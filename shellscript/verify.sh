@@ -16,8 +16,19 @@ PURPOSE=${PURPOSE:-any}
 
 printf "$JSON" | sed -e 's/.*payload":.?*"//' -e 's/".*//'  > "$TMPDIR/payload.$$.bin"
 
+PARTIAL=""
+if [ "x$CA" = "x$CERT" ]; then
+	# check if the CERT is a complete chain; if not - configure
+	# the check to be partial.
+	#
+	if openssl x509 -in "$CERT" -text | grep -q CA:FALSE; then
+		PARTIAL="-partial_chain"
+		echo Warning - enabling partial chain check - as there is no CA defined. This may not be what you want.
+	fi
+fi
+
 # Allow for partial chain and any purpose for
-# testing and debugging purposes.
+# testing and debugging purposes. 
 #
 printf "$JSON" | \
 	sed -e 's/.*signature":.?*"//' -e 's/".*//' |\
@@ -26,7 +37,7 @@ printf "$JSON" | \
 		-content "$TMPDIR/payload.$$.bin" -inform DER -binary \
 		-CAfile "$CA" \
 		-certfile client.crt \
-		-partial_chain \
+		$PARTIAL \
 		-purpose $PURPOSE \
 	| \
 	base64 -d
