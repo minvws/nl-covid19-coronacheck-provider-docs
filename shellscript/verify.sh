@@ -6,25 +6,17 @@ if [ $# -gt 1 ]; then
 	echo "Syntax: $0 [client.crt]"
 	exit 1
 fi
-CERT=${1:-client.crt}
-
 JSON=$(cat | tr -d '\\' | tr -d '\n\r' )
 
 TMPDIR=${TMPDIR:-/tmp}
-CA=${CA:-$CERT}
+CA=${1:-ca-pki-overheid.pem}
 PURPOSE=${PURPOSE:-any}
 
 printf "$JSON" | sed -e 's/.*payload":.?*"//' -e 's/".*//'  > "$TMPDIR/payload.$$.bin"
 
-PARTIAL=""
-if [ "x$CA" = "x$CERT" ]; then
-	# check if the CERT is a complete chain; if not - configure
-	# the check to be partial.
-	#
-	if openssl x509 -in "$CERT" -text | grep -q CA:FALSE; then
-		PARTIAL="-partial_chain"
-		echo Warning - enabling partial chain check - as there is no CA defined. This may not be what you want.
-	fi
+if [ $# -eq 1 ]; then
+	PARTIAL="-partial_chain"
+	CA=$1
 fi
 
 # Allow for partial chain and any purpose for
@@ -36,7 +28,7 @@ printf "$JSON" | \
 	openssl cms -verify \
 		-content "$TMPDIR/payload.$$.bin" -inform DER -binary \
 		-CAfile "$CA" \
-		-certfile client.crt \
+		-certfile "$CA" \
 		$PARTIAL \
 		-purpose $PURPOSE \
 	| \

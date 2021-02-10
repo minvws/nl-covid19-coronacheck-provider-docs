@@ -17,7 +17,11 @@ Output:
 
 To check:
 
-	 ./sign.sh | ./verify.sh
+	 ./sign.sh | ./verify.sh .cert
+
+or against a real server
+
+         curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh        
 
 Gives the output:
 
