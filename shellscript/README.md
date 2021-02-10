@@ -1,7 +1,8 @@
 Usage:
 
-Use:
-      ./sign.sh
+       ./sign.sh [example.json [client-cert-to-sign-with.pem]]
+
+If no client cert is passed - this tool wil generate a keystore.p12 java style trust store in PKCS#12 format and a client certifciate (client.crt).
 
 Output:
 

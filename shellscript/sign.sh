@@ -10,15 +10,19 @@ fi
 JSON=${1:-example.json}
 CERT=${2:-client.crt}
 
-if [ ! -e client.crt ]; then
+if [ $# -lt 2 -a ! -e client.crt ]; then
 	echo Generating a self signed demo certificate.
 	echo
 
 	ERM=$(
+              SERIAL=$(openssl rand -hex 1024 | tr -d a-zA-Z | cut -c 1-16)
               openssl req \
 		-new -x509 \
+		-extensions v3_req \
+		-addext subjectKeyIdentifier=hash \
+		-addext authorityKeyIdentifier=keyid,issuer \
 		-subj "/CN=Locatie Noord/O=Testers-are-us/C=NL" \
-		-keyout client.crt -out client.crt -nodes -set_serial 1278172891  2>&1
+		-keyout client.crt -out client.crt -nodes -set_serial $SERIAL 2>&1
 
 	     openssl pkcs12 -in client.crt -export -out keystore.p12 \
 		-passout pass:changeme -name "1" 2>&1
