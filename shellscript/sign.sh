@@ -20,7 +20,8 @@ if [ ! -e client.crt ]; then
 		-subj "/CN=Locatie Noord/O=Testers-are-us/C=NL" \
 		-keyout client.crt -out client.crt -nodes -set_serial 1278172891  2>&1
 
-	     openssl pkcs12 -in client.crt -export -out keystore.p12 -passout pass:changeme 2>&1
+	     openssl pkcs12 -in client.crt -export -out keystore.p12 \
+		-passout pass:changeme -name "1" 2>&1
 	) 
 	if [ $? -ne 0 ]; then
 		echo cert generation failed: $ERM
