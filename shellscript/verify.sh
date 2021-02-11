@@ -1,5 +1,4 @@
 #!/bin/sh
-
 set -e
 
 if [ $# -gt 1 ]; then
@@ -12,7 +11,7 @@ TMPDIR=${TMPDIR:-/tmp}
 CA=${1:-ca-pki-overheid.pem}
 PURPOSE=${PURPOSE:-any}
 
-printf "$JSON" | sed -e 's/.*payload":.?*"//' -e 's/".*//'  > "$TMPDIR/payload.$$.bin"
+printf "$JSON" | sed -e 's/.*payload":.?*"//' -e 's/".*//' | base64 -d  > "$TMPDIR/payload.$$.bin"
 
 if [ $# -eq 1 ]; then
 	PARTIAL="-partial_chain"
@@ -30,8 +29,6 @@ printf "$JSON" | \
 		-CAfile "$CA" \
 		-certfile "$CA" \
 		$PARTIAL \
-		-purpose $PURPOSE \
-	| \
-	base64 -d
+		-purpose $PURPOSE  
 
-rm -f "$TMPDIR/payload.$$.bin"
+# rm -f "$TMPDIR/payload.$$.bin"
