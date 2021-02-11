@@ -17,7 +17,10 @@ Output:
 
 To check:
 
-	 ./sign.sh | ./verify.sh .cert
+	 ./sign.sh | ./verify.sh ca.pem
+
+To see what is in it
+	./sign.sh | ./decode.sh
 
 or against a real server
 
