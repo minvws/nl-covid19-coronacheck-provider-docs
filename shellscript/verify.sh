@@ -12,6 +12,16 @@ CA=${1:-ca-pki-overheid.pem}
 PURPOSE=${PURPOSE:-any}
 OPENSSL=${OPENSSL:-openssl}
 
+
+if $OPENSSL version | grep -q LibreSSL; then
+        echo Sorry - OpenSSL is needed.
+        exit 1
+fi
+if ! $OPENSSL version | grep -q 1\.; then
+        echo Sorry - OpenSSL 1.0 or higher is needed.
+        exit 1
+fi
+
 printf "$JSON" |\
 	jq .payload |\
 	sed -e 's/^"//' -e 's/"$//' |
