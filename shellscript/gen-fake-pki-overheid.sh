@@ -13,7 +13,7 @@ if test -f ca.key; then
 	exit 1
 fi
 
-$OPENSSL req -x509 \
+$OPENSSL req -x509 -new \
 	-out ca.pem -keyout ca.key -nodes \
 	-subj '/CN=Staat der Nederlanden Root CA - G3/O=Staat der Nederlanden/C=NL'
 
@@ -41,7 +41,7 @@ cat sub-ca.pem  > chain.pem
 # Create the root cert to import into keychain - in all formats
 #
 openssl x509 -in ca.pem -out ca.crt -outform DER
-openssl pkcs12 -export -out=ca.pfx -in ca.pem -cacerts -nodes -nokeys -passout pass:corona2020
+openssl pkcs12 -export -out ca.pfx -in ca.pem -cacerts -nodes -nokeys -passout pass:corona2020
 openssl crl2pkcs7 -nocrl -certfile ca.pem -certfile sub-ca.pem -out chain.p7b
 
 hostname=${1:-client}
@@ -63,4 +63,4 @@ $OPENSSL x509 \
 rm ext.cnf.$$
 
 cat client.key client.pub > client.crt
-openssl pkcs12 -export -out=client.pfx -in client.pub -inkey client.key -certfile full-chain.pem -nodes -passout pass:corona2020
+openssl pkcs12 -export -out client.pfx -in client.pub -inkey client.key -certfile full-chain.pem -nodes -passout pass:corona2020
