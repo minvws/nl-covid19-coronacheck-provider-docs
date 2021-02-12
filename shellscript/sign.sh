@@ -12,7 +12,12 @@ CERT=${2:-client.crt}
 
 if $OPENSSL version | grep -q LibreSSL; then
 	echo Sorry - OpenSSL is needed.
-	exit
+	exit 1
+fi
+
+if ! $OPENSSL version | grep -q 1\.; then
+	echo Sorry - OpenSSL 1.0 or higher is needed.
+	exit 1
 fi
 
 if [ $# -lt 2 -a ! -e client.crt ]; then

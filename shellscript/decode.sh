@@ -6,6 +6,16 @@ if [ $# -ne 0 ]; then
 fi
 OPENSSL=${OPENSSL:-openssl}
 
+
+if $OPENSSL version | grep -q LibreSSL; then
+        echo Sorry - OpenSSL is needed.
+        exit 1
+fi
+if ! $OPENSSL version | grep -q 1\.; then
+        echo Sorry - OpenSSL 1.0 or higher is needed.
+        exit 1
+fi
+
 jq .signature | \
 	tr -d '\\' |\
 	tr -d '\n\r' |\

@@ -1,3 +1,8 @@
+Requirements:
+	Openssl 1.0 or newer.
+	base64 
+	jq (https://stedolan.github.io/jq/)
+
 Usage:
 
        ./sign.sh [example.json [client-cert-to-sign-with.pem]]
