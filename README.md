@@ -1,4 +1,4 @@
-# coronatester - demo for testers
+# CoronaTester - Demo for testers
 
 This repository contains a simple demo of the digital signatures used by the
 (public and private) test providers.
