@@ -7,15 +7,20 @@
   <name>pkcstest</name>
   <licenses>
     <license>
-      <name>EU_</name>
+      <name>EUROPEAN UNION PUBLIC LICENCE v. 1.2</name>
+      <url>https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/2020-03/EUPL-1.2%20EN.txt</url>
     </license>
   </licenses>
   <properties>
     <maven.compiler.source>14</maven.compiler.source>
     <maven.compiler.target>14</maven.compiler.target>
   </properties>
-
   <dependencies>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk15on</artifactId>
+      <version>1.68</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -31,6 +36,9 @@
         <configuration>
           <archive>
             <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>${settings.localRepository}</classpathPrefix>
+              <classpathLayoutType>repository</classpathLayoutType>
               <mainClass>org.webweaving.signaturedemo.SignatureDemo</mainClass>
             </manifest>
           </archive>

@@ -27,8 +27,7 @@ public class SignatureDemo {
     private String payloadFile;
 
     public static void main(String[] args) {
-
-        if(args.length != 4) {
+        if(args.length < 3) {
             // command and config
             System.out.println(HELP);
             System.exit(1);
@@ -39,7 +38,11 @@ public class SignatureDemo {
         demo.payloadFile = args.length == 4 ? args[3] : null;
         String action = args[0];
         if  (action.equalsIgnoreCase("verify")) {
-            demo.verify();
+            if(!demo.verify()) {
+                throw new RuntimeException("Verify failed");
+            } else {
+                System.out.println("Verification succesful");
+            }
         } else if (action.equalsIgnoreCase("sign")) {
             demo.sign();
         } else {
@@ -55,19 +58,19 @@ public class SignatureDemo {
         StringBuffer json = new StringBuffer();
         json.append("[{\n");
         json.append("\"payload\":");
-        json.append("\""+data.get("payload")+"\"\n");
+        json.append("\""+data.get("payload")+"\",\n");
         json.append("\"signature\":");
         json.append("\""+data.get("signature")+"\"\n");
         json.append("}]");
         System.out.println(json);
     }
 
-    public void verify() {
+    public boolean verify() {
         JavaSecurity js = new JavaSecurity(keyStore, password);
         String sigpay = new String(readFromStdin());
         String signature = getValue("signature", sigpay);
         String payload = getValue("payload", sigpay);
-        js.isSignedBy(signature, payload);
+        return js.verify(signature, payload);
     }
 
     private byte[] readFromStdin() {
@@ -88,6 +91,7 @@ public class SignatureDemo {
                 while ((line = bur.readLine()) != null) {
                     sb.append(line);
                 }
+                System.out.println(sb);
                 result = sb.toString().getBytes();
             } catch (Exception e) {
                 e.printStackTrace();

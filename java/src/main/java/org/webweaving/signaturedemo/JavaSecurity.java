@@ -13,13 +13,34 @@
  */
 package org.webweaving.signaturedemo;
 
+import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.cms.ContentInfo;
+import org.bouncycastle.asn1.x509.Certificate;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cms.CMSProcessableByteArray;
+import org.bouncycastle.cms.CMSSignedData;
+import org.bouncycastle.cms.CMSSignedDataGenerator;
+import org.bouncycastle.cms.SignerInformation;
+import org.bouncycastle.cms.SignerInformationStore;
+import org.bouncycastle.cms.SignerInformationVerifier;
+import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoVerifierBuilder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
+import org.bouncycastle.util.Store;
+
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.PrivateKey;
-import java.security.Signature;
+import java.security.Security;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +51,7 @@ public class JavaSecurity {
     private char[] password;
 
     public JavaSecurity(String keystoreFile, String password) {
+        Security.addProvider(new BouncyCastleProvider());
         this.keystoreFile = keystoreFile;
         this.password = password.toCharArray();
     }
@@ -60,15 +82,17 @@ public class JavaSecurity {
         result.put("payload", new String(Base64.getEncoder().encode(payload)));
         try {
             KeyStore store = getKeyStore();
-            // if no name is specified in openssl it is probably "1"
-            // you can see what aliasa in the keystore are present with
-            // store.aliases().asIterator().forEachRemaining(System.out::println);
             X509Certificate cert = getCertificate(store);
-            Signature signature = Signature.getInstance(cert.getSigAlgName());
-            signature.initSign((PrivateKey) store.getKey(ALIAS, password));
-            signature.update(payload);
-            byte[] signed = signature.sign();
-            result.put("signature", new String(Base64.getEncoder().encode(signed)));
+            PrivateKey pk = (PrivateKey) store.getKey(ALIAS, password);
+            CMSSignedDataGenerator gen = new CMSSignedDataGenerator();
+            // convert java.security certificate to buoncycastle
+            X509CertificateHolder certHolder = new X509CertificateHolder(Certificate.getInstance(cert.getEncoded()));
+            gen.addCertificate(certHolder);
+            ContentSigner sha1Signer = new JcaContentSignerBuilder(cert.getSigAlgName()).setProvider("BC").build(pk);
+            gen.addSignerInfoGenerator(new JcaSignerInfoGeneratorBuilder(new JcaDigestCalculatorProviderBuilder().build()).build(sha1Signer, certHolder));
+            CMSProcessableByteArray msg = new CMSProcessableByteArray(payload);
+            CMSSignedData signedData = gen.generate(msg);
+            result.put("signature", new String(Base64.getEncoder().encode(signedData.getEncoded("DER"))));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,32 +101,35 @@ public class JavaSecurity {
 
     /**
      * checks the if the signature is the expected one
-     * @param signatureEncoded (assume base64 encoded value).
+     * @param signatureEncoded (assumed base64 encoded value).
      * @param payloadEncoded assumed base64 encoded.
      * @return
      */
-    public boolean isSignedBy(String signatureEncoded, String payloadEncoded) {
+    public boolean verify(String signatureEncoded, String payloadEncoded) {
         byte[] signature = Base64.getDecoder().decode(signatureEncoded);
         byte[] payload = Base64.getDecoder().decode(payloadEncoded);
-        return isSignedBy(signature, payload);
+        System.out.println(new String(payload));
+        return verify(signature, payload);
     }
 
-    /**
-     * checks the if the signature is the expected one.
-     * @param signature signature in bytes
-     * @param payload payload in bytes.
-     * @return
-     */
-    public boolean isSignedBy(byte[] signature, byte[] payload) {
+    public boolean verify(byte[] signature, byte[] payload) {
         boolean result = false;
-        KeyStore store = getKeyStore();
-        X509Certificate cert = getCertificate(store);
         try {
-            Signature sig = Signature.getInstance(cert.getSigAlgName());
-            sig.initVerify(cert.getPublicKey());
-            sig.update(payload);
-            result = sig.verify(signature);
-        } catch (Exception e) {
+            ASN1Primitive asn = null;
+            try(ByteArrayInputStream bIn = new ByteArrayInputStream(signature)) {
+                try(ASN1InputStream aIn = new ASN1InputStream(bIn)) {
+                    asn = aIn.readObject();
+                }
+            }
+            ContentInfo contentInfo = ContentInfo.getInstance(asn);
+            CMSSignedData s = new CMSSignedData(new CMSProcessableByteArray(payload), contentInfo);
+            Store certs = s.getCertificates();
+            SignerInformationStore signers = s.getSignerInfos();
+            SignerInformation signer = signers.getSigners().iterator().next();
+            X509CertificateHolder certHolder = ((Collection<X509CertificateHolder>)certs.getMatches(signer.getSID())).iterator().next();
+            SignerInformationVerifier verifier = new JcaSimpleSignerInfoVerifierBuilder().build(certHolder);
+            result = signer.verify(verifier);
+        }catch(Exception e) {
             e.printStackTrace();
         }
         return result;

@@ -27,6 +27,6 @@ public class JavaSecurityTest {
         JavaSecurity js = new JavaSecurity(keystoreFile, "changeme");
         String payload = "{\"key\": \"hello world\"}";
         Map<String, String> signed = js.sign(payload);
-        assertEquals(true, js.isSignedBy(signed.get("signature"), signed.get("payload")));
+        assertEquals(true, js.verify(signed.get("signature"), signed.get("payload")));
     }
 }
