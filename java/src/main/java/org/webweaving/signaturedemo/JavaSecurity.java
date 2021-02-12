@@ -52,8 +52,10 @@ public class JavaSecurity {
 
     public JavaSecurity(String keystoreFile, String password) {
         Security.addProvider(new BouncyCastleProvider());
-        this.keystoreFile = keystoreFile;
-        this.password = password.toCharArray();
+        if (keystoreFile != null) {
+            this.keystoreFile = keystoreFile;
+            this.password = password.toCharArray();
+        }
     }
 
     /**

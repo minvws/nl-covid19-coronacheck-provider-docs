@@ -10,8 +10,12 @@ JSON=$(cat | tr -d '\\' | tr -d '\n\r' )
 TMPDIR=${TMPDIR:-/tmp}
 CA=${1:-ca-pki-overheid.pem}
 PURPOSE=${PURPOSE:-any}
+OPENSSL=${OPENSSL:-openssl}
 
-printf "$JSON" | sed -e 's/.*payload":.?*"//' -e 's/".*//' | base64 -d  > "$TMPDIR/payload.$$.bin"
+printf "$JSON" |\
+	jq .payload |\
+	sed -e 's/^"//' -e 's/"$//' |
+	base64 -d > "$TMPDIR/payload.$$.bin"
 
 if [ $# -eq 1 ]; then
 	PARTIAL="-partial_chain"
@@ -21,10 +25,12 @@ fi
 # Allow for partial chain and any purpose for
 # testing and debugging purposes. 
 #
-printf "$JSON" | \
-	sed -e 's/.*signature":.?*"//' -e 's/".*//' |\
+printf "$JSON" | jq .signature | sed -e 's/^"//' -e 's/"$//' |
+	base64 -d  > x.raw
+
+printf "$JSON" | jq .signature | sed -e 's/^"//' -e 's/"$//' |
 	base64 -d |\
-	openssl cms -verify \
+	$OPENSSL cms -verify \
 		-content "$TMPDIR/payload.$$.bin" -inform DER -binary \
 		-CAfile "$CA" \
 		-certfile "$CA" \

@@ -6,9 +6,9 @@ if [ $# -ne 0 ]; then
 fi
 OPENSSL=${OPENSSL:-openssl}
 
-grep signature |\
+jq .signature | \
 	tr -d '\\' |\
 	tr -d '\n\r' |\
-	sed -e 's/.*"M/M/' -e 's/".*//' |  \
+	sed -e 's/^"//' -e 's/"$//' |\
 	base64 -d |\
 	$OPENSSL pkcs7 -inform DER -noout -print

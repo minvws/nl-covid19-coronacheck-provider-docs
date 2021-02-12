@@ -27,10 +27,8 @@ JSON_B64=$(base64 "$JSON")
 SIG_B64=$($OPENSSL cms -in "$JSON" -sign -outform DER -signer "$CERT" -certfile chain.pem -binary | base64)
 
 cat <<EOM
-[
-	{
-		"payload": "$JSON_B64",
-		"signature": "$SIG_B64"
-	}
-]
+{
+	"payload": "$JSON_B64",
+	"signature": "$SIG_B64"
+}
 EOM

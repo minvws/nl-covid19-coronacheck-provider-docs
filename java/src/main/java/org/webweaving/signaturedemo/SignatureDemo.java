@@ -20,23 +20,30 @@ import java.util.Map;
 
 public class SignatureDemo {
 
-    private static final String HELP = "Expected sign | verify keystore keystorepassword [payload]\n Payload is optional if you use pipes";
+    private static final String HELP = "Expected sign | verify [keystore keystorepassword] [payload]\n Payload is optional if you use pipes";
 
     private String keyStore;
     private String password;
     private String payloadFile;
 
     public static void main(String[] args) {
-        if(args.length < 3) {
+        SignatureDemo demo = new SignatureDemo();
+        String action = args[0];
+
+        if(args.length <= 2) {
+            demo.keyStore = null;
+            demo.password = null;
+            demo.payloadFile = args.length == 2 ? args[1] : null;
+       } else 
+        if(args.length == 3 || args.length == 4) {
+             demo.keyStore = args[1];
+             demo.password = args[2];
+             demo.payloadFile = args.length == 4 ? args[3] : null;
+        } else {
             // command and config
             System.out.println(HELP);
             System.exit(1);
         }
-        SignatureDemo demo = new SignatureDemo();
-        demo.keyStore = args[1];
-        demo.password = args[2];
-        demo.payloadFile = args.length == 4 ? args[3] : null;
-        String action = args[0];
         if  (action.equalsIgnoreCase("verify")) {
             if(!demo.verify()) {
                 throw new RuntimeException("Verify failed");
