@@ -1,4 +1,10 @@
-# Running this example
+# PHP CMS Signature
+
+### Requirements
+The `openssl_cms_sign` function used in this demo requires PHP8 or later.
+
+### Running this example
+
 
 1)	generate a chain by doing
 

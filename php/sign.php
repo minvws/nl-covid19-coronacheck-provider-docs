@@ -1,7 +1,7 @@
 <?php
 
-$payloadfile ="example.json";
-$encode_payloadfile ="example.b64";
+$payloadfile = "example.json";
+$encode_payloadfile = "example.b64";
 $sigfile = "signed.out";
 
 $payload = fread(fopen($payloadfile, "r"),filesize($payloadfile));
@@ -16,7 +16,7 @@ if (!(openssl_cms_sign(
 	array("file://client.key","changeme"), 
 	null, 
 	PKCS7_DETACHED | PKCS7_BINARY,
-	OPENSSL_ENCODING_DER, # ignore the manual; OPENSLL is wrong.
+	OPENSSL_ENCODING_DER, # ignore the manual; OPENSSL is wrong.
 	"chain.pem", # Don't ask - but note file prefix..
 ))) exit(1);
 
