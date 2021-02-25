@@ -7,7 +7,14 @@ It can also validate the signature containined in the JSON wrapper against the g
 
 It serves as an easily runnable example of how the signing works, implemented in C#. 
 
-## Usage
+# Building
+
+Install the .Net SDK for your platform (.net 5) then execute `publish.bat` or `publish.sh` (after making it executable!) as 
+appropriate to build + publish the tool.
+
+# Usage
+
+Using the publish output (`publish/CmsSigner`)..
 
 To produce a signed payload:
 
