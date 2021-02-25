@@ -15,16 +15,17 @@ To produce a signed payload:
 
 e.g.
 
-    CmsSigner -i text.txt -s sign.pfx -p corona2020 -c chain.p7b
+    CmsSigner -i Example/test.txt -s Example/sign.pfx -p corona2020 -c Example/chain.p7b > file.json
 
 The output can be piped to a file.
 
 To check that a signature in the json wrapper you just made (the output from this tool in signing mode) is valid:
 
     CmsSigner -v -i file-containing-json-wrapper -s path-to-x509-CMS-certificate -p password -c path-to-x509-CMS-chain
+
 e.g.
 
-    CmsSigner -v -i file.json -s sign.pfx -p corona2020 -c chain.p7b
+    CmsSigner -v -i file.json -s Example/sign.pfx -p corona2020 -c Example/chain.p7b
 
 There is an example in the folder /Example (including test certificate + example certificate/chain) which generates the wrapper than
 validates it. This is included in the output directory when you build/publish this project.
