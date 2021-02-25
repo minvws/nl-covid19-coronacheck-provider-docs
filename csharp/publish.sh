@@ -1,0 +1,1 @@
+dotnet publish src/CmsSigner/CmsSigner.csproj -o publish/CmsSigner -p:PublishProfile=Publish-Linux-x64
