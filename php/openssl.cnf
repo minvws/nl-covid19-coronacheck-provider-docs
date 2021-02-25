@@ -1,0 +1,4 @@
+[ subca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+basicConstraints=CA:TRUE
