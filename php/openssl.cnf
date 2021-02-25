@@ -1,8 +1,4 @@
-[req]
-distinguished_name=dn
-[ dn ]
 [ subca ]
-# keyUsage = cRLSign, keyCertSign
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
 basicConstraints=CA:TRUE
