@@ -29,7 +29,7 @@ JSON_B64=$(base64 "$JSON")
 # We avoid using echo (shell and /bin echo behave differently) as to 
 # get control over the trialing carriage return.
 
-SIG_B64=$($OPENSSL cms -in "$JSON" -sign -outform DER -signer "$CERT" -certfile chain.pem -binary | base64)
+SIG_B64=$($OPENSSL cms -in "$JSON" -sign -outform DER -signer "$CERT" -certfile chain.pem -binary  -keyopt rsa_padding_mode:pss | base64)
 
 cat <<EOM
 {
