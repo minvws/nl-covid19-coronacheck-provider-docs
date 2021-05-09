@@ -71,3 +71,8 @@ The data that the Test Provider should maintain in their system can be found [he
 | testTitle                | string             | the name of the specific test record                             |
 
 How this data is represented in the Test Provider database is up to the implementor of that database.
+
+### submitting new test cases
+If you uncover additional test cases, that could be helpful for VWS and / or other test providers -- and as such make this service even more useful, please add these to the [default test cases](default-test-cases.csv) CSV file and create a pull request on this repository.
+
+This also means that it may be a good idea to put a Watch on this repository, as we will be adding new test records as and when we receive them.
