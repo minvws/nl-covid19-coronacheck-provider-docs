@@ -1,6 +1,6 @@
 # nl-covid19-coronacheck-app-coronatestprovider-portal
 
-Version 0.2 - 10th May 2021
+Version 0.2.1 - 10th May 2021
 
 
 In the CoronaCheck project we are providing sample test data to Test Providers that we advice the Test Providers contain within their system. Combined with the Test Provider Test Portal, this enables Test Providers to conduct an end-to-end test of their endpoints.
@@ -71,6 +71,9 @@ The data that the Test Provider should maintain in their system can be found [he
 | testTitle                | string             | the name of the specific test record                             |
 
 How this data is represented in the Test Provider database is up to the implementor of that database.
+
+### Updating the data prior to testing
+The tokens cannot be older than 40 hours. In order to be able to test properly, the `sampleData` field in your database needs to be updated to something sensible. For testing, we suggest to update the sample dates in the test providers' database prior to using this portal, and set these to `now()`. That way, the test cases will send the appropriate `expectedStatus`. Only the test cases for token `LLBULLBULLBU` and `VSBQVSBQVSBQ` should not be updated. These two tests are specifically focussing on expired and pending tests.
 
 ### submitting new test cases
 If you uncover additional test cases, that could be helpful for VWS and / or other test providers -- and as such make this service even more useful, please add these to the [default test cases](default-test-cases.csv) CSV file and create a pull request on this repository.
