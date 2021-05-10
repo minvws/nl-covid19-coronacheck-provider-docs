@@ -1,9 +1,9 @@
 # nl-covid19-coronacheck-app-coronatestprovider-portal
 
-Version 0.1 - 7th May 2021
+Version 0.2 - 10th May 2021
 
 
-In the CoronaCheck project we are providing sample test data to Test Providers that we advice the Test Providers contain within their system. Combined with the Test Provider Test Portal (at https://aaaa), this enables Test Providers to conduct an end-to-end test of their endpoints.
+In the CoronaCheck project we are providing sample test data to Test Providers that we advice the Test Providers contain within their system. Combined with the Test Provider Test Portal, this enables Test Providers to conduct an end-to-end test of their endpoints.
 
 ## Test Portal
 VWS provides a web front-end through which Test Providers can test their endpoints. Data entered through this web front-end will be sent to a given endpoint and show the response it receives from it.
@@ -16,7 +16,7 @@ After the test service has been called, the exact return values will be shown to
 
 A standardized test set has been provided. It is up to the Test Provider to ensure that this data is recorded in their database, such that this VWS web front-end can be used against an existing and known test set.
 
-This Test Portal can be found here: 
+This Test Portal can be found here: [https://provider.coronacheck.nl/](https://provider.coronacheck.nl/)
 
 ### User Interface
 The Test Portal contains the following fields:
