@@ -4,7 +4,7 @@
 	base64 
 	jq (https://stedolan.github.io/jq/)
 	
-Note: MacOS ships swith LibreSSL which doesn't support all algorithms we use. Install openssl for example via `brew install openssl`. If succesful, an `openssl version` should display 'OpenSSL' instead of 'LibreSSL'.	
+Note: MacOS ships with LibreSSL which doesn't support all algorithms we use. Install openssl for example via `brew install openssl`. If succesful, an `openssl version` should display 'OpenSSL' instead of 'LibreSSL'.	
 	
 ## Usage
 
