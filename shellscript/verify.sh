@@ -5,13 +5,13 @@ if [ $# -gt 1 ]; then
 	echo "Syntax: $0 [client.crt]"
 	exit 1
 fi
-JSON=$(cat | tr -d '\\' | tr -d '\n\r' )
+#JSON=$(cat | tr -d '\\' | tr -d '\n\r' )
+JSON=$(cat)
 
 TMPDIR=${TMPDIR:-/tmp}
 CA=${1:-ca-pki-overheid.pem}
 PURPOSE=${PURPOSE:-any}
 OPENSSL=${OPENSSL:-openssl}
-
 
 if $OPENSSL version | grep -q LibreSSL; then
         echo Sorry - OpenSSL is needed.
@@ -23,7 +23,7 @@ if ! $OPENSSL version | grep -q 1\.; then
 fi
 
 printf "$JSON" |\
-	jq .payload |\
+	jq -r .payload | \
 	sed -e 's/^"//' -e 's/"$//' |
 	base64 -d > "$TMPDIR/payload.$$.bin"
 
@@ -35,10 +35,10 @@ fi
 # Allow for partial chain and any purpose for
 # testing and debugging purposes. 
 #
-printf "$JSON" | jq .signature | sed -e 's/^"//' -e 's/"$//' |
+printf "$JSON" | jq -r .signature | 
 	base64 -d  > x.raw
 
-printf "$JSON" | jq .signature | sed -e 's/^"//' -e 's/"$//' |
+printf "$JSON" | jq -r .signature |
 	base64 -d |\
 	$OPENSSL cms -verify \
 		-content "$TMPDIR/payload.$$.bin" -inform DER -binary \
