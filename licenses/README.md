@@ -1,1 +1,0 @@
-This folder contains third party licenses of components that have been used as part of this project.

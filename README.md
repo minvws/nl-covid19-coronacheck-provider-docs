@@ -1,31 +1,52 @@
-# COVID-19 CoronaCheck App - Coordination and Documentation
+# COVID-19 CoronaCheck App - Provider Documentation
 
 ## Introduction
-This repository contains the technical documentation of the Dutch COVID-19 CoronaCheck app proof of concept.
+This repository contains the technical documentation for Vaccination, Negative Test and Recovery providers of the Dutch COVID-19 CoronaCheck app.
 
-## Overview of CoronaCheck Repositories
+## Contents
 
-* [Documentation](https://github.com/minvws/nl-covid19-coronacheck-app-coordination) (this repository)
+Here's an overview of relevant parts of this repository:
+
+* [Documentation](docs/) - All technical documentation to connect to the CoronaCheck app
+* [Templates](html-templates/) - HTML templates for providers integrating CoronaCheck into their frontends
+* [Signing Demo](signing-demo/) - Demo / reference code for digitally signing responses and verifying the result
+* [Test Suite](test-suite/) - Once you've implemented the endpoints, import our test suite to be able to verify your endpoints
+
+## Getting started
+
+### Test Providers
+
+If you're a provider of covid-19 tests, the following documents are relevant to you:
+
+1. [Data Structures Overview](docs/data-structures-overview.md) - The JSON responses that you should generate
+2. [Providing Events by Token](docs/providing-events-by-token.md) - The endpoints you need to implement to allow users to retrieve test results via a token.
+3. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve test results via DigiD
+4. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign test results.
+5. [Example Implementation](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example) - A reference implementation of a working test provider.
+
+### Vaccination Providers
+
+If you're a provider of vaccinations, the following documents are relevant to you:
+
+1. [Data Structures Overview](docs/data-structures-overview.md) - The JSON responses that you should generate
+2. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve vaccination records via DigiD
+3. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign recovery statements.
+
+### Recovery Providers
+
+If you're a provider of recovery statements (based on positive test results), the following documents are relevant to you:
+
+1. [Data Structures Overview](docs/data-structures-overview.md) - The JSON responses that you should generate
+2. [Providing Events by Token](docs/providing-events-by-token.md) - The endpoints you need to implement to allow users to retrieve recovery statements via a token.
+2. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve recovery statements via DigiD
+3. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign recovery statements.
+
+
+## Other Relevant Repositories
+
+* [Architecture Docuentation](https://github.com/minvws/nl-covid19-coronacheck-app-coordination)
 * [UX/UI Designs](https://github.com/minvws/nl-covid19-coronacheck-app-design)
-* [iOS app](https://github.com/minvws/nl-covid19-coronacheck-app-ios)
-* [Android app](https://github.com/minvws/nl-covid19-coronacheck-app-android)
-* [BFF API for the apps](https://github.com/minvws/nl-covid19-coronacheck-app-bff)
-* [Website and print portal](https://github.com/minvws/nl-covid19-coronacheck-website)
-* [Debug portal for test providers](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-portal)
 * [Reference impementation of a dummy test provider](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example)
-* [Example signing code for test/vaccination/recovery providers](https://github.com/minvws/nl-covid19-coronacheck-signature-demo)
-* [Backend services](https://github.com/minvws/nl-covid19-coronacheck-app-backend)
-* [CL Signing library](https://github.com/minvws/nl-covid19-coronacheck-cl-core)
-
-## Architecture documentation
-
-The CoronaCheck Architecture and development documentation can be found in the [architecture/](architecture/) folder.
-
-A good starting point with an overall view of the system is the [COVID-19 CoronaTester Verifiable Test Result - Solution Architecture](https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/main/architecture/Solution%20Architecture%20VTR.md)
-
-## Provider documentation
-
-All documentation for providers who want to connect to Coronacheck an be found in the [docs/](docs/) folder.
 
 ## Development & Contribution process
 
