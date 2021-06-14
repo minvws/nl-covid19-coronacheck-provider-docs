@@ -8,7 +8,7 @@ The following versions exist:
 
 | Version | Active use | Planning | Remarks |
 | --- | --- | --- | --- |
-| 1.0 | NO | This was the original protocol and used only during Fieldlab trials. It only supported negative test results. This protocol is no longer in use. There are no clients that use this protocol, so it doesn't have to be implemented. |
+| 1.0 | NO | | This was the original protocol and used only during Fieldlab trials. It only supported negative test results. This protocol is no longer in use. There are no clients that use this protocol, so it doesn't have to be implemented. |
 | 2.0 | YES | To be phased out by July 1st | The second generation introduced light personally identifiable information (pii) to be able to validate if a proof belongs to the person showing it. This protocol is in use in the 1.4 version of the apps which are currently still out in the field. |
 | 3.0 | YES | To be introduced from mid-June | The 3.0 version introduced support for vaccinations and recovery, and contains the dataset that is required to be able to generate European DCC QR codes. This version will be released in version 2.0 of the apps, which are planned for end of June. |
 
