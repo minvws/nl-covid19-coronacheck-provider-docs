@@ -44,9 +44,9 @@ If you're a provider of recovery statements (based on positive test results), th
 
 ## Other Relevant Repositories
 
-* [Architecture Docuentation](https://github.com/minvws/nl-covid19-coronacheck-app-coordination)
+* [Architecture Documentation](https://github.com/minvws/nl-covid19-coronacheck-app-coordination)
 * [UX/UI Designs](https://github.com/minvws/nl-covid19-coronacheck-app-design)
-* [Reference impementation of a dummy test provider](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example)
+* [Reference implementation of a dummy test provider](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example)
 
 ## Development & Contribution process
 
