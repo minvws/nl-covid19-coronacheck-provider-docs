@@ -1,0 +1,314 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+% Copyright (c) 2020 De Staat der Nederlanden, Ministerie van Volksgezondheid, Welzijn en Sport.
+% Licensed under the EUROPEAN UNION PUBLIC LICENCE v. 1.2&
+%
+% SPDX-License-Identifier: EUPL-1.2
+%
+% Based on RedWax.eu and KS-HiP 2001 (c) Webweaving, 2017 (c) RedWax.eu under the Apache Softewar License
+% version 1.0 or later
+%.
+
+% \documentclass[11.0pt,twoside,openright]{report}
+\documentclass[11.0pt]{report}
+\usepackage[bottom]{footmisc}
+
+\def\orgtitle{Design -- Certificate Pinning van SSL en CMS}
+
+% \def\testsonly{x}
+\def\CoronaCheckApp{CoronaCheck-app\xspace}
+\def\CoronaCheckScannerApp{CoronaCheck Scanner app\xspace}
+
+\ifdefined\testsonly
+\def\thisdoc{\orgtitle\xspace voor test providers}
+\else
+\def\thisdoc{\orgtitle}
+\fi
+\def\thisauthor{CoronaCheck, MinVWS}
+\def\version{1.08\xspace}
+
+%\def\rid{002}
+%\def\priority{Impact: Kritiek - Urgentie: Laag - Priority: P3}
+%\def\what{incident}
+
+\include{ro-stijl.tex}
+
+\begin{document}
+% \StopCensoring
+
+\maketitle
+
+\section*{Document geschiedenis}
+
+\begin{tabular}{|r|l|l|}
+\hline
+Versie & Datum & Veranderingen \\
+\hline
+\hline
+1.00 & 2021-02-017 & Concept. \\
+\hline
+1.01 & 2021-02-017 & Comments IJ verwerkt -- detail counterfeit data.\\
+\hline
+1.02 & 2021-02-017 & Comments HV verwerkt -- redirect niet toegestaan \\
+\hline
+1.03 & 2021-02-018 & Verzoek HV tot opname keyids verwerkt.  \\
+\hline
+1.04 & 2021-02-018 & Verzoek RB tot opname URL met certs.  \\
+\hline
+1.05 & 2021-02-026 & Drop deel eis PKI-O op private test stations TLS \\
+\hline
+1.06 & 2021-02-026 & Correctie datum \& volledige naam private root \\
+\hline
+1.07 & 2021-02-026 & Verduidelijking commerciële handtekening test resultaat \\
+\hline
+1.08 & 2021-02-026 & Verduidelijking print portaal, typo in table. Versie test providers. \\
+\hline
+\end{tabular}
+
+%\setcounter{tocdepth}{0}
+%\tableofcontents
+
+\pagebreak
+\chapter{Executive Summary}
+
+De veiligheid van \CoronaCheckApp berust, onder andere, op de betrouwbaarheid van de connecties naar het backend systeem en dat van (commerciële en publieke) test providers.
+
+Een aspect hiervan is het hebben van een hoge mate van zekerheid dat de app praat met het `echte' backend of systeem waar het mee denkt te praten. En niet met een totaal ander systeem of een 'man in the middle'.
+
+Om deze reden wordt onder andere Certificaat Pinning toegepast op de Certificaat Autoriteit (in deze PKI Overheid) en de vertrouwensketen (chain) alsmede een controle lijst en verificatie van bepaalde velden volgens het volgende schema:
+
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+Wat						& (met) Wie					& Hoe	& CA						& CN check & whitelist & wildcards  \\
+\hline
+\hline
+\ifdefined\testsonly
+\else
+Connectie				& VWS						& TLS 	& PKI-O (Server 2020)	& ja			& nee		& nee \\
+Master-Config			& VWS						& CMS 	& PKI-O (EV)  		& ja			& nee		& \emph{n/a} \\
+Anders (direct)			& VWS						& CMS	& \emph{n/a}		  		& \emph{n/a}	& \emph{n/a}& \emph{n/a} \\
+Anders (via CDN)		& VWS						& CMS	& PKI-O (EV)  		& ja			& nee 		& \emph{n/a} \\
+\fi
+Connectie				& test provider 				& TLS 	& PKI-O (all)/EV (all) 	& ja 			& ja 		& ja \\
+						& test provider 				& CMS 	& PKI-O (all) 			& nee 			& ja 		& \emph{n/a} \\
+Printportaal			& test provider 				& TLS 	& PKI-O (EV/Server 2020) & ja 			& ja 		& ja \\
+\hline
+\end{tabular}
+
+
+Waarbij TLS de bescherming is van de connectie en CMS de bescherming is van de `\emph{payload}' (zoals een testbewijs of configuratie bestand).
+
+Dit document%
+\ifdefined\testsonly
+\footnote{Zie ook het uitgebreidere algemene document:``\orgtitle'', version \version, \thisauthor}
+\fi
+\xspace getailleerd het ontwerp en de gedachtes erachter.
+
+\pagebreak
+\section*{Uitgangspunten}
+
+\ifdefined\testsonly
+\else
+De \CoronaCheckApp en de \CoronaCheckScannerApp moeten op gezette tijden contact opnemen met een aantal backend services van de overheid. Daarnaast moet de \CoronaCheckApp tijdens het laden van het test resultaat contact opnemen met de server van de publieke (e.g. GGD) of private (e.g. commerciële) test provider. 
+
+Specifiek gaat het om:
+
+\begin{enumerate}
+\item	Connectie \CoronaCheckScannerApp/\CoronaCheckApp ten behoeve van het ophalen van de basis configuratie\footnote{Welke extra gevoelig is - omdat hier zaken als geldigheid en een onomkeerbare `killswitch' in zitten}.
+\item	Connectie \CoronaCheckScannerApp/\CoronaCheckApp met de backend API - bijvoorbeeld voor het 'inwisselen' van een test resultaat voor een C.L. getekende code.
+\item 	Connectie \CoronaCheckApp ten behoeve van het test certificaat met een (commerciële) test provider. 
+\end{enumerate}
+
+Ditzelfde geld voor de test providers.
+\fi
+De \CoronaCheckApp heeft, ten behoeve van het ophalen van test resultaten, contact met de server van de test provider (direct, of unomi/events). Hierbij is het van belang dat de app \emph{`zeker'} weet dat het met een legitieme test provider te maken heeft\footnote{Daarnaast neemt het monitoring backend op gezette tijden ook contact op met de test provider om de verbindingsinstellingen te controleren.}. Daarnaast kan het zijn dat de burger het printportaal moet benaderen.
+
+\section{Risico afweging / Contigency}
+
+Omdat een probleem inzake de veiligheid en vertrouwelijkheid van de medische informatie van de burger (of de betrouwbaarheid van een uitgeven verklaring) een  Kritiek\footnote{Treft alle gebruikers, reële kans op politieke verantwoording, reputatie schade landelijke media} incident oplevert zijn er de volgende mitigaties meegenomen in het ontwerp:
+
+\begin{enumerate}
+\item Gebruik van de PKI overheids infrastructuur welke onder Nederlandse controle is (geen afhankelijkheid van (buitenlandse) derden waar mogelijk.
+\ifdefined\testsonly
+\else\item Geen `\emph{harde}' pinning op het leaf certificaat waar mogelijk - zodat in samenwerking met PKI Overheid vervangende sleutels in de door hun gecontroleerde infrastructuur gemaakt kunnen worden.
+\item Het toestaan van een (relatief onbetrouwbaar) Content Delivery Network (\textsc{cdn}) om de distributie van het configuratie zeer robuust te maken.
+\fi
+\item Het gebruik van een gecontroleerde, maar relatief toegankelijke, set van certificaten (verstrekt PKI Overheid). Dit om integratie door derden makkelijk te maken met een digitale signature `\emph{waar integriteit belangrijk is}'. Zoals het geval is bij een test resultaat. Maar er voor zorgdragen dat er wel een goede (en in het Nederlands recht systeem verankerde) controle is.
+\item Het toestaan van een zeer brede reeks van (commerciële) certificaten (PKI Overheid of CAB-Forum EV certified) inzake de TLS connectie naar test providers - maar, ter compensatie, dit gecombineerd met whitelisting op leaf level.
+\item Daar waar geen whitelisting mogelijk is (bijvoorbeeld omdat de connectie vanuit de webbrowser geïnitieerd wordt) enkel een PKI Overheid certificaat toestaan - zodat er goede (Nederlandse) controle is (de meeste CAB-Forum certificaten vallen onder buitenlands recht).
+\end{enumerate}
+
+
+\ifdefined\testsonly
+\else
+\pagebreak
+\section{Ontwerp - API VWS instanties}
+\label{api}
+
+Deze connecties zullen beschermd worden met Certificaat Pinning. Hierbij zal:
+
+\begin{enumerate}
+\item	Gecontroleerd worden een PKI overheid certificaat uit een specifieke, hardcoded lijst, deel uit maakt van de trust-chain.
+
+De pinning zal plaatsvinden op:
+\begin{enumerate}
+\item Staat der Nederlanden Domein Server CA 2020 CA (zie appendix \ref{keyid} op pagina \pageref{keyid} voor de keyIDs).
+\item Er is geen beperking qua diepte.
+\end{enumerate}
+\item 	Gecontroleerd worden dat de Fully Qualified Domain Hostname (\textsc{fqdn}) van de server waarmee contact opgenomen wordt overeenkomt met de CN of SubjectAlterNative name\footnote{Dit staat dus los van andere aspecten, zoals DNS Sec}. Hierbij zijn geen wildcards toegestaan. 
+\item 	Dat de \textsc{fqdn} eindigd op coronacheck.nl (case insensitive).
+% \item	Dit geldt voor alle servers; dus bij een HTTP-redirect wordt elke server in het pad aldus gecontroleerd.
+\item HTTP-Redirects zijn \emph{niet} toegestaan.
+\end{enumerate}
+
+Deze laatste optie is strict genomen niet nodig (het betreft hier \textsc{fqdn} welke hardcoded zijn c.q. uit de configuratie komen) -- maar is toegevoegd als `backstopper' bij een partial backend compromise.
+
+\section{Ontwerp - ophalen VWS config bestand}
+\label{config}
+
+Daarnaast zal bij het ophalen van de configuratie ook gecheckt worden dat deze ondertekend is met een geldige CMS handtekening waarvan:
+
+\begin{enumerate}
+\item	Gecontroleerd worden dat een PKI overheid certificaat, uit een specifieke, hardcoded lijst, deel uit maakt van de trust-chain.
+
+De pinning zal plaatsvinden op:
+\begin{enumerate}
+\item Stamcertificaat Staat der Nederlanden EV Root CA
+\item Er is geen beperking qua diepte.
+\end{enumerate}
+\item	Dat de commonName van het distinguishedName veld het woord 'coronacheck' (case insensitive) bevat.
+\end{enumerate}
+
+De reden voor deze extra laag van beveiliging is 1) dat dit bestand via een CDN gedistribueerd zal worden en dat 2) de configuratie een aantal extra gevoelige zaken bevat (en lang gecached kan worden) - zoals de `\emph{killswitch}'\footnote{Welke aan het eind van de covid-19 risis de app volledig, onomkeerbaar, uitschakeld.}
+
+\section{Ontwerp - ophalen andere VWS data}
+
+Het is mogelijk dat er op basis van het configuratie bestand additionele data opgehaald moet worden (bijvoorbeeld voor de dagelijkse echtheidskenmerken).
+
+Hiervoor geld dat data welke via het CDN opgehaald wordt \emph{altijd} getekend dient te zijn - gelijk an het configuratie bestand (sectie \S\ref{config}).
+
+En dat data welke direct, bij de eigen API servers opgehaald wordt, voldoet aan de eisen uit sectie \S\ref{api} -- en dus niet getekend hoeft te worden.
+
+De reden voor dit verschil is dat de controle over het SSL certificaat in dit laatste geval geheel bij het Ministerie van VWS ligt op infrastructuur met additionele lagen van isolatie en beveiliging. Terwijl de CDN data via een gedeeld platform loopt waarbij de SSL certificaten hun private keys minder `defence in depth' hebben.
+
+\fi
+\section{Ontwerp - Connecties (commerciële test) providers}
+
+Voor de resultaten zal de \CoronaCheckApp met diverse test providers contact op moeten opnemen. Hiervoor gelden eisen inzake de TLS connectie en eisen inzake de data (testuitslag) zelf. 
+
+Het gaat hier om 3 soorten certificaten; waarvan de eerste twee gecombineerd kunnen worden:
+
+\begin{enumerate}
+\item Eén voor de TLS connectie naar de server van de test provider waar de app van de burger het resultaat op haalt, 
+\item Eén voor de TLS connectie die de burger haar webbrowser maakt naar de server van de test provider om een papieren testbewijs aan te maken.
+
+Deze kan gecombineerd worden met eerste TLS certificaat.
+\item Eén ten behoeve van het digitaal ondertekenen van de test uitslag.
+\end{enumerate}
+
+
+\subsection{Eisen TLS connectie met derden ten behoeve resultaat}
+\label{tlstest}
+
+Dit is de TLS connectie die de app (client) maakt met de (web)server van de test provider. Hiervoor geldt dat:
+
+\begin{enumerate}
+\item voor de TLS connectie controleerd zal worden dat: 
+\begin{enumerate}
+\item Een PKI overheid certificaat uit een specifieke, hardcoded lijst, deel uit maakt van de trust-chain betreft. In dat geval zal de pinning zal plaatsvinden op:
+\begin{enumerate}
+\item Staat der Nederlanden Root CA - G3
+\item Stamcertificaat Staat der Nederlanden EV Root CA 
+\item Staat der Nederlanden Private Root CA (\emph{Niet toegestaan indien gecombineerd met het printportaal -- zie de uitzondering in sectie \ref{note}}).\label{priv}
+\end{enumerate}
+
+\emph{--Of--}
+
+\item  dat het een Extended Validation Certificate (EV) betreft welke voldoet aan de eisen gesteld in versie 1.7.4 (of nieuwer mits door Ballot bevestigd) van de richtlijnen van het CA/Browser Forum ```\emph{Guidelines For The Issuance And Management Of Extended Validation Certificates}''\footnote{\url{https://cabforum.org/extended-validation/}}.
+
+(\emph{Niet toegestaan indien gecombineerd met het printportaal -- zie de uitzondering in sectie \ref{note}}).
+\label{cab}
+\item Er is geen beperking qua diepte.
+\end{enumerate}
+
+\item   Dat het \textsc{fqdn} en Subject Key Identifier (2.5.29.14) paar op de lijst voorkomen van geaccepteerde providers.
+\item 	Dat het certificaat gewhitelist is.
+\item 	Gecontroleerd wordt dat de \textsc{fqdn} van de server waarmee contact opgenomen wordt overeenkomt met de CN of SubjectAlterNative name\footnote{Dit staat dus los van andere aspecten, zoals DNS Sec, toegankelijkheidseisen (\url{https://www.digitoegankelijk.nl/wetgeving/wat-verplicht}, waar van toepassing richtlijnen als \ref{https://www.communicatierijk.nl/vakkennis/rijkswebsites/verplichte-richtlijnen} en met name de pas-toe-of-leg uit lijst.}. Hierbij zijn wildcards toegestaan (normale CAB forum matching rules).
+\item HTTP-Redirects zijn \emph{niet} toegestaan.
+\end{enumerate}
+
+
+\subsection{Eisen TLS connectie Printportaal, serverzijde}
+
+Aangezien het online printportaal van CoronaCheck\footnote{\url{https://coronacheck.nl/nl/print/}} vanuit de browser van de burger direct een TLS-verbinding legt met de test provider - dient het certificaat er één te zijn die op de trustlist van de browser staat. Daarnaast dient zij te zijn uitgegeven door de Staat der Nederlanden.
+
+Dus voor dit TLS certificaat geldt dat bij connectie met de webserver er:
+
+\begin{enumerate}
+\item gecontroleerd zal worden dat: 
+\begin{enumerate}
+\item Staat der Nederlanden Root CA - G3
+\item Stamcertificaat Staat der Nederlanden EV Root CA 
+\end{enumerate}
+\item Dat het certificaat voorzien is van de juiste CN and Subject Alternative Name (als per CA/Browser forum (\textsc{cab} regelgeving). Dus gecontroleerd wordt dat de \textsc{fqdn} van de server waarmee contact opgenomen wordt overeenkomt met de CN of SubjectAlterNative name\footnote{Dit staat dus los van andere aspecten, zoals DNS Sec}. Hierbij zijn wildcards toegestaan (normale CAB forum matching rules).
+\item HTTP-Redirects zijn \emph{niet} toegestaan.
+\end{enumerate}
+
+\subsection{Combineren TLS certificaten in één}
+\label{note}
+
+Indien organisatorisch mogelijk kan voor het printportaal (technisch) hetzelfde certificaat als dat uit sectie \ref{tlstest} gebruik worden. Bijvoorbeeld indien de partij die deze dienst levert -en- de service één en dezelfde is. In dat geval gelden er twee extra beperkingen. 
+
+Ten eerste kan men in dat geval niet de Private Root gebruiken (optie \ref{priv} in sectie \ref{tlstest}). Want voor het printportaal is het het certificaat in de CAB Forum lijst van de browsers van de burger staat. En dat is niet het geval bij de ``Staat der Nederlanden Private Root CA''. Deze staat niet op de internationale CA lijst die in de browsers van de burgers zit. 
+
+Ten tweede is het van belang dat de controle over de connectie (naar het printportaal) onder Nederlandse controle blijft vallen - dus de tweede optie - het gebruik van een `Extended Validation Certificate (EV)' van een CAB partij (optie \ref{cab} in  sectie \ref{tlstest}) valt ook af. 
+
+Het certificaat moet dus van een van de volgende twee types zijn:
+
+\begin{enumerate}
+\item Staat der Nederlanden Root CA - G3
+\item Stamcertificaat Staat der Nederlanden EV Root CA 
+\end{enumerate}
+
+\subsection{Eisen CMS signature payload derden (testuitslag)}
+
+Tot slot zal bij het ophalen van de data via de API ook gecheckt worden dat deze (testuitslag) ondertekend is met een geldige CMS handtekening waarvan:
+
+\begin{enumerate}
+\item	Gecontroleerd worden dat een PKI overheid certificaat, uit een specifieke, hardcoded lijst, deel uit maakt van de trust-chain.
+
+De pinning zal plaatsvinden op:
+
+\begin{enumerate}
+\item Staat der Nederlanden Root CA - G3
+\item Stamcertificaat Staat der Nederlanden EV Root CA 
+\item Staat der Nederlanden Private Root CA 
+\end{enumerate}
+\item Dat het certificaat gewhitelist is.
+\item Er is geen beperking qua diepte.
+\end{enumerate}
+
+\appendix
+\chapter{Key IDs}
+\label{keyid}
+
+De huidige keys (peildatum \today) zijn:\\
+
+\begin{description}
+\item[Stamcertificaat Staat der Nederlanden EV Root CA]  Vervaldatum: December 2022 \\
+
+FE AB 00 90 98 9E 24 FC A9 CC 1A 8A FB 27 B8 BF 30 6E A8 3B \\
+
+\item[Staat der Nederlanden Root CA -- G3] Vervaldatum: 3 November 2028 \\
+
+54 AD FA C7 92 57 AE CA 35 9C 2E 12 FB E4 BA 5D 20 DC 94 57 \\
+
+\item[Staat der Nederlanden Private Root CA -- G1] Vervaldatum: 14 November 2028  \\
+
+2A FD B9 2B 1E FA C3 84 87 06 DB 81 FF 86 97 75 0D EB 01 8B \\
+\end{description}
+
+Zie \url{https://cert.pkioverheid.nl/cert-pkioverheid-nl.htm} voor de certificaten zelf in diverse formaten.
+
+\end{document}
