@@ -1,9 +1,12 @@
-Requirements:
+## Requirements
+
 	Openssl 1.0 or newer.
 	base64 
 	jq (https://stedolan.github.io/jq/)
-
-Usage:
+	
+Note: MacOS ships with LibreSSL which doesn't support all algorithms we use. Install openssl for example via `brew install openssl`. If succesful, an `openssl version` should display 'OpenSSL' instead of 'LibreSSL'.	
+	
+## Usage
 
        ./sign.sh [example.json [client-cert-to-sign-with.pem]]
 
@@ -27,7 +30,9 @@ To check:
 To see what is in it
 	./sign.sh | ./decode.sh
 
-or against a real server
+
+## Verification against a real server
+
 
          curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh        
 
