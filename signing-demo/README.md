@@ -1,6 +1,6 @@
 # CoronaCheck - Demo for data providers 
 
-This repository contains a simple demo of the digital signatures used by the
+This directory contains a simple demo of the digital signatures used by the
 (public and private) test/vaccination providers.
 
 See the document at
@@ -28,10 +28,10 @@ Further details can be found at the above URL.
 Bug reports, feedback, suggestions and contributions are most welcome; 
 see the above URL and then file your issue / pull request at:
 
-	https://github.com/minvws/nl-covid19-coronacheck-signature-demo
+	https://github.com/minvws/nl-covid19-coronacheck-provider-docs
 
 ## Security 
 
 For security reports - see the security tab at:
 
-	https://github.com/minvws/nl-covid19-coronacheck-signature-demo/security/policy
+	https://github.com/minvws/nl-covid19-coronacheck-provider-docs/security/policy
