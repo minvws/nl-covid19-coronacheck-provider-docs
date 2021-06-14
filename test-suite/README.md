@@ -1,6 +1,6 @@
-# nl-covid19-coronacheck-app-coronatestprovider-portal
+# CoronaCheck Provider Test Suite
 
-Version 0.2.1 - 10th May 2021
+Version 0.2.2 - 14th June 2021
 
 
 In the CoronaCheck project we are providing sample test data to Test Providers that we advice the Test Providers contain within their system. Combined with the Test Provider Test Portal, this enables Test Providers to conduct an end-to-end test of their endpoints.
