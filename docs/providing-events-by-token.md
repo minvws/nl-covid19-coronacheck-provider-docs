@@ -8,7 +8,7 @@
   >  https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/test-provider-protocol-2.0/docs/providing-test-results.md
   > 
 
-* Version 3.0.1
+* Version 3.0.2
 * Authors: Ivo, Nick
 
 In the CoronaCheck project we have implemented a means of presenting a digital proof of a negative test result, vaccination or recovery. This document describes the steps a party needs to take to provide test results or vaccination events that the CoronaCheck app will use to provide proof of vaccination/negative test/recovery.
@@ -18,7 +18,6 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
 - [Providing Vaccination / Test / Recovery by retrieval code](#providing-vaccination---test---recovery-by-retrieval-code)
   * [Overview](#overview)
     + [Retrieval from the CoronaCheck app](#retrieval-from-the-coronacheck-app)
-    + [Retrieval from print terminals](#retrieval-from-print-terminals)
   * [Requirements](#requirements)
   * [Distributing a test token](#distributing-a-test-token)
     + [Analog Code](#analog-code)
@@ -34,7 +33,6 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Returning a test result](#returning-a-test-result)
     + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
     + [Token retention](#token-retention)
-    + [Performing terminal verification](#performing-terminal-verification)
     + [Error states](#error-states)
   * [Initial normalization](#initial-normalization)
   * [Signing responses](#signing-responses)
@@ -156,8 +154,6 @@ The process of providing a one time code sent via sms/e-mail is familiar to user
 
 Verification codes must be numeric and 6 digits. 
 
-Note: Verification codes will only be used when the user uses the app. For terminal flows this verification is replaced by an ID check.
-
 ## Exchanging the token for a test result or vaccination event
 
 Once the token is scanned / read / entered in the app, CoronaCheck will try to fetch the result.
@@ -204,7 +200,7 @@ In the case of test results, a token must *only* be provided to users who have a
 
 The HTTP response code is: 202
 
-The response body would look like this (for both the app and terminal endpoints):
+The response body would look like this:
 
 ```javascript
 {
@@ -477,8 +473,6 @@ Whenever a digital signature is placed - it is the signers responsibility to ens
 
 It is the responsibility of the party fetching the data to ensure that it is connected to the right system (by means of certificate pinning and PKI-O certificate checks). 
 
-And in B2B settings (such as the print terminals), the client may be required to provide a PKI-O client certificate to authenticate (and the provider must check validity of this certificate).
-
 #  Implementation Validation process
 
 This process provides both CoronaCheck and the Test Result Provider the assurance that their implementation is capable of correctly handling the test cases defined by CoronaCheck. The process is designed to be repeated on a periodic bases to ensure that implementations remain compliant with the requirements of CoronaCheck.
@@ -701,6 +695,10 @@ Example:
 	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-04-01T00:00:00Z
 
 # Changelog
+
+3.0.2
+
+* Removed obsolete print terminal references.
 
 3.0.1
 * Added error code information
