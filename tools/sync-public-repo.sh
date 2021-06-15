@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Config
-BASE_REPONAME=nl-covid19-coronatester-app-coordination
+BASE_REPONAME=nl-covid19-coronacheck-provider-docs
 
 # Helpers
 TIMESTAMP=`date '+%Y%m%d-%H%M%S'`
