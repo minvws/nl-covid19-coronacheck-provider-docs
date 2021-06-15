@@ -365,7 +365,7 @@ To be able to retrieve the result from a web browser (the web client for home pr
 ```
 Access-Control-Allow-Origin: https://coronacheck.nl
 Access-Control-Allow-Headers: Authorization, CoronaCheck-Protocol-Version, Content-Type
-Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Methods: POST, OPTIONS
 ```
 
 For acceptance testing, the url is slightly different, so on acceptance test environments, the headers should be:
@@ -373,7 +373,7 @@ For acceptance testing, the url is slightly different, so on acceptance test env
 ```
 Access-Control-Allow-Origin: https://web.acc.coronacheck.nl
 Access-Control-Allow-Headers: Authorization, CoronaCheck-Protocol-Version, Content-Type
-Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Methods: POST, OPTIONS
 ```
 
 Notes:
@@ -419,6 +419,10 @@ print(f"SECRET: {secret.decode()}")
 print(f"PUBLIC: {public.decode()}")
 ```
 ## Changelog
+
+1.3.1
+ 
+* Removed GET from CORS headers (no longer needed).
 
 1.3
 

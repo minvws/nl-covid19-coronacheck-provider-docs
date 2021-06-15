@@ -373,7 +373,7 @@ To be able to retrieve the test result from a web browser (the web client for ho
 ```
 Access-Control-Allow-Origin: https://coronacheck.nl
 Access-Control-Allow-Headers: Authorization, CoronaCheck-Protocol-Version, Content-Type
-Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Methods: POST, OPTIONS
 ```
 
 For acceptance testing, the url is slightly different, so on acceptance test environments, the headers should be:
@@ -381,7 +381,7 @@ For acceptance testing, the url is slightly different, so on acceptance test env
 ```
 Access-Control-Allow-Origin: https://web.acc.coronacheck.nl
 Access-Control-Allow-Headers: Authorization, CoronaCheck-Protocol-Version, Content-Type
-Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Methods: POST, OPTIONS
 ```
 
 Notes:
