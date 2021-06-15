@@ -19,10 +19,11 @@ Here's an overview of relevant parts of this repository:
 If you're a provider of covid-19 tests, the following documents are relevant to you:
 
 1. [Data Structures Overview](docs/data-structures-overview.md) - The JSON responses that you should generate
-2. [Providing Events by Token](docs/providing-events-by-token.md) - The endpoints you need to implement to allow users to retrieve test results via a token.
-3. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve test results via DigiD
-4. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign test results.
-5. [Example Implementation](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example) - A reference implementation of a working test provider.
+2. [Providing Events by Token](docs/providing-events-by-token.md) - The endpoints you need to implement to allow users to retrieve test results via a token (all commercial providers).
+3. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve test results via DigiD (currently only GGD for negative tests).
+4. [Migration Guide](docs/migration-guide.me) - For providers on version 2 of the protocol, this helps migrate to 3.0 
+5. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign test results.
+6. [Example Implementation](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example) - A reference implementation of a working test provider.
 
 ### Vaccination Providers
 
