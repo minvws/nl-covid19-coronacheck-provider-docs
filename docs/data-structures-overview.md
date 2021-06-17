@@ -111,13 +111,13 @@ Additional field explanations:
 
 #### Authoritative data sources for values
 
-**Types**
+***Types***
 
 To be able to generate both a domestic and EU DCC certificate, the type should be one of the [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
 
 In NL various other tests are in use, which can be used in the type field but will not lead to an EU DCC. See below under **Domestic valueset**
         
-**Manufacturers** 
+***Manufacturers*** 
 
 The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
 
@@ -125,11 +125,11 @@ Note that each entry is essentially a combination of a manufacturer and a test n
 
 For this field, you can also use an entry from the Domestic valueset, but that will not lead to an EU DCC.
 
-**Domestic valueset**
+***Domestic valueset***
 
 For NL domestic QRs, the following additional codes can be used:
 
-| Type | Manufacturer | Description
+| Type | Manufacturer | Description |
 | --- | --- | --- |
 | `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
  
