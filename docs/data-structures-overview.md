@@ -137,6 +137,7 @@ For NL domestic QRs, the following additional codes can be used:
 | --- | --- | --- |
 | `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
  
+**NOTE:** If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
 
 ### Recovery Statement
 
