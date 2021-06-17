@@ -136,6 +136,7 @@ For NL domestic QRs, the following additional codes can be used:
 | negativetest.type | negativetest.manufacturer | Description |
 | --- | --- | --- |
 | `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
+| `NL:BIKKER` | `NL:VWS` | Ammendement Bikker test type |
  
 **NOTE:** If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
 
