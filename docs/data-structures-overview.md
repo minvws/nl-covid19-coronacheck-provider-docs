@@ -137,8 +137,12 @@ For NL domestic QRs, the following additional codes can be used:
 | --- | --- | --- |
 | `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
 | `NL:BIKKER` | `NL:VWS` | Ammendement Bikker test type |
+| `NL:AGOB` | `NL:UNKNOWN` | There's a specific set of tests where the test type can't be recovered. They are of type antigen or PCR. They are treated as 'at least antigen' | 
  
-**NOTE:** If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
+**NOTES:** 
+
+* If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
+* Some values are reserved for specific providers and should not be used without consulting a CoronaCheck coordinator. 
 
 ### Recovery Statement
 
