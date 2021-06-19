@@ -48,6 +48,7 @@ Notes about optional fields:
                 "brand": "EU/1/20/1507", 
                 "completedByMedicalStatement": false, // Optional
                 "completedByPersonalStatement": false, // Optional
+                "completionReason": "recovery", // Optional, clarification of completion. 
                 "country": "NL", // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if shot was administered abroad
                 "doseNumber": 1, // optional, will be based on business rules if left out. If set, should be integer >= 1. 
                 "totalDoses": 2, // optional, will be based on business rules / brand info if left out. If set, should be integer >= 1. 
@@ -59,7 +60,8 @@ Notes about optional fields:
 
 Field details:
 * `completedByMedicalStatement`: If known at the provider, mark this vaccination as 'considered complete' (e.g. last in a batch, or *doctor*-based 'this is sufficient for this person' declaration. If unknown, leave this field out instead of using false.
-* `completedByPersonalStatement`: This is the self-declared version of the completed statement. If a user has indicated that they only need 1 shot because they recently had covid, use this boolean instead of the medical boolean. In business rules we can then make the distinction whether or not to allow this based on policy.
+* `completedByPersonalStatement`: This is the self-declared version of the completed statement. If a user has indicated that they only need 1 shot, use this boolean instead of the medical boolean. In business rules we can then make the distinction whether or not to allow this based on policy.
+* `completionReason`: Used to indicate the reason for completion. Accepted values: `recovery` (leads to 1/1 vaccination) or `priorevent` (leads to 2/2). Will only be evaluated if one of the 'completedBy' statements is used). 
 
 Authorative Data sources
 * hpkCode from the accepted list available on [https://hpkcode.nl/](https://hpkcode.nl/).
