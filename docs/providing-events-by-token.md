@@ -263,7 +263,6 @@ And the payload should look like this:
     "providerIdentifier": "XXX",
     "status": "complete", // This refers to the data-completeness, not vaccination status.
     "holder": {
-        "identityHash": "", // The identity-hash belonging to this person.
         "firstName": "",
         "infix": "",
         "lastName": "",
@@ -699,6 +698,7 @@ Example:
 3.0.2
 
 * Removed obsolete print terminal references.
+* Removed incorrect reference to 'identityHash'. 
 
 3.0.1
 * Added error code information
