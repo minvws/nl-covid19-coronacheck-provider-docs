@@ -111,9 +111,40 @@ Additional field explanations:
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
 
 
-Authoritative data sources for values:
-* Types: [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
-* Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
+#### Authoritative data sources for values
+
+***Types*** 
+
+Field: `negativetest.type`
+
+To be able to generate both a domestic and EU DCC certificate, the type should be one of the [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
+
+In NL various other tests are in use, which can be used in the type field but will not lead to an EU DCC. See below under **Domestic valueset**
+        
+***Manufacturers*** 
+
+Field: `negativetest.manufacturer` 
+
+The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
+
+Note that each entry is essentially a combination of a manufacturer and a test name. 
+
+For this field, you can also use an entry from the Domestic valueset, but that will not lead to an EU DCC.
+
+***Domestic valueset***
+
+For NL domestic QRs, the following additional codes can be used:
+
+| negativetest.type | negativetest.manufacturer | Description |
+| --- | --- | --- |
+| `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
+| `NL:BIKKER` | `NL:VWS` | Ammendement Bikker test type |
+| `NL:AGOB` | `NL:UNKNOWN` | There's a specific set of tests where the test type can't be recovered. They are of type antigen or PCR. They are treated as 'at least antigen' | 
+ 
+**NOTES:** 
+
+* If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
+* Some values are reserved for specific providers and should not be used without consulting a CoronaCheck coordinator. 
 
 ### Recovery Statement
 
