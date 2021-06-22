@@ -40,7 +40,7 @@ After providing this information and hitting `Submit` the portal executes the fo
 The values returned from this call are then presented to the user. Next to the returned values, the expected return values are also shown and it is clearly indicated which do not match the expected outcomes.
 
 ## Test Data
-The data that the Test Provider should maintain in their system can be found [here](default-test-cases.csv) in this repository. This data has been provided as a means to conduct end-to-end testing via the above mentioned portal. The data is defined as follows:
+The data that the Test Provider should maintain in their system can be found in this repository. This data has been provided as a means to conduct end-to-end testing via the above mentioned portal. The data is defined as follows:
 
 | field name               | type               | description                                                      |
 |--------------------------|--------------------|------------------------------------------------------------------|
