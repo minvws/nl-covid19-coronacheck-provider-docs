@@ -88,7 +88,7 @@ The data is defined as follows for V3:
 | negativeResult           | boolean            | if the result of the test was negative (always TRUE)             |
 | country                  | string             | the country code (in most cases 2-digit ISO code [1] 			   |
 | facility                 | string             | the name of the facility where the test/vaccine occurred         |
-| name                     | string             | the name of the test/vaccine from the DCC list [2]			   |
+| brand                    | string             | the brand code of the test/vaccine from the DCC list [2]		   |
 | manufactorer             | string             | the manufactorer of the test or vaccine from the DCC list [3]    |
 | namePrefix               | string             | any letters, or titles that go in front of the persons' name     |
 | firstName                | string             | the full first name of the person                                |
