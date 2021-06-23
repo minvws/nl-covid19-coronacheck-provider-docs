@@ -51,7 +51,7 @@ Notes about optional fields:
                 "completionReason": "recovery", // Optional, clarification of completion. 
                 "country": "NL", // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if shot was administered abroad
                 "doseNumber": 1, // optional, will be based on business rules if left out. If set, should be integer >= 1. 
-                "totalDoses": 2, // optional, will be based on business rules / brand info if left out. If set, should be integer >= 1. 
+                "totalDoses": 2 // optional, will be based on business rules / brand info if left out. If set, should be integer >= 1. 
             }
         }
     ]    
@@ -94,8 +94,9 @@ Authorative Data sources
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "???",
-                "manufacturer": "1232"
+                "name": "Panbio COVID-19 Ag Rapid Test",
+                "manufacturer": "1232",
+                "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
     ]    
@@ -140,11 +141,15 @@ For NL domestic QRs, the following additional codes can be used:
 | `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
 | `NL:BIKKER` | `NL:VWS` | Ammendement Bikker test type |
 | `NL:AGOB` | `NL:UNKNOWN` | There's a specific set of tests where the test type can't be recovered. They are of type antigen or PCR. They are treated as 'at least antigen' | 
- 
+
 **NOTES:** 
 
 * If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
 * Some values are reserved for specific providers and should not be used without consulting a CoronaCheck coordinator. 
+
+***Countries***
+
+Countries should come from the [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json).
 
 ### Recovery Statement
 
@@ -169,7 +174,8 @@ Statement that a person has recovered from Covid19.
             "recovery": {
                 "sampleDate": "2021-01-01",
                 "validFrom": "2021-01-12",
-                "validUntil": "2021-06-30"
+                "validUntil": "2021-06-30",
+                "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
     ]    
@@ -201,8 +207,9 @@ For those providers who are unable to provide a recovery event but who are able 
                 "positiveResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "???",
-                "manufacturer": "1232"
+                "name": "Panbio COVID-19 Ag Rapid Test",
+                "manufacturer": "1232",
+                "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
     ]    
@@ -217,7 +224,7 @@ Notes:
 Authoritative data sources for values:
 * Types: [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
 * Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
-
+* Country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json)
 
 ### Formatting rules
 
