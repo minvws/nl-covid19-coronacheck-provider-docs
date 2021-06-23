@@ -48,9 +48,10 @@ Notes about optional fields:
                 "brand": "EU/1/20/1507", 
                 "completedByMedicalStatement": false, // Optional
                 "completedByPersonalStatement": false, // Optional
+                "completionReason": "recovery", // Optional, clarification of completion. 
                 "country": "NL", // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if shot was administered abroad
                 "doseNumber": 1, // optional, will be based on business rules if left out. If set, should be integer >= 1. 
-                "totalDoses": 2, // optional, will be based on business rules / brand info if left out. If set, should be integer >= 1. 
+                "totalDoses": 2 // optional, will be based on business rules / brand info if left out. If set, should be integer >= 1. 
             }
         }
     ]    
@@ -59,7 +60,8 @@ Notes about optional fields:
 
 Field details:
 * `completedByMedicalStatement`: If known at the provider, mark this vaccination as 'considered complete' (e.g. last in a batch, or *doctor*-based 'this is sufficient for this person' declaration. If unknown, leave this field out instead of using false.
-* `completedByPersonalStatement`: This is the self-declared version of the completed statement. If a user has indicated that they only need 1 shot because they recently had covid, use this boolean instead of the medical boolean. In business rules we can then make the distinction whether or not to allow this based on policy.
+* `completedByPersonalStatement`: This is the self-declared version of the completed statement. If a user has indicated that they only need 1 shot, use this boolean instead of the medical boolean. In business rules we can then make the distinction whether or not to allow this based on policy.
+* `completionReason`: Used to indicate the reason for completion. Accepted values: `recovery` (leads to 1/1 vaccination) or `priorevent` (leads to 2/2). Will only be evaluated if one of the 'completedBy' statements is used). 
 
 Authorative Data sources
 * hpkCode from the accepted list available on [https://hpkcode.nl/](https://hpkcode.nl/).
@@ -92,8 +94,9 @@ Authorative Data sources
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "???",
-                "manufacturer": "1232"
+                "name": "Panbio COVID-19 Ag Rapid Test",
+                "manufacturer": "1232",
+                "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
     ]    
@@ -109,9 +112,44 @@ Additional field explanations:
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
 
 
-Authoritative data sources for values:
-* Types: [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
-* Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
+#### Authoritative data sources for values
+
+***Types*** 
+
+Field: `negativetest.type`
+
+To be able to generate both a domestic and EU DCC certificate, the type should be one of the [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
+
+In NL various other tests are in use, which can be used in the type field but will not lead to an EU DCC. See below under **Domestic valueset**
+        
+***Manufacturers*** 
+
+Field: `negativetest.manufacturer` 
+
+The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
+
+Note that each entry is essentially a combination of a manufacturer and a test name. 
+
+For this field, you can also use an entry from the Domestic valueset, but that will not lead to an EU DCC.
+
+***Domestic valueset***
+
+For NL domestic QRs, the following additional codes can be used:
+
+| negativetest.type | negativetest.manufacturer | Description |
+| --- | --- | --- |
+| `NL:BREATH` | `NL:BMSN` | Breathomix, Spironose |
+| `NL:BIKKER` | `NL:VWS` | Ammendement Bikker test type |
+| `NL:AGOB` | `NL:UNKNOWN` | There's a specific set of tests where the test type can't be recovered. They are of type antigen or PCR. They are treated as 'at least antigen' | 
+
+**NOTES:** 
+
+* If these values are used, then CoronaCheck will only hand out a domestic QR code and not an EU DCC.
+* Some values are reserved for specific providers and should not be used without consulting a CoronaCheck coordinator. 
+
+***Countries***
+
+Countries should come from the [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json).
 
 ### Recovery Statement
 
@@ -136,7 +174,8 @@ Statement that a person has recovered from Covid19.
             "recovery": {
                 "sampleDate": "2021-01-01",
                 "validFrom": "2021-01-12",
-                "validUntil": "2021-06-30"
+                "validUntil": "2021-06-30",
+                "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
     ]    
@@ -168,8 +207,9 @@ For those providers who are unable to provide a recovery event but who are able 
                 "positiveResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "???",
-                "manufacturer": "1232"
+                "name": "Panbio COVID-19 Ag Rapid Test",
+                "manufacturer": "1232",
+                "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
     ]    
@@ -184,7 +224,7 @@ Notes:
 Authoritative data sources for values:
 * Types: [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
 * Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
-
+* Country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json)
 
 ### Formatting rules
 
