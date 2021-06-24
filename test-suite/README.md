@@ -1,11 +1,11 @@
 # CoronaCheck Provider Test Suite
 
-Version 0.2.2 - 14th June 2021
-
+Version 0.3 - 24th June 2021
 
 In the CoronaCheck project we are providing sample test data to Test Providers that we advice the Test Providers contain within their system. Combined with the Test Provider Test Portal, this enables Test Providers to conduct an end-to-end test of their endpoints.
 
 ## Test Portal
+
 VWS provides a web front-end through which Test Providers can test their endpoints. Data entered through this web front-end will be sent to a given endpoint and show the response it receives from it.
 
 On the web front-end the user will need to enter:
@@ -19,6 +19,7 @@ A standardized test set has been provided. It is up to the Test Provider to ensu
 This Test Portal can be found here: [https://provider.coronacheck.nl/](https://provider.coronacheck.nl/)
 
 ### User Interface
+
 The Test Portal contains the following fields:
 
 ```
@@ -91,10 +92,10 @@ The official valuesets are available here:
 
 * Countries: [EU Country List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/release/1.3.0/country-2-codes.json)
 * Brands (vaccine): [EU Vaccine Product List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/release/1.3.0/vaccine-medicinal-product.json)
-* Manufactorers (vaccine): [EU Vaccine Manufacturer List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/release/1.3.0/vaccine-mah-manf.json)
-* Manufactorers (tests): [EU Test Manufacturer List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json)
-* Product types (tests: [EU Test types](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/test-type.json)
-* Product types (vaccine): [EU Vaccine types](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/vaccine-prophylaxis.json)
+* Manufacturers (vaccine): [EU Vaccine Manufacturer List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/release/1.3.0/vaccine-mah-manf.json)
+* Manufacturers (tests): [EU Test Manufacturer List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json)
+* Product types (tests): [EU Test types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json)
+* Product types (vaccine): [EU Vaccine types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-prophylaxis.json)
 
 The data can be found [here](default-test-cases-v3.csv).
 
@@ -133,9 +134,11 @@ The data is defined as follows for V2:
 The data can be found [here](default-test-cases-v2.csv)
 
 ### Updating the data prior to testing
+
 The tokens cannot be older than 40 hours. In order to be able to test properly, the `sampleData` field in your database needs to be updated to something sensible. For testing, we suggest to update the sample dates in the test providers' database prior to using this portal, and set these to `now()`. That way, the test cases will send the appropriate `expectedStatus`. Only the test cases for token `LLBULLBULLBU` and `VSBQVSBQVSBQ` should not be updated. These two tests are specifically focussing on expired and pending tests.
 
-### submitting new test cases
+### Submitting new test cases
+
 If you uncover additional test cases, that could be helpful for VWS and / or other test providers -- and as such make this service even more useful, please add these to the [default test cases](default-test-cases.csv) CSV file and create a pull request on this repository.
 
 This also means that it may be a good idea to put a Watch on this repository, as we will be adding new test records as and when we receive them.
