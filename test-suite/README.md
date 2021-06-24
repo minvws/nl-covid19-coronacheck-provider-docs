@@ -94,8 +94,8 @@ The official valuesets are available here:
 * Brands (vaccine): [EU Vaccine Product List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/release/1.3.0/vaccine-medicinal-product.json)
 * Manufacturers (vaccine): [EU Vaccine Manufacturer List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/release/1.3.0/vaccine-mah-manf.json)
 * Manufacturers (tests): [EU Test Manufacturer List](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json)
-* Product types (tests): [EU Test types](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/test-type.json)
-* Product types (vaccine): [EU Vaccine types](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/vaccine-prophylaxis.json)
+* Product types (tests): [EU Test types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json)
+* Product types (vaccine): [EU Vaccine types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-prophylaxis.json)
 
 The data can be found [here](default-test-cases-v3.csv).
 
