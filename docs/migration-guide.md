@@ -36,8 +36,8 @@ For existing providers who currently support protocol 2.0, the following bullets
 * In 2.0, the holder data only contains initials and birth month / day. In 3.0 this should be changed to include the full names and the full birth date. This is necessary for EU compatiblility.
 * The initial normalization that was done on the initials (é -> E, 't -> T etc) is not necessary in 3.0, as CoronaCheck will take care of that based on the full names.
 * The test types have changed from plain `pcr`, `pcr-lamp`, `antigen` and `breathalizer` to an EU code system. **Please ensure that the tests you are using are available in the EU code system**. The data should now be derived from:
-    *  The [EU valueset for types](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/test-type.json).
-    *  The [EU valueset for manufacturers](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/test-manf.json)
+    *  The [EU valueset for types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json).
+    *  The [EU valueset for manufacturers](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
 *  The 'name' field for the test is arbitrary and can be set to the name of the test you use. This will be replaced with a valueset in a future version of the specification.
 *  The test facility should be included. Note: there's currently a debate about the significance of this field and it may be dropped from the spec. For now it's safer to provide it if available. 
    

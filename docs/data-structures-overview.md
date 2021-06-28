@@ -65,10 +65,10 @@ Field details:
 
 Authorative Data sources
 * hpkCode from the accepted list available on [https://hpkcode.nl/](https://hpkcode.nl/).
-* type: [ehealth type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/vaccine-prophylaxis.json)
-* brand: [ehealth medicinal product list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/vaccine-medicinal-product.json)
-* manufacturer: [ehealth manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/vaccine-mah-manf.json)
-* country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json)
+* type: [ehealth type list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-prophylaxis.json)
+* brand: [ehealth medicinal product list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-medicinal-product.json)
+* manufacturer: [ehealth manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-mah-manf.json)
+* country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/country-2-codes.json)
 
 
 ### Negative Test Event
@@ -118,7 +118,7 @@ Additional field explanations:
 
 Field: `negativetest.type`
 
-To be able to generate both a domestic and EU DCC certificate, the type should be one of the [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
+To be able to generate both a domestic and EU DCC certificate, the type should be one of the [ehealth test type list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json).
 
 In NL various other tests are in use, which can be used in the type field but will not lead to an EU DCC. See below under **Domestic valueset**
         
@@ -126,7 +126,7 @@ In NL various other tests are in use, which can be used in the type field but wi
 
 Field: `negativetest.manufacturer` 
 
-The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
+The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
 
 Note that each entry is essentially a combination of a manufacturer and a test name. 
 
@@ -149,7 +149,7 @@ For NL domestic QRs, the following additional codes can be used:
 
 ***Countries***
 
-Countries should come from the [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json).
+Countries should come from the [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/country-2-codes.json).
 
 ### Recovery Statement
 
@@ -222,9 +222,9 @@ Notes:
 * Returning `false` for the `positiveResult` does not necessarily imply 'negative'. This is data minimisation: when requesting a recovery, it is not necessary for the app to know whether a person is negative, only that they have had a positive test result. A `false` in the `positiveResult` field could either indicate a negative test, or no test at all, etc.
 
 Authoritative data sources for values:
-* Types: [ehealth test type list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-type.json)
-* Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
-* Country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/main/valuesets/country-2-codes.json)
+* Types: [ehealth test type list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json)
+* Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json)
+* Country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/country-2-codes.json)
 
 ### Formatting rules
 
