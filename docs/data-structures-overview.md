@@ -94,8 +94,8 @@ Authorative Data sources
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "Panbio COVID-19 Ag Rapid Test",
-                "manufacturer": "1232",
+                "name": "Panbio COVID-19 Ag Rapid Test", 
+                "manufacturer": "1232", // Only required for RAT tests
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
@@ -126,7 +126,7 @@ In NL various other tests are in use, which can be used in the type field but wi
 
 Field: `negativetest.manufacturer` 
 
-The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
+This field is only required for RAT tests. The manufacturer field for RAT tests should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-digital-green-development/ehn-dgc-schema/blob/main/valuesets/test-manf.json)
 
 Note that each entry is essentially a combination of a manufacturer and a test name. 
 
