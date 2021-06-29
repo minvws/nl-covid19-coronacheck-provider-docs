@@ -17,7 +17,7 @@ if $OPENSSL version | grep -q LibreSSL; then
         echo Sorry - OpenSSL is needed.
         exit 1
 fi
-if ! $OPENSSL version | grep -q 1\.; then
+if ! $OPENSSL version | grep -q '[123]\.'; then
         echo Sorry - OpenSSL 1.0 or higher is needed.
         exit 1
 fi
@@ -37,6 +37,8 @@ fi
 #
 printf "$JSON" | jq -r .signature | 
 	base64 -d  > x.raw
+
+openssl x509 -in client.crt -ext authorityKeyIdentifier -noout | sed -e 's/Identifier:/Identifier/' -e 's/keyid/0x04, 0x14/g' -e 's/:/, 0x/g' 
 
 printf "$JSON" | jq -r .signature |
 	base64 -d |\
