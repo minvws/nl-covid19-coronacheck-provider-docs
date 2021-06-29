@@ -3,8 +3,6 @@
 * Version 1.3
 * Authors: Nick, Ivo
 
-Note: This document is a draft and is not yet final. Changes are to be expected as requirements evolve.
-
 ## Contents
 
 - [Providing Vaccination / Test / Recovery Events by Digid](#providing-vaccination---test---recovery-events-by-digid)
