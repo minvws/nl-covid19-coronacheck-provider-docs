@@ -331,7 +331,7 @@ Note: both failed/expired tokens and missing `verificationCode` result in a 401 
 
 ### Token retention
 
-A token should remain valid untilits no longer valid in any country:
+A token should remain valid until it's no longer valid in any country:
 * 96 hours after the sample time of the underlying test result.
 * One year after a vaccination event
 * One year after a positive test event
