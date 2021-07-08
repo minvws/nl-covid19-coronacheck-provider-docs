@@ -16,25 +16,26 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
 ## Contents
 
 - [Providing Vaccination / Test / Recovery by retrieval code](#providing-vaccination---test---recovery-by-retrieval-code)
+  * [Contents](#contents)
   * [Overview](#overview)
     + [Retrieval from the CoronaCheck app](#retrieval-from-the-coronacheck-app)
   * [Requirements](#requirements)
-  * [Distributing a test token](#distributing-a-test-token)
+  * [Distributing a token](#distributing-a-token)
     + [Analog Code](#analog-code)
     + [Deeplink](#deeplink)
     + [Token ownership verification](#token-ownership-verification)
-  * [Exchanging the token for a test result](#exchanging-the-token-for-a-test-result)
+  * [Exchanging the token for a test result or vaccination event](#exchanging-the-token-for-a-test-result-or-vaccination-event)
     + [Request as received by the endpoint.](#request-as-received-by-the-endpoint)
     + [Returning a 'pending' state](#returning-a--pending--state)
       - [Poll tokens](#poll-tokens)
       - [Poll delay](#poll-delay)
     + [Requesting owner verification](#requesting-owner-verification)
-    + [Returning a test result](#returning-a-test-result)
     + [Protocol versioning](#protocol-versioning)
+    + [Returning a test, vaccination or recovery event](#returning-a-test--vaccination-or-recovery-event)
     + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
-  * [Initial normalization](#initial-normalization)
+    + [CORS headers](#cors-headers)
   * [Signing responses](#signing-responses)
     + [Obtaining a signing certificate](#obtaining-a-signing-certificate)
     + [Signature algorithm](#signature-algorithm)
@@ -42,15 +43,18 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Signature verification](#signature-verification)
     + [Command line example](#command-line-example)
     + [More sample code](#more-sample-code)
-    + [Governance and the digital signature of the test result](#governance-and-the-digital-signature-of-the-test-result)
-- [Implementation validation process](#implementation-validation-process)
+    + [Governance and the digital signature of the result](#governance-and-the-digital-signature-of-the-result)
+- [Implementation Validation process](#implementation-validation-process)
 - [Security and privacy guidelines](#security-and-privacy-guidelines)
 - [Appendix 1: Example implementations of X509 CMS signing](#appendix-1--example-implementations-of-x509-cms-signing)
 - [Appendix 2: Validating the signing output](#appendix-2--validating-the-signing-output)
 - [Appendix 3: OpenAPI specification of endpoint](#appendix-3--openapi-specification-of-endpoint)
 - [Appendix 4: Available Test Types](#appendix-4--available-test-types)
-- [Appendix 5: Test sets](#appendix-4--test-sets)
+- [Appendix 5: Test sets](#appendix-5--test-sets)
+  * [Test Cases File Name and Location](#test-cases-file-name-and-location)
+  * [Test Cases File Structure](#test-cases-file-structure)
 - [Changelog](#changelog)
+
 
 ## Overview
 
@@ -780,4 +784,6 @@ Example:
 
 * Initial version
 
+# Acknowledgements
 
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
