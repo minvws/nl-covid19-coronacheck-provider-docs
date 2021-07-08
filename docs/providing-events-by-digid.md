@@ -13,6 +13,7 @@
   * [Requirements](#requirements)
   * [Identity Hash](#identity-hash)
   * [JWT Tokens](#jwt-tokens)
+  * [Protocol versioning](#protocol-versioning)
   * [Api Endpoints](#api-endpoints)
     + [Information Available](#information-available)
       - [Request](#request)
@@ -138,6 +139,12 @@ When evaluating the JWT, the API endpoint should check:
 * Whether the JWT has a valid signature
 * Whether the expiration is in the future (`exp` field)
 * Note: if you validate the issuer (`iss`) check only if it ends in `coronacheck.nl` as different prefixes might be used depending on infrastructure changes.
+
+## Protocol versioning
+
+The request to all endpoints contains a `CoronaCheck-Protocol-Version`. This should be considered a content negotiation. The app will always pass the highest version it supports. Providers should however return the JSON responses in the highest version they support.
+
+For example, the app gets an upgrade and supports a new version, `CoronaCheck-Protocol-Version: 5.0`. Providers who haven't upgraded to this new version, can continue to return 3.0 responses (`"protocolVersion": "3.0"`)until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
 
 ## Api Endpoints
 
@@ -417,6 +424,10 @@ print(f"SECRET: {secret.decode()}")
 print(f"PUBLIC: {public.decode()}")
 ```
 ## Changelog
+
+1.3.2
+
+* Added clarification about protocol version negotiation.
 
 1.3.1
  
