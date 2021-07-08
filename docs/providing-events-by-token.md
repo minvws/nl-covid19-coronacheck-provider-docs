@@ -21,7 +21,6 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
   * [Requirements](#requirements)
   * [Distributing a test token](#distributing-a-test-token)
     + [Analog Code](#analog-code)
-    + [QR Token](#qr-token)
     + [Deeplink](#deeplink)
     + [Token ownership verification](#token-ownership-verification)
   * [Exchanging the token for a test result](#exchanging-the-token-for-a-test-result)
@@ -70,7 +69,7 @@ Although the picture depicts a negative test result, the process is the same for
 
 In order to be able to deliver test results or vaccination events for CoronaCheck, a test provider MUST do the following:
 
-* Implement a mechanism to distribute a `token` in the form of a QR or `code` to the citizen that can be used to collect a negative result. 
+* Implement a mechanism to distribute a `retrieval code` to the citizen that can be used to collect a negative result. 
 * Provide one endpoint:
     * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
 * Obtain an x509 PKI-O certificate for CMS signing responses (from a private PKI-O root).
@@ -87,8 +86,6 @@ After a user has taken a test, and the result is negative, the party should supp
 Similarly, if a user got vaccinated, a token can be handed out after the vaccination was registered.
 
 For security reasons the token must be at least 10 characters long. It must be randomly generated and should not be predictable or derived from any identifier or code that was previously communicated to the user (e.g. do not use a booking code directly as a token for a negative result).
-
-Our recommendation is to provide the token to the user in the form of a QR code. The CoronaCheck app is designed to work with QR codes and provides the user the ability to scan a QR code containing their test token. 
 
 ### Analog Code
 
@@ -122,20 +119,6 @@ The checksum is defined as the Luhn mod-N for alphanummerics; where the codepoin
 
 Note that the version number (2) is at the end of the string; this is an anti-pattern; but conscious choise; these are to be human readable/entered strings that would look odd starting with (always the same) number. Also note that the 'XXX-' allows for a future 'Z-XXX-' or 'ZXXX-' type of start.
 
-### QR Token
-
-When providing the code through a QR code, the CoronaCheck App will be able to scan the token using the device's camera. The app will look for the following content:
-
-```javascript
-{
-   "protocolVersion": "3.0",
-   "providerIdentifier": "XXX",
-   "token": "YYYYYYYYYYYYY",
-}
-```
-
-The token should use the same character subset as the oral codes (as it's common to provide the manual code as an alternative to scanning the QR, in case the user sees the QR on the same device). 
-
 ### Deeplink
 
 When providing the token via a website that the user can visit using the device where CoronaCheck is installed, the token can be directly loaded into the CoronaCheck app by utilizing the app's deeplink functionality. To use the deeplink, the token should be wrapped inside the same code that the manual entry uses (XXX-YYYYYYYYYY-ZV) The deeplink should be constructed as such:
@@ -148,7 +131,7 @@ Note the use of the ```#``` in the URL. By using an anchor the token is not leak
 
 ### Token ownership verification
 
-If the token can be securely transferred to the user (e.g. by scanning a QR code in the test facility right after having confirmed identity, under supervision of staff), it is not necessary to require ownership verification. In most circumstances however, ownership should be verified upon entering the test result. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
+If the token can be securely transferred to the user (e.g. by loading a result in the test facility right after having confirmed identity, under supervision of staff), it is not necessary to require ownership verification. In most circumstances however, ownership should be verified upon entering the test result. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
 
 The process of providing a one time code sent via sms/e-mail is familiar to users who have used Two Factor Authentication mechanisms. It is important to note that the scheme documented in this this specification is not a true 2FA schema. In a true 2FA schema two distinct factors should be used, whereas in our case there is only one distinct factor - both the token and the verification code constitute 'something you have'. 
 
@@ -187,7 +170,7 @@ curl
   https://provider-endpoint-base-url
 ```
 
-The call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised scanning of a QR and doesn't require ownership verification, the app will omit this body. 
+The call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised entry of a token and doesn't require ownership verification, the app will omit this body. 
 
 Notes:
 
@@ -214,7 +197,7 @@ The response body would look like this:
 
 Where: 
 
-* `protocolVersion` is the version of the protocol used. This helps the app interpret the QR correctly. This should match the version of the protocol implemented.
+* `protocolVersion` is the version of the protocol used. This helps the app interpret the result correctly. This should match the version of the protocol implemented.
 * `providerIdentifier` is the 3-letter identifier of the test provider, as supplied by the CoronaCheck team.
 * `status`: Should be `pending` or `complete` (lowercase), to indicate that a result is included or not.
 * `pollToken`: An optional token of max 50 characters to be used for the next attempt to retrieve the test result. If no pollToken is provided, the next attempt will use the original token provided by the user.
@@ -697,6 +680,10 @@ Example:
 	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-04-01T00:00:00Z
 
 # Changelog
+
+3.1
+
+* Removed obsolete token-as-qr distribution (infrequent use and confusion with the proof qr codes)
 
 3.0.2
 
