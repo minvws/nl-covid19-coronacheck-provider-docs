@@ -1,6 +1,6 @@
 # Providing Vaccination / Test / Recovery Events by Digid
 
-* Version 1.3
+* Version 1.3.2
 * Authors: Nick, Ivo
 
 ## Contents
