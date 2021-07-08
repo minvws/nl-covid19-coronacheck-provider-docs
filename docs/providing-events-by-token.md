@@ -8,7 +8,7 @@
   >  https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/test-provider-protocol-2.0/docs/providing-test-results.md
   > 
 
-* Version 3.0.2
+* Version 3.1
 * Authors: Ivo, Nick
 
 In the CoronaCheck project we have implemented a means of presenting a digital proof of a negative test result, vaccination or recovery. This document describes the steps a party needs to take to provide test results or vaccination events that the CoronaCheck app will use to provide proof of vaccination/negative test/recovery.
@@ -30,6 +30,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
       - [Poll delay](#poll-delay)
     + [Requesting owner verification](#requesting-owner-verification)
     + [Returning a test result](#returning-a-test-result)
+    + [Protocol versioning](#protocol-versioning)
     + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
@@ -131,11 +132,15 @@ Note the use of the ```#``` in the URL. By using an anchor the token is not leak
 
 ### Token ownership verification
 
-If the token can be securely transferred to the user (e.g. by loading a result in the test facility right after having confirmed identity, under supervision of staff), it is not necessary to require ownership verification. In most circumstances however, ownership should be verified upon entering the test result. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
+Ownership of a test result should be verified upon entering the retrieval code. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
+
+SMS is strongly prefered, as it is faster than e-mail and most phones allow the user to enter an sms verification code without leaving the app. E-mail can be used for users that do not have a mobile phone number.
 
 The process of providing a one time code sent via sms/e-mail is familiar to users who have used Two Factor Authentication mechanisms. It is important to note that the scheme documented in this this specification is not a true 2FA schema. In a true 2FA schema two distinct factors should be used, whereas in our case there is only one distinct factor - both the token and the verification code constitute 'something you have'. 
 
 Verification codes must be numeric and 6 digits. 
+
+There is one exception where ownership verification can be skipped. If the token can be securely transferred to the user (e.g. by loading a result in the test facility right after having confirmed identity, under supervision of staff, with a short validity), it is not necessary to require ownership verification. Since this is a rare situation, please consult with the CoronaCheck team if you plan to make use of this exception.
 
 ## Exchanging the token for a test result or vaccination event
 
@@ -217,7 +222,7 @@ Please note that the `pollDelay` is not guaranteed. Foreground/background activi
 
 ### Requesting owner verification
 
-To tighten the binding between user and test result, ownership verification should be performed when a result will be issued outside a supervised context. The server should issue a verification code to the user by ways of sms, phone or e-mail and should return a response that prompts the CoronaCheck app to ask for this validation number. 
+To tighten the binding between user and test result, ownership verification should be performed. The server should issue a verification code to the user by ways of sms, phone or e-mail and should return a response that prompts the CoronaCheck app to ask for this validation number. 
 
 To prompt the response, use HTTP response code: 401
 
@@ -233,6 +238,12 @@ The response body should look like this:
 ```
 
 The client can then repeat the request, but include the verificationCode body.
+
+### Protocol versioning
+
+The request to the endpoint contains a CoronaCheck-Protocol-Version. This should be considered a content negotiation. The app will always pass the highest version it supports. Providers should however return the JSON responses in the highest version they support.
+
+For example, the app gets an upgrade and supports a new version, CoronaCheck-Protocol-Version: 5.0. Providers who haven't upgraded to this new version, can continue to return 3.0 responses until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
 
 ### Returning a test, vaccination or recovery event
 
@@ -683,6 +694,8 @@ Example:
 
 3.1
 
+* Clarify that ownership verification is almost always required by moving the exception to the end of the paragraph.
+* Added a note about SMS being preferable for token ownership verification over e-mail
 * Removed obsolete token-as-qr distribution (infrequent use and confusion with the proof qr codes)
 
 3.0.2
