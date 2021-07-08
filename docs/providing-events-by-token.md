@@ -245,9 +245,9 @@ The client can then repeat the request, but include the verificationCode body.
 
 ### Protocol versioning
 
-The request to the endpoint contains a CoronaCheck-Protocol-Version. This should be considered a content negotiation. The app will always pass the highest version it supports. Providers should however return the JSON responses in the highest version they support.
+The request to the endpoint contains a `CoronaCheck-Protocol-Version` header. This should be considered a content negotiation. The app will always pass the highest version it supports. Providers should however return the JSON responses in the highest version they support.
 
-For example, the app gets an upgrade and supports a new version, CoronaCheck-Protocol-Version: 5.0. Providers who haven't upgraded to this new version, can continue to return 3.0 responses until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
+For example, the app gets an upgrade and supports a new version, `CoronaCheck-Protocol-Version: 5.0`. Providers who haven't upgraded to this new version, can continue to return 3.0 responses (`"protocolVersion": "3.0"`) until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
 
 ### Returning a test, vaccination or recovery event
 
@@ -701,6 +701,7 @@ Example:
 * Clarify that ownership verification is almost always required by moving the exception to the end of the paragraph.
 * Added a note about SMS being preferable for token ownership verification over e-mail
 * Removed obsolete token-as-qr distribution (infrequent use and confusion with the proof qr codes)
+* Clarified how CoronaCheck-Protocol-Version negotiation works.
 
 3.0.2
 
