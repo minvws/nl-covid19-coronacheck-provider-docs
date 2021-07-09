@@ -337,7 +337,6 @@ A token should remain valid until it's no longer valid in any country:
 
 Even when a user has already retrieved their result via a token, it should remain valid. One reason is that the user might reinstall their app and need to retrieve the result again. Another reason for this is that they need to confirm in the CoronaCheck app that this is indeed the correct result that should be converted to a QR. This process is cancelable by the user, and is not atomic (e.g. it could fail before a QR has been generated succesfully). To avoid the user ending up with neither a valid code nor a valid QR, the token should *not* be immediately removed after succesful retrieval. If the user cancels the operation and re-enters the code later, they can still retrieve their result. 
 
-To avoid reuse of the code by multiple phones/users, the Signer Service will only sign each result a limited number of times, based on its `unique` field, so even if during the validity window the user would retrieve the result multiple times, only a few times it can be converted to a signed test result in the signing service. This is to avoid certain forms of fraud.
 
 Note: this is about token validity as seen from the app. There may be regulations that require you to keep the medical records for a longer period. 
 
