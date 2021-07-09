@@ -135,7 +135,7 @@ The data can be found [here](default-test-cases-v2.csv)
 
 ### Updating the data prior to testing
 
-The tokens cannot be older than 40 hours. In order to be able to test properly, the `sampleData` field in your database needs to be updated to something sensible. For testing, we suggest to update the sample dates in the test providers' database prior to using this portal, and set these to `now()`. That way, the test cases will send the appropriate `expectedStatus`. Only the test cases for token `LLBULLBULLBU` and `VSBQVSBQVSBQ` should not be updated. These two tests are specifically focussing on expired and pending tests.
+The tokens cannot be older than 40 hours. In order to be able to test properly, the `sampleDate` field in your database needs to be updated to something sensible. For testing, we suggest to update the sample dates in the test providers' database prior to using this portal, and set these to `now()`. That way, the test cases will send the appropriate `expectedStatus`. Only the test cases for token `LLBULLBULLBU` and `VSBQVSBQVSBQ` should not be updated. These two tests are specifically focussing on expired and pending tests.
 
 ### Submitting new test cases
 

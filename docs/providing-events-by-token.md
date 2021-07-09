@@ -8,7 +8,7 @@
   >  https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/test-provider-protocol-2.0/docs/providing-test-results.md
   > 
 
-* Version 3.0.2
+* Version 3.1
 * Authors: Ivo, Nick
 
 In the CoronaCheck project we have implemented a means of presenting a digital proof of a negative test result, vaccination or recovery. This document describes the steps a party needs to take to provide test results or vaccination events that the CoronaCheck app will use to provide proof of vaccination/negative test/recovery.
@@ -16,25 +16,26 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
 ## Contents
 
 - [Providing Vaccination / Test / Recovery by retrieval code](#providing-vaccination---test---recovery-by-retrieval-code)
+  * [Contents](#contents)
   * [Overview](#overview)
     + [Retrieval from the CoronaCheck app](#retrieval-from-the-coronacheck-app)
   * [Requirements](#requirements)
-  * [Distributing a test token](#distributing-a-test-token)
+  * [Distributing a token](#distributing-a-token)
     + [Analog Code](#analog-code)
-    + [QR Token](#qr-token)
     + [Deeplink](#deeplink)
     + [Token ownership verification](#token-ownership-verification)
-  * [Exchanging the token for a test result](#exchanging-the-token-for-a-test-result)
+  * [Exchanging the token for a test result or vaccination event](#exchanging-the-token-for-a-test-result-or-vaccination-event)
     + [Request as received by the endpoint.](#request-as-received-by-the-endpoint)
     + [Returning a 'pending' state](#returning-a--pending--state)
       - [Poll tokens](#poll-tokens)
       - [Poll delay](#poll-delay)
     + [Requesting owner verification](#requesting-owner-verification)
-    + [Returning a test result](#returning-a-test-result)
+    + [Protocol versioning](#protocol-versioning)
+    + [Returning a test, vaccination or recovery event](#returning-a-test--vaccination-or-recovery-event)
     + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
-  * [Initial normalization](#initial-normalization)
+    + [CORS headers](#cors-headers)
   * [Signing responses](#signing-responses)
     + [Obtaining a signing certificate](#obtaining-a-signing-certificate)
     + [Signature algorithm](#signature-algorithm)
@@ -42,15 +43,18 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Signature verification](#signature-verification)
     + [Command line example](#command-line-example)
     + [More sample code](#more-sample-code)
-    + [Governance and the digital signature of the test result](#governance-and-the-digital-signature-of-the-test-result)
-- [Implementation validation process](#implementation-validation-process)
+    + [Governance and the digital signature of the result](#governance-and-the-digital-signature-of-the-result)
+- [Implementation Validation process](#implementation-validation-process)
 - [Security and privacy guidelines](#security-and-privacy-guidelines)
 - [Appendix 1: Example implementations of X509 CMS signing](#appendix-1--example-implementations-of-x509-cms-signing)
 - [Appendix 2: Validating the signing output](#appendix-2--validating-the-signing-output)
 - [Appendix 3: OpenAPI specification of endpoint](#appendix-3--openapi-specification-of-endpoint)
 - [Appendix 4: Available Test Types](#appendix-4--available-test-types)
-- [Appendix 5: Test sets](#appendix-4--test-sets)
+- [Appendix 5: Test sets](#appendix-5--test-sets)
+  * [Test Cases File Name and Location](#test-cases-file-name-and-location)
+  * [Test Cases File Structure](#test-cases-file-structure)
 - [Changelog](#changelog)
+
 
 ## Overview
 
@@ -70,7 +74,7 @@ Although the picture depicts a negative test result, the process is the same for
 
 In order to be able to deliver test results or vaccination events for CoronaCheck, a test provider MUST do the following:
 
-* Implement a mechanism to distribute a `token` in the form of a QR or `code` to the citizen that can be used to collect a negative result. 
+* Implement a mechanism to distribute a `retrieval code` to the citizen that can be used to collect a negative result. 
 * Provide one endpoint:
     * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
 * Obtain an x509 PKI-O certificate for CMS signing responses (from a private PKI-O root).
@@ -87,8 +91,6 @@ After a user has taken a test, and the result is negative, the party should supp
 Similarly, if a user got vaccinated, a token can be handed out after the vaccination was registered.
 
 For security reasons the token must be at least 10 characters long. It must be randomly generated and should not be predictable or derived from any identifier or code that was previously communicated to the user (e.g. do not use a booking code directly as a token for a negative result).
-
-Our recommendation is to provide the token to the user in the form of a QR code. The CoronaCheck app is designed to work with QR codes and provides the user the ability to scan a QR code containing their test token. 
 
 ### Analog Code
 
@@ -122,20 +124,6 @@ The checksum is defined as the Luhn mod-N for alphanummerics; where the codepoin
 
 Note that the version number (2) is at the end of the string; this is an anti-pattern; but conscious choise; these are to be human readable/entered strings that would look odd starting with (always the same) number. Also note that the 'XXX-' allows for a future 'Z-XXX-' or 'ZXXX-' type of start.
 
-### QR Token
-
-When providing the code through a QR code, the CoronaCheck App will be able to scan the token using the device's camera. The app will look for the following content:
-
-```javascript
-{
-   "protocolVersion": "3.0",
-   "providerIdentifier": "XXX",
-   "token": "YYYYYYYYYYYYY",
-}
-```
-
-The token should use the same character subset as the oral codes (as it's common to provide the manual code as an alternative to scanning the QR, in case the user sees the QR on the same device). 
-
 ### Deeplink
 
 When providing the token via a website that the user can visit using the device where CoronaCheck is installed, the token can be directly loaded into the CoronaCheck app by utilizing the app's deeplink functionality. To use the deeplink, the token should be wrapped inside the same code that the manual entry uses (XXX-YYYYYYYYYY-ZV) The deeplink should be constructed as such:
@@ -148,11 +136,15 @@ Note the use of the ```#``` in the URL. By using an anchor the token is not leak
 
 ### Token ownership verification
 
-If the token can be securely transferred to the user (e.g. by scanning a QR code in the test facility right after having confirmed identity, under supervision of staff), it is not necessary to require ownership verification. In most circumstances however, ownership should be verified upon entering the test result. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
+Ownership of a test result should be verified upon entering the retrieval code. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
+
+SMS is strongly prefered, as it is faster than e-mail and most phones allow the user to enter an sms verification code without leaving the app. E-mail can be used for users that do not have a mobile phone number.
 
 The process of providing a one time code sent via sms/e-mail is familiar to users who have used Two Factor Authentication mechanisms. It is important to note that the scheme documented in this this specification is not a true 2FA schema. In a true 2FA schema two distinct factors should be used, whereas in our case there is only one distinct factor - both the token and the verification code constitute 'something you have'. 
 
 Verification codes must be numeric and 6 digits. 
+
+There is one exception where ownership verification can be skipped. If the token can be securely transferred to the user (e.g. by loading a result in the test facility right after having confirmed identity, under supervision of staff, with a short validity), it is not necessary to require ownership verification. Since this is a rare situation, please consult with the CoronaCheck team if you plan to make use of this exception.
 
 ## Exchanging the token for a test result or vaccination event
 
@@ -187,7 +179,7 @@ curl
   https://provider-endpoint-base-url
 ```
 
-The call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised scanning of a QR and doesn't require ownership verification, the app will omit this body. 
+The call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised entry of a token and doesn't require ownership verification, the app will omit this body. 
 
 Notes:
 
@@ -214,7 +206,7 @@ The response body would look like this:
 
 Where: 
 
-* `protocolVersion` is the version of the protocol used. This helps the app interpret the QR correctly. This should match the version of the protocol implemented.
+* `protocolVersion` is the version of the protocol used. This helps the app interpret the result correctly. This should match the version of the protocol implemented.
 * `providerIdentifier` is the 3-letter identifier of the test provider, as supplied by the CoronaCheck team.
 * `status`: Should be `pending` or `complete` (lowercase), to indicate that a result is included or not.
 * `pollToken`: An optional token of max 50 characters to be used for the next attempt to retrieve the test result. If no pollToken is provided, the next attempt will use the original token provided by the user.
@@ -234,7 +226,7 @@ Please note that the `pollDelay` is not guaranteed. Foreground/background activi
 
 ### Requesting owner verification
 
-To tighten the binding between user and test result, ownership verification should be performed when a result will be issued outside a supervised context. The server should issue a verification code to the user by ways of sms, phone or e-mail and should return a response that prompts the CoronaCheck app to ask for this validation number. 
+To tighten the binding between user and test result, ownership verification should be performed. The server should issue a verification code to the user by ways of sms, phone or e-mail and should return a response that prompts the CoronaCheck app to ask for this validation number. 
 
 To prompt the response, use HTTP response code: 401
 
@@ -250,6 +242,12 @@ The response body should look like this:
 ```
 
 The client can then repeat the request, but include the verificationCode body.
+
+### Protocol versioning
+
+The request to the endpoint contains a `CoronaCheck-Protocol-Version` header. This should be considered a content negotiation. The app will always pass the highest version it supports. Providers should however return the JSON responses in the highest version they support.
+
+For example, the app gets an upgrade and supports a new version, `CoronaCheck-Protocol-Version: 5.0`. Providers who haven't upgraded to this new version, can continue to return 3.0 responses (`"protocolVersion": "3.0"`) until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
 
 ### Returning a test, vaccination or recovery event
 
@@ -698,6 +696,13 @@ Example:
 
 # Changelog
 
+3.1
+
+* Clarify that ownership verification is almost always required by moving the exception to the end of the paragraph.
+* Added a note about SMS being preferable for token ownership verification over e-mail
+* Removed obsolete token-as-qr distribution (infrequent use and confusion with the proof qr codes)
+* Clarified how CoronaCheck-Protocol-Version negotiation works.
+
 3.0.2
 
 * Removed obsolete print terminal references.
@@ -780,4 +785,6 @@ Example:
 
 * Initial version
 
+# Acknowledgements
 
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
