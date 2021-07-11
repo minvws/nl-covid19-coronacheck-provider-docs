@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cat | \
+	jq .signature -r |\
+	base64 -D |\
+	openssl cms -verify -inform DER \
+		-noverify -no_content_verify \
+		-content /dev/null \
+		-signer /dev/stdout csignerfile |\
+	openssl x509 -noout -subject 2>&1 |\
+	grep -v "Veri"
+
+
