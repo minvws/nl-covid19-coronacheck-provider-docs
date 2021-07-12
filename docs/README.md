@@ -20,5 +20,5 @@ An overview with samples of the various datastructures can be [found here](data-
 
 ## Other relevant documentation
 
-* To understand how the apps use certificate pinning, and what this means for your signing and SSL certificates, can be found in the [pinning document](x509-pinning-test-providers-1.08.pdf]).
+* To understand how the apps use certificate pinning, and what this means for your signing and SSL certificates, can be found in the [pinning document](x509-pinning-test-providers-1.08.pdf).
 * If you work with a broker/intermediary for CoronaCheck, or if you are a broker, check the [broker documentation](brokers.md).
