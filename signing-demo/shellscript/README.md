@@ -55,3 +55,10 @@ Verification successful
    "afspraakId":2587197219}
 ]
 ```
+
+The scripts
+
+	extract_signer
+
+can be used to extract (just) the signer from a CMS package. It wont'd do ANY validation - just display what the file claims is the signer. 
+	
