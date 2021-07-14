@@ -31,7 +31,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
       - [Poll delay](#poll-delay)
     + [Requesting owner verification](#requesting-owner-verification)
     + [Protocol versioning](#protocol-versioning)
-    + [Returning a test, vaccination or recovery event](#returning-a-test--vaccination-or-recovery-event)
+    + [Returning a test, vaccination or recovery event](#returning-a-test-vaccination-or-recovery-event)
     + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
