@@ -15,7 +15,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
 
 ## Contents
 
-- [Providing Vaccination / Test / Recovery by retrieval code](#providing-vaccination---test---recovery-by-retrieval-code)
+- [Providing Vaccination / Test / Recovery by retrieval code](#providing-vaccination-test-recovery-by-retrieval-code)
   * [Contents](#contents)
   * [Overview](#overview)
     + [Retrieval from the CoronaCheck app](#retrieval-from-the-coronacheck-app)
@@ -26,7 +26,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Token ownership verification](#token-ownership-verification)
   * [Exchanging the token for a test result or vaccination event](#exchanging-the-token-for-a-test-result-or-vaccination-event)
     + [Request as received by the endpoint.](#request-as-received-by-the-endpoint)
-    + [Returning a 'pending' state](#returning-a--pending--state)
+    + [Returning a 'pending' state](#returning-a-pending-state)
       - [Poll tokens](#poll-tokens)
       - [Poll delay](#poll-delay)
     + [Requesting owner verification](#requesting-owner-verification)
@@ -46,11 +46,11 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Governance and the digital signature of the result](#governance-and-the-digital-signature-of-the-result)
 - [Implementation Validation process](#implementation-validation-process)
 - [Security and privacy guidelines](#security-and-privacy-guidelines)
-- [Appendix 1: Example implementations of X509 CMS signing](#appendix-1--example-implementations-of-x509-cms-signing)
-- [Appendix 2: Validating the signing output](#appendix-2--validating-the-signing-output)
-- [Appendix 3: OpenAPI specification of endpoint](#appendix-3--openapi-specification-of-endpoint)
-- [Appendix 4: Available Test Types](#appendix-4--available-test-types)
-- [Appendix 5: Test sets](#appendix-5--test-sets)
+- [Appendix 1: Example implementations of X509 CMS signing](#appendix-1-example-implementations-of-x509-cms-signing)
+- [Appendix 2: Validating the signing output](#appendix-2-validating-the-signing-output)
+- [Appendix 3: OpenAPI specification of endpoint](#appendix-3-openapi-specification-of-endpoint)
+- [Appendix 4: Available Test Types](#appendix-4-available-test-types)
+- [Appendix 5: Test sets](#appendix-5-test-sets)
   * [Test Cases File Name and Location](#test-cases-file-name-and-location)
   * [Test Cases File Structure](#test-cases-file-structure)
 - [Changelog](#changelog)
@@ -307,7 +307,7 @@ Where:
 * `holder`: A number of personally identifiable information fields that allow verification against an ID, without revealing a full identity. 
 * `events`: The container for the actual events. Although events is an array, this is purely for compatibility with [Digid based retrieval](providing-events-by-digid.md). Each code should correspond to a single event.
 
-For the details of the vaccination, test and recovery records, see the overview at https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/main/docs/data-structures-overview.md
+For the details of the vaccination, test and recovery records, see the overview at https://github.com/minvws/nl-covid19-coronacheck-provider-docs/blob/main/docs/data-structures-overview.md
 
 
 ### Response payload for invalid/expired tokens
@@ -484,7 +484,7 @@ This process provides both CoronaCheck and the Test Result Provider the assuranc
   * CoronaCheck team provide the Result Provider with the results in the form of a report.
 4. If unsuccessful, Result provider applies technical fixes and follows this process again from step 1.
 
-The test set files are defined in [Appendix 5: Test sets](#appendix-4--test-sets).
+The test set files are defined in [Appendix 5: Test sets](#appendix-4-test-sets).
 
 The first version will not support the two factor authentication flow: the endpoint under test must be configured such that this check will be ommitted.
 
