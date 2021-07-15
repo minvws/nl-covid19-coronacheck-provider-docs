@@ -48,9 +48,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
 - [Security and privacy guidelines](#security-and-privacy-guidelines)
 - [Appendix 1: Example implementations of X509 CMS signing](#appendix-1--example-implementations-of-x509-cms-signing)
 - [Appendix 2: Validating the signing output](#appendix-2--validating-the-signing-output)
-- [Appendix 3: OpenAPI specification of endpoint](#appendix-3--openapi-specification-of-endpoint)
-- [Appendix 4: Available Test Types](#appendix-4--available-test-types)
-- [Appendix 5: Test sets](#appendix-5--test-sets)
+- [Appendix 3: Test sets](#appendix-3--test-sets)
   * [Test Cases File Name and Location](#test-cases-file-name-and-location)
   * [Test Cases File Structure](#test-cases-file-structure)
 - [Changelog](#changelog)
@@ -164,8 +162,6 @@ Both states will be detailed below.
 
 ### Request as received by the endpoint.
 
-The detailed specification of the endpoint is provided in appendix 3.
-
 The Authorization header will contain a Bearer token which consists of the `token` (YYYYYYYYYYYYY) part of the `code`.
 
 In common CURL syntax it looks like this when the request comes from the app or website:
@@ -179,7 +175,7 @@ curl
   https://provider-endpoint-base-url
 ```
 
-The call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised entry of a token and doesn't require ownership verification, the app will omit this body. 
+The initial request will not contain a request body. If the user enters a verification code, the call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised entry of a token and doesn't require ownership verification, the app will omit this body. 
 
 Notes:
 
@@ -491,7 +487,7 @@ This process provides both CoronaCheck and the Test Result Provider the assuranc
   * CoronaCheck team provide the Result Provider with the results in the form of a report.
 4. If unsuccessful, Result provider applies technical fixes and follows this process again from step 1.
 
-The test set files are defined in [Appendix 5: Test sets](#appendix-4--test-sets).
+The test set files are defined in [Appendix 3: Test sets](#appendix-3--test-sets).
 
 The first version will not support the two factor authentication flow: the endpoint under test must be configured such that this check will be ommitted.
 
@@ -505,7 +501,7 @@ When providing endpoints for test retrieval, along with the general best practic
 * The app will not trust redirects. This means exact specification of endpoint urls, accurate to the point of trailing slashes and extensions. 
 * The CMS signature should use an appropritate signature algorithm and padding; conformant to the current, in-force [SOG-IS](https://www.sogis.eu/uk/supporting_doc_en.html) standard.
 * The unique identifier of the test result MUST NOT be linkable to an individual citizen, pseudonymization is required. 
-* Tokens should have a lifetime of at maximum 40 hours after the sample time (see [token retention](#token-retention)
+* Tokens should have a lifetime of at maximum 96 hours after the sample time (see [token retention](#token-retention)
 * Verification codes should have a limited lifetime of 5 minutes. 
 * Properly secure endpoints against common attacks by implementing, for example, but not limited to, OWASP best practices.
 * Properly secure endpoints against DDOS attacks. 
@@ -559,20 +555,7 @@ when used against a PKI-Overheid.nl certificate; or
 
 when used against a self-signed test certificate.
 
-# Appendix 3: OpenAPI specification of endpoint
-
-Todo: swagger doc
-
-# Appendix 4: Available Test Types
-
-ID         | Name
------------|--------
-pcr        | PCR Test (Traditional)
-pcr-lamp   | PCR Test (LAMP)
-antigen    | Antigen Test
-breath     | Breath Test
-
-# Appendix 5: Test sets
+# Appendix 3: Test sets
 
 ## Test Cases File Name and Location
 
@@ -706,6 +689,7 @@ Example:
 3.1.1
 
 * Added expected behavior examples for ownership verification.  
+* Cleaned up obsolete appendices. 
 
 3.1
 
