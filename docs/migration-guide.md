@@ -55,7 +55,7 @@ Comparison of the responses:
         "testType": "pcr", // must be one of pcr, pcr-lamp, antigen, breath
         "negativeResult": true,
         "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
-        "isSpecimen": true, // Optional
+        "isSpecimen": false, // Optional
         "holder": {
             "firstNameInitial": "J", // Normalized
             "lastNameInitial": "D", // Normalized
@@ -83,7 +83,7 @@ Comparison of the responses:
         {
             "type": "negativetest",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
-            "isSpecimen": true, // Always true when dealing with non-production data
+            "isSpecimen": false, // Always true when dealing with dummy data
             "negativetest": {
                 "sampleDate": "2021-01-01T10:00:00Z", 
                 "negativeResult": true,
@@ -97,4 +97,4 @@ Comparison of the responses:
 }
 ```
 
-`isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. E.g. on non-production environments this should always be set to true. With real data this should always be false.
+`isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. With real data this should always be false.
