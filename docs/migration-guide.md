@@ -83,7 +83,7 @@ Comparison of the responses:
         {
             "type": "negativetest",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
-            "isSpecimen": true,
+            "isSpecimen": true, // Always true when dealing with non-production data
             "negativetest": {
                 "sampleDate": "2021-01-01T10:00:00Z", 
                 "negativeResult": true,
@@ -96,3 +96,5 @@ Comparison of the responses:
     ]    
 }
 ```
+
+`isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. E.g. on non-production environments this should always be set to true. With real data this should always be false.
