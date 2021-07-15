@@ -39,7 +39,7 @@ Notes about optional fields:
         {
             "type": "vaccination",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed9",
-            "isSpecimen": true,
+            "isSpecimen": false, //Optional
             "vaccination": {
                 "date": "2021-01-01",
                 "hpkCode": "2924528",  // If hpkCode is available, type/manufacturer/brand can be left blank.
@@ -88,7 +88,7 @@ Authorative Data sources
         {
             "type": "negativetest",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
-            "isSpecimen": true,
+            "isSpecimen": false, //Optional
             "negativetest": {
                 "sampleDate": "2021-01-01T10:00:00Z", 
                 "negativeResult": true,
@@ -110,7 +110,7 @@ Additional field explanations:
 * `type`: The type of test that was used to obtain the result, see below for the value lists to use. 
 * `negativeResult`: The presence of a negative result of the covid test. true when a negative result is present. false in all other situations. This is data minimisation: it is not necessary for the app to know whether a person is positive, only that they have had a negative test result. A `false` in the `negativeResult` field could either indicate a positive test, or no test at all, etc.
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
-
+* `isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. With real data this should always be false.
 
 #### Authoritative data sources for values
 
@@ -170,7 +170,7 @@ Statement that a person has recovered from Covid19.
         {
             "type": "recovery",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
-            "isSpecimen": true,
+            "isSpecimen": false, //Optional
             "recovery": {
                 "sampleDate": "2021-01-01",
                 "validFrom": "2021-01-12",
@@ -201,7 +201,7 @@ For those providers who are unable to provide a recovery event but who are able 
         {
             "type": "positivetest",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
-            "isSpecimen": true,
+            "isSpecimen": false, //Optional
             "positivetest": {
                 "sampleDate": "2021-01-01T10:00:00Z", 
                 "positiveResult": true,
@@ -258,7 +258,7 @@ In protocol version 2 we only supported negative test results.
         "testType": "pcr", // must be one of pcr, pcr-lamp, antigen, breath
         "negativeResult": true,
         "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
-        "isSpecimen": true, // Optional
+        "isSpecimen": false, // Optional
         "holder": {
             "firstNameInitial": "J", // Normalized
             "lastNameInitial": "D", // Normalized
