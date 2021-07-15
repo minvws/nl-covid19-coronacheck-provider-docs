@@ -264,7 +264,7 @@ And the payload should look like this:
         "firstName": "",
         "infix": "",
         "lastName": "",
-        "birthDate": "1970-01-01" // ISO 8601
+        "birthDate": "1970-01-22" // ISO 8601
     },
     "events": [
         {
