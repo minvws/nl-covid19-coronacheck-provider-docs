@@ -88,7 +88,7 @@ Authorative Data sources
         {
             "type": "negativetest",
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
-            "isSpecimen": true,
+            "isSpecimen": true, // Always true when dealing with non-production data
             "negativetest": {
                 "sampleDate": "2021-01-01T10:00:00Z", 
                 "negativeResult": true,
@@ -110,7 +110,7 @@ Additional field explanations:
 * `type`: The type of test that was used to obtain the result, see below for the value lists to use. 
 * `negativeResult`: The presence of a negative result of the covid test. true when a negative result is present. false in all other situations. This is data minimisation: it is not necessary for the app to know whether a person is positive, only that they have had a negative test result. A `false` in the `negativeResult` field could either indicate a positive test, or no test at all, etc.
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
-
+* `isSpecimen`: A boolean indicating if the reponse is a specimen (fake). This is used for test purposes in a production environment. E.g. on non-production environments this should always be set to true.
 
 #### Authoritative data sources for values
 
