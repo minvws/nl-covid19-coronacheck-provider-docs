@@ -94,7 +94,7 @@ Authorative Data sources
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "Panbio COVID-19 Ag Rapid Test", // Only required for RAT tests, otherwise leave empty (string "") or a sensible name
+                "name": "Panbio COVID-19 Ag Rapid Test", // Only required for RAT tests ("" or sensible name), otherwise NULL
                 "manufacturer": "1232", // Only required for RAT tests, otherwise leave empty (string "") or a sensible name
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
@@ -128,7 +128,7 @@ Field: `negativetest.manufacturer`
 
 This field is only required for RAT tests. The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
 
-Note that each entry is essentially a combination of a manufacturer and a test name. 
+Note that each entry is essentially a combination of a manufacturer and a test name. The `name` must be "manufacturer name, brand name".
 
 For this field, you can also use an entry from the Domestic valueset, but that will not lead to an EU DCC.
 
