@@ -94,8 +94,8 @@ Authorative Data sources
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "Panbio COVID-19 Ag Rapid Test", 
-                "manufacturer": "1232", // Only required for RAT tests
+                "name": "Panbio COVID-19 Ag Rapid Test", // Only required for RAT tests, otherwise leave empty (string "") or a sensible name
+                "manufacturer": "1232", // Only required for RAT tests, otherwise leave empty (string "") or a sensible name
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
