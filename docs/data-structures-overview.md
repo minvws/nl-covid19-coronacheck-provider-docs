@@ -94,8 +94,8 @@ Authorative Data sources
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
-                "name": "", // should not be used for NAAT tests (so fill with ""), otherwise NULL or sensible name
-                "manufacturer": "", // should not be used for NAAT tests (so fill with ""), see below for extra explanation
+                "name": "", // see table NAAT / RAT*
+                "manufacturer": "", // see table NAAT / RAT*
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
             }
         }
@@ -111,9 +111,14 @@ Additional field explanations:
 * `negativeResult`: The presence of a negative result of the covid test. true when a negative result is present. false in all other situations. This is data minimisation: it is not necessary for the app to know whether a person is positive, only that they have had a negative test result. A `false` in the `negativeResult` field could either indicate a positive test, or no test at all, etc.
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
 * `isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. With real data this should always be false.
-* `name`: example of sensible name for a RAT is something like 'Panbio COVID-19 Ag Rapid Test'
 
 
+####NAAT / RAT differences:
+
+Test type |`manufacturer` field |`name` field |
+| --- | --- | --- |
+NAAT | use manufacturer code from [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json) | empty
+RAT | null | sensible name (optional)
 
 #### Authoritative data sources for values
 
@@ -129,7 +134,7 @@ In NL various other tests are in use, which can be used in the type field but wi
 
 Field: `negativetest.manufacturer` 
 
-This field is only required for RAT tests. The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
+This field is only required for NAAT tests. The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
 
 Note that each entry is essentially a combination of a manufacturer and a test name. The `name` must be "manufacturer name, brand name".
 
