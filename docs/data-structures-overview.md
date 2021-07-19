@@ -113,12 +113,13 @@ Additional field explanations:
 * `isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. With real data this should always be false.
 
 
-####NAAT / RAT differences:
+#### NAAT / RAT differences
 
-Test type |`manufacturer` field |`name` field |
-| --- | --- | --- |
+Depending on whether you use rapid antigen tests (RAT) or NAAT (such as PCR) you need to supply different values for the `name` and `manufacturer` fields. 
 
-NAAT | null | sensible name (optional)
+Test type |`manufacturer` field |`name` field 
+ --- | --- | --- 
+NAAT | null | sensible string in `manufacturer, product name` format (optional)
 RAT | use manufacturer code from [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json) | empty
 
 #### Authoritative data sources for values
@@ -137,7 +138,7 @@ Field: `negativetest.manufacturer`
 
 This field is only required for RAT tests. The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
 
-Note that each entry is essentially a combination of a manufacturer and a test name. The `name` must be "manufacturer name, brand name".
+Note that each entry is essentially a combination of a manufacturer and a test name. 
 
 For this field, you can also use an entry from the Domestic valueset, but that will not lead to an EU DCC.
 
