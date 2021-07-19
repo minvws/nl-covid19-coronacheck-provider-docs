@@ -198,7 +198,7 @@ Statement that a person has recovered from Covid19.
 
 For those providers who are unable to provide a recovery event but who are able to provide the result of a positive test, there is an alternative event. Note that it's the exact same structure as a negative event, but with type `positivetest` and a `positiveResult` field.
 
-**Warning**: positive test events are ONLY intended for recoveries and as such may only be handed out by the GGD at present. Other test providers should ONLY provide negative events and should NOT supply the user with a token of the result was not negative. 
+**Warning**: positive test events are ONLY intended for recoveries and as such may only be handed out by the GGD at present. Other test providers should ONLY provide negative events and should NOT supply the user with a token if the result was not negative. 
 
 ```javascript
 {
