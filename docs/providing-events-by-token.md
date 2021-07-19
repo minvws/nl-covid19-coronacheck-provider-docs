@@ -240,12 +240,12 @@ The client can then repeat the request, but include the verificationCode body.
 
 The below table described the expected actions based on the situation: 
 
-Event                                             | Expected behavior 
---------------------------------------------------|-------------------
-Client sends request without request body         | Send a verification code to the user. Return verification_required response. 
-Client sends request with wrong verificationCode  | Only return verification_required response. 
-Client sends request with correct verificationCode| Return payload 
-Client sends request with expired verificationCode| Send a verification code to the user. Return verification_required response. 
+Event                                             | verificationCode behavior | Return "status"
+--------------------------------------------------|---------|----------
+Client sends request without request body         | Send a verification code to the user. | Return verification_required response. 
+Client sends request with wrong verificationCode  | Do nothing | Return verification_required response. 
+Client sends request with correct verificationCode| Do nothing | Return payload 
+Client sends request with expired verificationCode| Send a verification code to the user. | Return verification_required response. 
 
 ### Protocol versioning
 
