@@ -117,10 +117,12 @@ Additional field explanations:
 
 Depending on whether you use rapid antigen tests (RAT) or NAAT (such as PCR) you need to supply different values for the `name` and `manufacturer` fields. 
 
-Test type |`manufacturer` field |`name` field 
- --- | --- | --- 
-NAAT | null | sensible string in `manufacturer, product name` format (optional)
-RAT | use manufacturer code from [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json) | empty
+Test type |`type` field | `manufacturer` field |`name` field 
+ --- | --- | --- | ---
+NAAT | `LP6464-4` | null | sensible string in `manufacturer, product name` format (optional)
+RAT | `LP217198-3` | use manufacturer code from [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json) | empty ("")
+
+See the authoritative data sources for more details on the potential values of each field. 
 
 #### Authoritative data sources for values
 
