@@ -117,8 +117,9 @@ Additional field explanations:
 
 Test type |`manufacturer` field |`name` field |
 | --- | --- | --- |
-NAAT | use manufacturer code from [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json) | empty
-RAT | null | sensible name (optional)
+
+NAAT | null | sensible name (optional)
+RAT | use manufacturer code from [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json) | empty
 
 #### Authoritative data sources for values
 
@@ -134,7 +135,7 @@ In NL various other tests are in use, which can be used in the type field but wi
 
 Field: `negativetest.manufacturer` 
 
-This field is only required for NAAT tests. The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
+This field is only required for RAT tests. The manufacturer field should be populated with one of the values from the [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json).
 
 Note that each entry is essentially a combination of a manufacturer and a test name. The `name` must be "manufacturer name, brand name".
 
