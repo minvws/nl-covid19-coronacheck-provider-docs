@@ -23,7 +23,7 @@ To speed up the process of showing both QR codes in sequence, we provide a deepl
 
 The following diagram shows the integration between 2 apps:
 
-TODO
+![deeplinks holder](images/deeplinks-holder.png)
 
 The ticket app opens the CoronaCheck app, telling it which URL the app should later return to. In the QR screen, a 'return to <name of ticket app>' button is visible for the user to directly return to the ticketing app.
 
@@ -37,8 +37,7 @@ https://coronacheck.nl/app/open?returnUri= | Opens the overview screen with QR c
 https://coronacheck.nl/app/open/domestic?returnUri= | Same behavior as the /app/open link, but if a domestic QR is available, it directly opens the QR. If not, is shows the home screen in domestic mode. | Idea stage
 https://coronacheck.nl/app/open/dcc?returnUri= | Same behavior as the /app/open link, but if an EU DCC is available it directly opens the QR. If multiple are available, it opens the international overview screen. If none are available, it shows the home screen in international mode. | Idea stage
   
-  
-  
+ 
 ### Whitelisting   
   
 To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts are return URLs. To add an app to the allow-list, please create a Github issue in this repository, supplying the following information:
