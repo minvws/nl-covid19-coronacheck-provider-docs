@@ -42,6 +42,12 @@ If you're a provider of recovery statements (based on positive test results), th
 2. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve recovery statements via DigiD
 3. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign recovery statements.
 
+### Ticket app providers
+
+If you have an app for access tickets and you want to integrate with the CoronaCheck app, the following document is relevant to you:
+
+1. [Deeplink Integration](docs/app-deeplinks.md) - Documentation on deeplink integration between CoronaCheck and other apps.
+
 
 ## Other Relevant Repositories
 
