@@ -38,7 +38,7 @@ https://coronacheck.nl/app/open/domestic?returnUri= | Same behavior as the /app/
 https://coronacheck.nl/app/open/dcc?returnUri= | Same behavior as the /app/open link, but if an EU DCC is available it directly opens the QR. If multiple are available, it opens the international overview screen. If none are available, it shows the home screen in international mode. | Idea stage
   
  
-### Whitelisting   
+### Allowlisting   
   
 To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts are return URLs. To add an app to the allow-list, please create a Github issue in this repository, supplying the following information:
   
