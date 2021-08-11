@@ -280,7 +280,7 @@ And the payload should look like this:
     "providerIdentifier": "XXX",
     "status": "complete",
     "result": {
-        "sampleDate": "2020-10-10T10:00:00Z", // rounded to nearest hour
+        "sampleDate": "2021-07-25T14:51:26Z",
         "testType": "pcr", // See Appendix 4
         "negativeResult": true,
         "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
@@ -300,7 +300,7 @@ Where:
 * `protocolVersion` indicates the version of this protocol that was used.
 * `providerIdentifier`: the provider identifier as discussed earlier
 * `status`: Either `pending` or `complete` (lowercase)
-* `sampleDate`: The date/time on which the sample for the covid test was obtained (in ISO 8601 / RFC3339 UTC date+time format with Z suffix, without milliseconds). Rounded **down** to the nearest hour to avoid linkability to test facility visits.
+* `sampleDate`: The date/time on which the sample for the covid test was obtained (in ISO 8601 / RFC3339 UTC date+time format with Z suffix, without milliseconds).
 * `testType`: The type of test that was used to obtain the result
 * `negativeResult`: The presence of a negative result of the covid test. `true` when a negative result is present. `false` in all other situations.
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
@@ -638,7 +638,7 @@ Fields:
 		type:
 			ISO-8601 date/time UTC to second precision
 		example:
-			2021-04-23T11:45:38Z
+			2021-07-25T14:51:26Z
 		
 	fullName
 		format:
@@ -697,13 +697,11 @@ Fields:
 		type:
 			ISO-8601 date/time UTC to second precision
 		example:
-			2021-04-23T11:00:00Z
-		notes:
-			The minutes and seconds must be set to zeros
+			2021-07-25T14:51:26Z
 
 Example:
 
-	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-04-01T00:00:00Z
+	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-07-25T14:51:26Z
 
 # Changelog
 

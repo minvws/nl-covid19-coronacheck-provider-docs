@@ -51,7 +51,7 @@ Comparison of the responses:
     "providerIdentifier": "XXX",
     "status": "complete",
     "result": {
-        "sampleDate": "2020-10-10T10:00:00Z", // rounded down to nearest hour
+        "sampleDate": "2021-07-25T14:51:26Z",
         "testType": "pcr", // must be one of pcr, pcr-lamp, antigen, breath
         "negativeResult": true,
         "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
@@ -85,7 +85,7 @@ Comparison of the responses:
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
             "isSpecimen": false, // Always true when dealing with dummy data
             "negativetest": {
-                "sampleDate": "2021-01-01T10:00:00Z", 
+                "sampleDate": "2021-07-25T14:51:26Z", 
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",

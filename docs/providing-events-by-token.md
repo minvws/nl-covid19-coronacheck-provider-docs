@@ -618,7 +618,7 @@ Fields:
 		type:
 			ISO-8601 date/time UTC to second precision
 		example:
-			2021-04-23T11:45:38Z
+			2021-07-25T14:51:26Z
 		
 	fullName
 		format:
@@ -677,15 +677,16 @@ Fields:
 		type:
 			ISO-8601 date/time UTC to second precision
 		example:
-			2021-04-23T11:00:00Z
-		notes:
-			The minutes and seconds must be set to zeros
+			2021-07-25T14:51:26Z
 
 Example:
 
-	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-04-01T00:00:00Z
+	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-07-25T14:51:26Z
 
 # Changelog
+
+3.2
+* removed the requirement to round down sampleDate
 
 3.1.1
 
