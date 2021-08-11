@@ -30,3 +30,16 @@ We use the classes `.test-provider-portal__hide-for-mobile` and `.test-provider-
 ## Mail
 
 Inside the directory `mail` there is the design for the e-mail template.
+
+## Zivver
+
+Inside the directory `zivver` there is an example HTML template that can be used with the Zivver platform.
+
+The Zivver platform has limited support for HTML e-mail. A lot of the styling elements are removed for security reasons.
+
+Including stylesheets and loading external resources such as fonts is not supported. For this reason this template makes use of inline styling elements
+and some modifications to get a user experience that comes close to the provided layout in this repository.
+
+In order to use this with Zivver, the "Mail Submission" module needs to be enabled to allow sending messages via SMTP.
+
+
