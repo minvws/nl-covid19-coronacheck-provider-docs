@@ -90,7 +90,7 @@ Authorative Data sources
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
             "isSpecimen": false, //Optional
             "negativetest": {
-                "sampleDate": "2021-01-01T10:00:00Z", 
+                "sampleDate": "2021-07-25T14:51:26Z", 
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
@@ -105,7 +105,6 @@ Authorative Data sources
 
 Additional field explanations:
 * `sampleDate`: The date and time that the test was taken.
-    * sampleDate should be rounded **down** to the nearest hour. (To avoid test times in the future). 
     * We deliberately use `sampleDate` and not an expiry after x hours/minutes/seconds. This is because we anticipate that validity might depend on both epidemiological conditions. By including the sample date, the CoronaCheck signer service can control the validity. 
 * `type`: The type of test that was used to obtain the result, see below for the value lists to use. 
 * `negativeResult`: The presence of a negative result of the covid test. true when a negative result is present. false in all other situations. This is data minimisation: it is not necessary for the app to know whether a person is positive, only that they have had a negative test result. A `false` in the `negativeResult` field could either indicate a positive test, or no test at all, etc.
@@ -184,7 +183,7 @@ Statement that a person has recovered from Covid19.
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
             "isSpecimen": false, //Optional
             "recovery": {
-                "sampleDate": "2021-01-01",
+                "sampleDate": "2021-07-25",
                 "validFrom": "2021-01-12",
                 "validUntil": "2021-06-30",
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
@@ -217,10 +216,10 @@ For those providers who are unable to provide a recovery event but who are able 
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed7",
             "isSpecimen": false, //Optional
             "positivetest": {
-                "sampleDate": "2021-01-01T10:00:00Z", 
+                "sampleDate": "2021-07-25T14:51:26Z", 
                 "positiveResult": true,
                 "facility": "GGD XL Amsterdam",
-                "type": "LP6464-4",
+                "type": "LP217198-3",
                 "name": "Panbio COVID-19 Ag Rapid Test",
                 "manufacturer": "1232",
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
@@ -231,7 +230,6 @@ For those providers who are unable to provide a recovery event but who are able 
 ```
 
 Notes:
-* sampleDate should be rounded **down** to the nearest hour. (To avoid test times in the future). 
 * We deliberately use `sampleDate` and not an expiry after x hours/minutes/seconds. This is because we anticipate that validity might depend on both epidemiological conditions as well as on where the test result is presented. E.g. a 2-day festival might require a longer validity than a short seminar; By including the sample date, verifiers can control how much data they really see.
 * Returning `false` for the `positiveResult` does not necessarily imply 'negative'. This is data minimisation: when requesting a recovery, it is not necessary for the app to know whether a person is negative, only that they have had a positive test result. A `false` in the `positiveResult` field could either indicate a negative test, or no test at all, etc.
 
@@ -248,9 +246,8 @@ Authoritative data sources for values:
 * sampleDate for tests: 
     * ISO 8601 date and time
     * Always in utc (Z)
-    * No milliseconds 
-    * Rounded down to nearest hour 
-    * Example: 2021-10-03T10:00:00Z
+    * No milliseconds
+    * Example: 2021-07-25T14:51:26Z
 * dates for vaccinations and recoveries:
     * YYYY-MM-DD
     * No time part 
@@ -268,7 +265,7 @@ In protocol version 2 we only supported negative test results.
     "providerIdentifier": "XXX",
     "status": "complete",
     "result": {
-        "sampleDate": "2020-10-10T10:00:00Z", // rounded down to nearest hour
+        "sampleDate": "2021-07-25T14:51:26Z",
         "testType": "pcr", // must be one of pcr, pcr-lamp, antigen, breath
         "negativeResult": true,
         "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
@@ -295,7 +292,7 @@ This version is now phased out and should not be used by any provider. There are
     "providerIdentifier": "XXX",
     "status": "complete",
     "result": {
-        "sampleDate": "2020-10-10T10:00:00Z", // rounded to nearest hour
+        "sampleDate": "2021-07-25T14:51:26Z",
         "testType": "pcr", // must be one of pcr, pcr-lamp
         "negativeResult": true,
         "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",

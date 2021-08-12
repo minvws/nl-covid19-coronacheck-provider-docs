@@ -25,7 +25,7 @@ The following diagram shows the integration between 2 apps:
 
 ![deeplinks holder](images/deeplinks-holder.png)
 
-The ticket app opens the CoronaCheck app, telling it which URL the app should later return to. In the QR screen, a 'return to <name of ticket app>' button is visible for the user to directly return to the ticketing app.
+The ticket app opens the CoronaCheck app, telling it which URL the app should later return to. In the QR screen, a 'return to \<name of ticket app\>' button is visible for the user to directly return to the ticketing app.
 
 ### Available Universal Links  
   
@@ -33,7 +33,7 @@ The following Universal Links are available. Note that some are only in idea/pla
   
 Link | Behavior | Status
 -----|----------|-------
-https://coronacheck.nl/app/open?returnUri= | Opens the overview screen with QR cards. After opening a QR card, the QR screen will show a 'return to <app name>' button which will link directly to the provided returnUri. | Currently in testing phase
+https://coronacheck.nl/app/open?returnUri= | Opens the overview screen with QR cards. After opening a QR card, the QR screen will show a 'return to \<app name\>' button which will link directly to the provided returnUri. | Currently in testing phase
 https://coronacheck.nl/app/open/domestic?returnUri= | Same behavior as the /app/open link, but if a domestic QR is available, it directly opens the QR. If not, is shows the home screen in domestic mode. | Idea stage
 https://coronacheck.nl/app/open/dcc?returnUri= | Same behavior as the /app/open link, but if an EU DCC is available it directly opens the QR. If multiple are available, it opens the international overview screen. If none are available, it shows the home screen in international mode. | Idea stage
   
@@ -42,7 +42,7 @@ https://coronacheck.nl/app/open/dcc?returnUri= | Same behavior as the /app/open 
   
 To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts are return URLs. To add an app to the allow-list, please create a Github issue in this repository, supplying the following information:
   
-  * The name of your app that should be used in the 'Return to <app name> button'
+  * The name of your app that should be used in the 'Return to \<app name\> button'
   * The domainname that you will use for the return urls, so we can add it to the allow-list
   * A description of how you plan to use the deeplink integration
   * The link to your Android and iOS app store entries so that we can download your app and evaluate your application
