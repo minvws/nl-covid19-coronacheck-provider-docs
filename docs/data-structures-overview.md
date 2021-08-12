@@ -219,7 +219,7 @@ For those providers who are unable to provide a recovery event but who are able 
                 "sampleDate": "2021-07-25T14:51:26Z", 
                 "positiveResult": true,
                 "facility": "GGD XL Amsterdam",
-                "type": "LP6464-4",
+                "type": "LP217198-3",
                 "name": "Panbio COVID-19 Ag Rapid Test",
                 "manufacturer": "1232",
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
