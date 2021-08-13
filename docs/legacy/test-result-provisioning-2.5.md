@@ -2,11 +2,11 @@
 
 *** WARNING *** 
 
-This is legacy documentation for the 2.4 version of the CoronaCheck protocol. The new documentation that will be used when the CoronaCheck 2.0 apps are in the app store, [can be found here](../).
+This is legacy documentation for the 2.x version of the CoronaCheck protocol. The new documentation that will be used when the CoronaCheck 2.0 apps are in the app store, [can be found here](../).
 
 *** END WARNING ***
 
-Version 2.4.1
+Version 2.5
 
 In the CoronaCheck project we are prototyping a means of presenting a digital proof of a negative test result. This document describes the steps a party needs to take to provide test results that the CoronaCheck app will use to provide proof of negative test.
 
@@ -704,6 +704,10 @@ Example:
 	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-07-25T14:51:26Z
 
 # Changelog
+
+2.5
+
+* Removed the requirement to round down sampleDate.
 
 2.4.1
 
