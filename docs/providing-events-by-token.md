@@ -5,7 +5,7 @@
   >
   >  ☢️🚧 This is the 3.0 version of the protocol, which was enhanced with EU and vaccination support. 
   >  Some commercial test providers are still on version 2.0 of the protocol. The 2.0 version is tagged and can be found here:
-  >  https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/test-provider-protocol-2.0/docs/providing-test-results.md
+  >  https://github.com/minvws/nl-covid19-coronacheck-provider-docs-private/blob/main/docs/legacy/test-result-provisioning-2.4.1.md
   > 
 
 * Version 3.2
