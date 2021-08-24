@@ -42,7 +42,7 @@ https://coronacheck.nl/app/open/dcc?returnUri= | Same behavior as the /app/open 
  
 ### Allowlisting   
   
-To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts are return URLs. 
+To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts as return URLs. 
 
 To add an app to the allow-list, please follow the registration procedure documented on the [Rijksoverheid site](https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/coronabewijs/coronacheck-voor-applicatie-providers).
   
