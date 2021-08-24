@@ -14,7 +14,9 @@ Note the use of the # in the URL. By using an anchor the token is not leaked to 
 
 ## Opening the CoronaCheck app to show the QR code (for ticketing apps)
 
-### Process 
+To find out if your app is eligible for exchanging universal links with CoronaCheck, please first [read the documentation on the Rijksoverheid site](https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/coronabewijs/coronacheck-voor-applicatie-providers).
+
+### Flow 
 At events where tickets are required users are typically required to first show their CoronaCheck QR code, to be scanned by the CoronaCheck scanner, and then the ticket QR code, to be scanned by a ticket scanner.
 
 To speed up the process of showing both QR codes in sequence, we provide a deeplink integration between ticket apps and CoronaCheck. This way the user does not have to navigate manually between 2 ticket apps.
@@ -40,8 +42,12 @@ https://coronacheck.nl/app/open/dcc?returnUri= | Same behavior as the /app/open 
  
 ### Allowlisting   
   
-To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts are return URLs. To add an app to the allow-list, please create a Github issue in this repository, supplying the following information:
+To avoid that arbitrary apps can modify the QR screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts as return URLs. 
+
+To add an app to the allow-list, please follow the registration procedure documented on the [Rijksoverheid site](https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/coronabewijs/coronacheck-voor-applicatie-providers).
   
+During this process you will be asked, among other things, for: 
+
   * The name of your app that should be used in the 'Return to \<app name\> button'
   * The domainname that you will use for the return urls, so we can add it to the allow-list
   * A description of how you plan to use the deeplink integration
