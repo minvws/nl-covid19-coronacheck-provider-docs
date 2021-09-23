@@ -469,7 +469,7 @@ The mycrt.crt is a X.509 certificate as issued to the sender by PKI-O. Full exam
 
 ### More sample code
 
-More sample code for the signing method can be found in our [Github Sample Code repository](https://github.com/minvws/nl-covid19-coronacheck-tester-signature-demo)
+More sample code for the signing method can be found in our [Github Sample Code repository](https://github.com/minvws/nl-covid19-coronacheck-app-coronatestprovider-example)
 
 ### Governance and the digital signature of the result
 
@@ -514,7 +514,7 @@ Note that this is not an extensive list and the provider is solely responsible f
 
 # Appendix 1: Example implementations of X509 CMS signing
 
-The directory 'shellscript' of https://github.com/minvws/nl-covid19-coronacheck-tester-signature-demo contains a script to generate such signatures ``sign.sh``:
+The directory 'shellscript' of https://github.com/minvws/nl-covid19-coronacheck-provider-docs/tree/main/signing-demo contains a script to generate such signatures ``sign.sh``:
 
     #!/bin/sh
     set -e
@@ -544,7 +544,7 @@ along with the code needed to decode and verify this.
 
 # Appendix 2: Validating the signing output
 
-The directory 'shellscript' of https://github.com/minvws/nl-covid19-coronacheck-tester-signature-demo contains a script that can verify a signature and decode the json.
+The directory 'shellscript' of https://github.com/minvws/nl-covid19-coronacheck-provider-docs/tree/main/signing-demo contains a script that can verify a signature and decode the json.
 
 Its typical use is
 
