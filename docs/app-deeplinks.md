@@ -54,7 +54,51 @@ During this process you will be asked, among other things, for:
   * The link to your Android and iOS app store entries so that we can download your app and evaluate your application
 
 
-## Checking if CoronaCheck is installed 
+### Checking if CoronaCheck is installed 
 
 To check if the CoronaCheck app is installed, the presence of the custom URI scheme "coronacheck://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
+
+## Opening the CoronaCheck Scanner app to scan a QR code (for ticket scanner apps)
+
+To find out if your app is eligible for exchanging universal links with CoronaCheck Scanner, please first [read the documentation on the Rijksoverheid site](https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/coronabewijs/coronacheck-voor-applicatie-providers).
+
+### Flow 
+At events where tickets are required users are typically required to first show their CoronaCheck QR code, to be scanned by the CoronaCheck scanner, and then the ticket QR code, to be scanned by a ticket scanner.
+
+To speed up the process of scanning both QR codes in sequence, we provide a deeplink integration between ticket scan apps and CoronaCheck Scanner. This way the agent does not have to navigate manually between 2 scanner apps and can scan both ticket and CoronaCheck in succession. This is very similar to the previous chapter which discussed deeplinks between ticket app and CoronaCheck app; the concept is indeed similar, but this time on the scanner side.
+
+**NOTE**: No data is exchanged between the two apps, for privacy reasons. This is only a way to quickly and conveniently switch between two scanners in different apps.
+
+The following diagram shows the integration between 2 apps:
+
+![deeplinks holder](images/deeplinks-verifier.png)
+
+The ticket scanner app opens the CoronaCheck app, telling it which URL the app should later return to. In the intials screen, a button is visible for the user to directly return to the ticketing app.
+
+### Available Universal Links  
+  
+The following Universal Links are available. Note that some are only in idea/planning stage, we will add support for these if we have a good use case and a test case for them.
+  
+Link | Behavior | Status
+-----|----------|-------
+https://coronacheck.nl/verifier/scan?returnUri= | Opens the scanner screen. After scanning a QR, the initials screen will show a button which will link directly to the provided returnUri. | The button is the same as the regular button, but with an 'exit' indication indicating that instead of returning to the CoronaCheck Scanner homescreen, it returns to the calling app.  
+ 
+### Allowlisting   
+  
+To avoid that arbitrary apps can modify the initials screen with a return button, the CoronaCheck app uses an allow-list of domain names that it accepts as return URLs. 
+
+To add an app to the allow-list, please follow the registration procedure documented on the [Rijksoverheid site](https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/coronabewijs/coronacheck-voor-applicatie-providers).
+  
+During this process you will be asked, among other things, for: 
+
+  * The name of your app that should be used in the 'Return to \<app name\> button'
+  * The domainname that you will use for the return urls, so we can add it to the allow-list
+  * A description of how you plan to use the deeplink integration
+  * The link to your Android and/or iOS app store entries so that we can download your app and evaluate your application. If your scanner app is not available through the public app store, please provide us with a way to install/evaluate your scanner app (e.g. by supplying us with the .apk file of your scanner app)
+
+
+### Checking if CoronaCheck Scanner is installed 
+
+To check if the CoronaCheck Scanner app is installed, the presence of the custom URI scheme "coronacheck-verifier://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
+
 
