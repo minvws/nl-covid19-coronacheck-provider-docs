@@ -2,6 +2,21 @@
 
 For integration between CoronaCheck and other apps we use Universal Links. This document lists the current possible deeplinks.
 
+## Contents
+
+- [CoronaCheck Deeplink Integration](#coronacheck-deeplink-integration)
+  * [Retrieval Code Redemption (for COVID Test Providers)](#retrieval-code-redemption--for-covid-test-providers-)
+  * [Opening the CoronaCheck app to show the QR code (for ticketing apps)](#opening-the-coronacheck-app-to-show-the-qr-code--for-ticketing-apps-)
+    + [Flow](#flow)
+    + [Available Universal Links](#available-universal-links)
+    + [Allowlisting](#allowlisting)
+    + [Checking if CoronaCheck is installed](#checking-if-coronacheck-is-installed)
+  * [Opening the CoronaCheck Scanner app to scan a QR code (for ticket scanner apps)](#opening-the-coronacheck-scanner-app-to-scan-a-qr-code--for-ticket-scanner-apps-)
+    + [Flow](#flow-1)
+    + [Available Universal Links](#available-universal-links-1)
+    + [Allowlisting](#allowlisting-1)
+    + [Checking if CoronaCheck Scanner is installed](#checking-if-coronacheck-scanner-is-installed)
+
 ## Retrieval Code Redemption (for COVID Test Providers)
 
 When providing the token via a portal that the user can visit using the device where CoronaCheck is installed, the token can be directly loaded into the CoronaCheck app by utilizing the app's deeplink functionality. To use the deeplink, the token should be wrapped inside the same code that the manual entry uses (XXX-YYYYYYYYYY-ZV) The deeplink should be constructed as such:
@@ -102,3 +117,4 @@ During this process you will be asked, among other things, for:
 To check if the CoronaCheck Scanner app is installed, the presence of the custom URI scheme "coronacheck-verifier://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
 
 
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
