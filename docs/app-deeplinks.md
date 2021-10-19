@@ -71,7 +71,9 @@ During this process you will be asked, among other things, for:
 
 ### Checking if CoronaCheck is installed 
 
-To check if the CoronaCheck app is installed, the presence of the custom URI scheme "coronacheck://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
+To check if the iOS CoronaCheck app is installed, the presence of the custom URI scheme "coronacheck://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
+
+Android apps can and should check the presence of the package `nl.rijksoverheid.ctr.holder`.
 
 ## Opening the CoronaCheck Scanner app to scan a QR code (for ticket scanner apps)
 
@@ -114,7 +116,9 @@ During this process you will be asked, among other things, for:
 
 ### Checking if CoronaCheck Scanner is installed 
 
-To check if the CoronaCheck Scanner app is installed, the presence of the custom URI scheme "coronacheck-verifier://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
+To check if the iOS CoronaCheck Scanner app is installed, the presence of the custom URI scheme "coronacheck-verifier://" can be checked, using typical 'canOpenURI' type operating system calls. (The Universal Links themselves are not always suitable for this since all devices can open the Universal Link if we count the presence of the website fallback).
+
+Android apps can and should check the presence of the package `nl.rijksoverheid.ctr.verifier`.
 
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
