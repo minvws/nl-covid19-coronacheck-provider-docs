@@ -260,7 +260,7 @@ The response (CMS Signed) may contain multiple events. The response should be pr
 }
 ```
 
-For the details of the vaccination, test and recovery records, see the overview at https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/main/docs/data-structures-overview.md
+For the details of the vaccination, test and recovery records, see the overview at https://github.com/minvws/nl-covid19-coronacheck-provider-docs/blob/main/docs/data-structures-overview.md
 
 There are a few edge cases to consider:
 * In case the person is known but events do not exist, the `events` array can be left empty.
@@ -424,6 +424,10 @@ print(f"SECRET: {secret.decode()}")
 print(f"PUBLIC: {public.decode()}")
 ```
 ## Changelog
+
+1.3.3
+
+* Changed link to documentation page regarding Data Structures Overview (was 404 to old page).
 
 1.3.2
 
