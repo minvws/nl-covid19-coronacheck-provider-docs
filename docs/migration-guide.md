@@ -33,7 +33,7 @@ The 3.0 protocol follows the same endpoints and communication as the 2.0 protoco
 For existing providers who currently support protocol 2.0, the following bullets are the most important changes in the 3.0 datastructure:
 
 * The result now contains an array of events. Each event has a type. This is done for compatibility with vaccinations. Note that you should still only provide the most recent test result, so the array for negative tests will always just contain a single item.
-* In 2.0, the holder data only contains initials and birth month / day. In 3.0 this should be changed to include the full names and the full birth date. This is necessary for EU compatiblility.
+* In 2.0, the holder data only contains initials and birth month / day. In 3.0 this should be changed to include the full names and the full birth date. This is necessary for EU compatibility.
 * The initial normalization that was done on the initials (é -> E, 't -> T etc) is not necessary in 3.0, as CoronaCheck will take care of that based on the full names.
 * The test types have changed from plain `pcr`, `pcr-lamp`, `antigen` and `breathalizer` to an EU code system. **Please ensure that the tests you are using are available in the EU code system**. The data should now be derived from:
     *  The [EU valueset for types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json).
