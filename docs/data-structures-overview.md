@@ -8,7 +8,7 @@ This chapter describes the datastructures that providers of test/vaccination res
 
 ## Protocol version 3.0
 
-Protocol version 3.0 has support for negative tests, positive tests, recovery statements and vaccination events. The current version of the app in the store used protocol version 2.0. Only use 3.0 for preparing for the future version of the app. (Consult with your CoronaCheck liaison when in doubt).
+Protocol version 3.0 has support for negative tests, positive tests, recovery statements and vaccination events.
 
 Notes about optional fields:
 * Optional does not mean 'never supply it'. Original source data is always better than interpreted values. E.g if you don't know the dose number, don't supply it. If you do know it, please supply it. 
@@ -250,57 +250,7 @@ Authoritative data sources for values:
     * Example: 2021-07-25T14:51:26Z
 * dates for vaccinations and recoveries:
     * YYYY-MM-DD
-    * No time part 
-
-
-## Protocol version 2.0
-
-In protocol version 2 we only supported negative test results.
-
-### Negative test result
-
-```javascript
-{
-    "protocolVersion": "2.0",
-    "providerIdentifier": "XXX",
-    "status": "complete",
-    "result": {
-        "sampleDate": "2021-07-25T14:51:26Z",
-        "testType": "pcr", // must be one of pcr, pcr-lamp, antigen, breath
-        "negativeResult": true,
-        "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
-        "isSpecimen": false, // Optional
-        "holder": {
-            "firstNameInitial": "J", // Normalized
-            "lastNameInitial": "D", // Normalized
-            "birthDay": "31", // String, but no leading zero, e.g. "4"
-            "birthMonth": "12" // String, but no leading zero, e.g. "4"
-        }
-    }
-}
-```
-
-## Protocol version 1.0
-
-This version is now phased out and should not be used by any provider. There are no apps in the field that use this protocol version. 
-
-### Negative test result
-
-```javascript
-{
-    "protocolVersion": "1.0",
-    "providerIdentifier": "XXX",
-    "status": "complete",
-    "result": {
-        "sampleDate": "2021-07-25T14:51:26Z",
-        "testType": "pcr", // must be one of pcr, pcr-lamp
-        "negativeResult": true,
-        "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
-        "checksum": 54,
-    }
-}
-```
-
+    * No time part
 
 # QR Credential Structures
 
