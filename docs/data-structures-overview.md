@@ -252,6 +252,54 @@ Authoritative data sources for values:
     * YYYY-MM-DD
     * No time part
 
+## (deprecated) Protocol version 2.0
+
+In protocol version 2 we only supported negative test results. This version is now phased out and should not be used by any provider. There are no apps in the field that use this protocol version.
+
+### Negative test result
+
+```javascript
+{
+    "protocolVersion": "2.0",
+    "providerIdentifier": "XXX",
+    "status": "complete",
+    "result": {
+        "sampleDate": "2021-07-25T14:51:26Z",
+        "testType": "pcr", // must be one of pcr, pcr-lamp, antigen, breath
+        "negativeResult": true,
+        "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
+        "isSpecimen": false, // Optional
+        "holder": {
+            "firstNameInitial": "J", // Normalized
+            "lastNameInitial": "D", // Normalized
+            "birthDay": "31", // String, but no leading zero, e.g. "4"
+            "birthMonth": "12" // String, but no leading zero, e.g. "4"
+        }
+    }
+}
+```
+
+## (deprecated) Protocol version 1.0
+
+This version is now phased out and should not be used by any provider. There are no apps in the field that use this protocol version.
+
+### Negative test result
+
+```javascript
+{
+    "protocolVersion": "1.0",
+    "providerIdentifier": "XXX",
+    "status": "complete",
+    "result": {
+        "sampleDate": "2021-07-25T14:51:26Z",
+        "testType": "pcr", // must be one of pcr, pcr-lamp
+        "negativeResult": true,
+        "unique": "kjwSlZ5F6X2j8c12XmPx4fkhuewdBuEYmelDaRAi",
+        "checksum": 54,
+    }
+}
+```
+
 # QR Credential Structures
 
 This chapter describes the structure of the QR code that is presented. The QR is ASN.1 encoded.
