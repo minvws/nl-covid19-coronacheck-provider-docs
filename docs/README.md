@@ -7,12 +7,6 @@ Depending on your situation, you need one of these docs:
   * [Test/vaccination/recovery token based protocol version 3](providing-events-by-token.md) - For (usually commercial) providers who hand out 'retrieval codes'.
   * [Test/vaccination/recovery digid based protocol version 3](providing-events-by-digid.md) - For RIVM/GGD or other providers who are allowed to do BSN based retrieval
 
-Providers that are still on the 2.0 protocol can use this 2.0 tagged doc for reference of their current implementation:
-  * [Test result token protocol version 2](legacy/test-result-provisioning-2.4.1.md)
-
-To migrate from version 2 to version 3 of the protocol, check the [migration guide](migration-guide.md)
-
-When in doubt which version to use, discuss this with your CoronaCheck liaison. 
 
 ## Data structures overview:
 

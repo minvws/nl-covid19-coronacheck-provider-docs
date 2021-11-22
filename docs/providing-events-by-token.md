@@ -3,9 +3,7 @@
 ** IMPORTANT **
 
   >
-  >  ☢️🚧 This is the 3.0 version of the protocol, which was enhanced with EU and vaccination support. 
-  >  Some commercial test providers are still on version 2.0 of the protocol. The 2.0 version is tagged and can be found here:
-  >  https://github.com/minvws/nl-covid19-coronacheck-provider-docs/blob/main/docs/legacy/test-result-provisioning-2.5.md
+  >  ☢️🚧 This is the 3.0 version of the protocol.
   > 
 
 * Version 3.2
@@ -118,9 +116,9 @@ The code ( prefix, token and checksum/version) matches the following regular exp
 ^[A-Z0-9]{3}-[A-Z0-9]+-[A-Z0-9]{1}[2-9]{1}$
 ```
 
-The checksum is defined as the Luhn mod-N for alphanummerics; where the codepoints are as per the allowed set of characters ```BCFGJLQRSTUVXYZ23456789```; with the B assigned a 0 and the 9 the number 22.
+The checksum is defined as the Luhn mod-N for alphanumerics; where the codepoints are as per the allowed set of characters ```BCFGJLQRSTUVXYZ23456789```; with the B assigned a 0 and the 9 the number 22.
 
-Note that the version number (2) is at the end of the string; this is an anti-pattern; but conscious choise; these are to be human readable/entered strings that would look odd starting with (always the same) number. Also note that the 'XXX-' allows for a future 'Z-XXX-' or 'ZXXX-' type of start.
+Note that the version number (2) is at the end of the string; this is an anti-pattern; but conscious choice; these are to be human readable/entered strings that would look odd starting with (always the same) number. Also note that the 'XXX-' allows for a future 'Z-XXX-' or 'ZXXX-' type of start.
 
 ### Deeplink
 
@@ -136,9 +134,9 @@ Note the use of the ```#``` in the URL. By using an anchor the token is not leak
 
 Ownership of a test result should be verified upon entering the retrieval code. Ownership verification is performed by sending a one time code to the user's phone per sms or per email, at the moment the user enters the token into the app. Although this doesn't guarantee for 100% that the result won't be passed to someone else, it now requires a deliberate act of fraud, instead of just 'handing over a voucher'. 
 
-SMS is strongly prefered, as it is faster than e-mail and most phones allow the user to enter an sms verification code without leaving the app. E-mail can be used for users that do not have a mobile phone number.
+SMS is strongly preferred, as it is faster than e-mail and most phones allow the user to enter an sms verification code without leaving the app. E-mail can be used for users that do not have a mobile phone number.
 
-The process of providing a one time code sent via sms/e-mail is familiar to users who have used Two Factor Authentication mechanisms. It is important to note that the scheme documented in this this specification is not a true 2FA schema. In a true 2FA schema two distinct factors should be used, whereas in our case there is only one distinct factor - both the token and the verification code constitute 'something you have'. 
+The process of providing a one time code sent via sms/e-mail is familiar to users who have used Two Factor Authentication mechanisms. It is important to note that the scheme documented in this specification is not a true 2FA schema. In a true 2FA schema two distinct factors should be used, whereas in our case there is only one distinct factor - both the token and the verification code constitute 'something you have'. 
 
 Verification codes must be numeric and 6 digits. 
 
@@ -179,7 +177,7 @@ The initial request will not contain a request body. If the user enters a verifi
 
 Notes:
 
-* The useragent will be anonimized.
+* The useragent will be anonymized.
 * HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
 
 ### Returning a 'pending' state
@@ -684,6 +682,9 @@ Example:
 	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-07-25T14:51:26Z
 
 # Changelog
+
+3.2.1
+* removed protocol-Version 2.0 in these docs
 
 3.2
 * removed the requirement to round down sampleDate
