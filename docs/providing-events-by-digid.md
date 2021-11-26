@@ -270,7 +270,7 @@ There are a few edge cases to consider:
 In addition to the standard JWT token fields documented earlier, the JWT token for the event request will contain:
 
 * `bsn`: The BSN in an encrypted format. 
-* `roleIdentifier`: Identifies the role of the requesting entity. CoronaCheck will set this to `01` ('Subject of care') when the requesting entity is represented by the provided bsn. CoronaCheck will set this value to `02` ('Subject of care proxy'), when the requesting entity is authorized to retrieve events on behalf of the provided bsn and hence not intended for own use. This value can be used by providers for NEN compliant logging.
+* `roleIdentifier`: Identifies the role of the requesting entity. CoronaCheck will set this to `01` ('Subject of care'), when the requesting entity is represented by the provided bsn. CoronaCheck will set this value to `02` ('Subject of care proxy'), when the requesting entity is authorized to retrieve events on behalf of the provided bsn and hence not intended for own use. This value can be used by providers for NEN compliant logging.
 
 The encryption of the BSN is done using libsodium public/private sealboxes (X25519). The private key that can be used to decrypt the token must remain with the provider at all times. The public key has to be provided to MinVWS.
 
