@@ -1,7 +1,7 @@
-# Providing Vaccination / Test / Recovery Events by Digid
+# Providing Vaccination / Test / Recovery / Assessment Events by Digid
 
-* Version 1.3.4
-* Authors: Nick, Ivo
+* Version 1.4.0
+* Authors: Nick, Ivo, Tomas, Mendel
 
 ## Contents
 
@@ -255,6 +255,13 @@ The response (CMS Signed) may contain multiple events. The response should be pr
             "positivetest": {
                 // Test result record
             }
+        },
+        {
+            "type": "vaccinationassessment",
+            "unique": "...",
+            "vaccinationassessment": {
+                // Vaccination assessment record
+            }
         }
     ]    
 }
@@ -424,6 +431,10 @@ print(f"SECRET: {secret.decode()}")
 print(f"PUBLIC: {public.decode()}")
 ```
 ## Changelog
+1.4.0
+
+* Added vaccinationassessment event type
+
 1.3.4
 
 * Added `roleIdentifier` details with regards to NEN logging and Digid 'Machtigen'.
