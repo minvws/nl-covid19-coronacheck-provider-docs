@@ -98,16 +98,9 @@ Authorative Data sources
 ```
 
 Field details:
-* `completedByMedicalStatement`: If known at the provider, mark this vaccination as 'considered complete' (e.g. last in a batch, or *doctor*-based 'this is sufficient for this person' declaration. If unknown, leave this field out instead of using false.
-* `completedByPersonalStatement`: This is the self-declared version of the completed statement. If a user has indicated that they only need 1 shot, use this boolean instead of the medical boolean. In business rules we can then make the distinction whether or not to allow this based on policy.
-* `completionReason`: Used to indicate the reason for completion. Accepted values: `recovery` (leads to 1/1 vaccination) or `priorevent` (leads to 2/2). Will only be evaluated if one of the 'completedBy' statements is used).
-
-Authorative Data sources
-* hpkCode from the accepted list available on [https://hpkcode.nl/](https://hpkcode.nl/).
-* type: [ehealth type list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-prophylaxis.json)
-* brand: [ehealth medicinal product list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-medicinal-product.json)
-* manufacturer: [ehealth manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-mah-manf.json)
-* country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/country-2-codes.json)
+* `date`: The date the assessment took place.
+* `digitallyVerified`: If the assessment is performed using a digital verification technique, such as scanning a non-DCC QR code, this boolean can be set to true.
+* `country`: Required. ISO 3166 2-letter country field.
 
 
 ### Negative Test Event
