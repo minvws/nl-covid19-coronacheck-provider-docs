@@ -88,7 +88,7 @@ Authorative Data sources
             "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed9",
             "isSpecimen": false, //Optional
             "vaccinationassessment": {
-                "date": "2021-01-01", // Date the assessment took place
+                "assessmentDate": "2021-12-12T12:42:42Z",  // Date and time the assessment took place
                 "digitallyVerified": true,
                 "country": "XX" // Required. ISO 3166 2-letter country field.
             }
