@@ -6,40 +6,6 @@ This document provides an overview of the various data structures in use in the 
 
 This chapter describes the datastructures that providers of test/vaccination results send to the CoronaCheck app. The protocol for sending the data is [documented here](providing-events-by-digid.md) (for digid based retrieval) and [here](providing-events-by-token.md).
 
-## Protocol version 4.0
-
-Protocol version 4.0 adds support for vaccination appreciations. The vaccination, negative, positive tests and recovery messages have not been changed and therefor not repeated here. See version 3.0 below for these events.
-
-### Vaccination Appraisal
-
-A vaccination appraisal is the result of an appraisal of a foreign vaccination, intended for toursists and other guests that enter the Netherlands and want to visit restaurants, bars or other places that require a CTB (Corona Toegangs Bewijs, or Corona Access Pass). In itself it has no value and does not lead to a CTB or DCC. In combination with a negative test that was performed within 3 days of the appraisal this will lead to a short stay corona access pass. A short stay corona access pass has a shorter validity than a typical vaccination certificate, and a longer validity than a negative test. It's intended to be used by tourists or other guests that stay in the country for a limited time.
-
-```javascript
-{
-    "protocolVersion": "4.0",
-    "providerIdentifier": "XXX",
-    "status": "complete", // This refers to the data-completeness, not vaccination status.
-    "holder": {
-        "firstName": "",
-        "infix": "", // optional 
-        "lastName": "",
-        "birthDate": "1970-01-01" // yyyy-mm-dd 
-    },
-    "events": [
-        {
-            "type": "vaccination_appraisal",
-            "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbee9",
-            "isSpecimen": false, //Optional
-            "vaccination_appraisal": {
-                "appraisalDate": "2021-07-25T14:51:26Z",
-            }
-        }
-    ]    
-}
-```
-
-To get an appraisal the user will be asked for an e-mail address and phone number, to be able to send a token that can be retrieved in the CoronaCheck app. These 2 data elements are however not part of the appraisal event and should not be included in the output.
-
 ## Protocol version 3.0
 
 Protocol version 3.0 has support for negative tests, positive tests, recovery statements and vaccination events.
@@ -105,6 +71,9 @@ Authorative Data sources
 * country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/country-2-codes.json)
 
 ### Vaccination Assessment Event
+
+A vaccination assessment is the result of a quick assessment of a foreign vaccination, intended for tourists and other visitors that enter the Netherlands and want to visit restaurants, bars or other places that require a CTB (Corona Toegangs Bewijs, or Corona Access Pass). In itself it has no value and does not lead to a CTB or DCC. In combination with a negative test, the assessment will lead to a short stay corona access pass. A short stay corona access pass has a shorter validity than a typical vaccination certificate, and a longer validity than a negative test.
+
 ```javascript
 {
     "protocolVersion": "3.0",
