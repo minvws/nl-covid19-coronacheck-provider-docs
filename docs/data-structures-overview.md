@@ -90,7 +90,7 @@ Authorative Data sources
             "vaccinationassessment": {
                 "assessmentDate": "2021-12-12T12:42:42Z",  // Date and time the assessment took place
                 "digitallyVerified": true,
-                "country": "XX" // Required. ISO 3166 2-letter country field.
+                "country": "XX"  // Country which provided the vaccination statement
             }
         }
     ]
@@ -100,7 +100,7 @@ Authorative Data sources
 Field details:
 * `date`: The date the assessment took place.
 * `digitallyVerified`: If the assessment is performed using a digital verification technique, such as scanning a non-DCC QR code, this boolean can be set to true.
-* `country`: Required. ISO 3166 2-letter country field.
+* `country`: ISO 3166 2-letter country field of the country that provided the vaccination statement.
 
 
 ### Negative Test Event
