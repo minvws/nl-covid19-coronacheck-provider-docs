@@ -9,10 +9,10 @@ The following versions exist:
 | Version | Active use | Planning | Remarks |
 | --- | --- | --- | --- |
 | 1.0 | NO | | This was the original protocol and used only during Fieldlab trials. It only supported negative test results. This protocol is no longer in use. There are no clients that use this protocol, so it doesn't have to be implemented. |
-| 2.0 | YES | To be phased out by July 1st | The second generation introduced light personally identifiable information (pii) to be able to validate if a proof belongs to the person showing it. This protocol is in use in the 1.4 version of the apps which are currently still out in the field. |
-| 3.0 | YES | To be introduced from mid-June | The 3.0 version introduced support for vaccinations and recovery, and contains the dataset that is required to be able to generate European DCC QR codes. This version will be released in version 2.0 of the apps, which are planned for end of June. |
+| 2.0 | NO | phased out by July 1st | The second generation introduced light personally identifiable information (pii) to be able to validate if a proof belongs to the person showing it. This protocol is in use in the 1.4 version of the apps which are currently still out in the field. |
+| 3.0 | YES | introduced in mid-June | The 3.0 version introduced support for vaccinations and recovery, and contains the dataset that is required to be able to generate European DCC QR codes. This version will be released in version 2.0 of the apps, which are planned for end of June. |
 
-Current recommendation for **new** providers: implement 3.0 and go live after July 1st. If it is important to go live before July 1st, a provider should implement both 2.0 and 3.0 responses.
+Currently the only option for **new** providers: implement 3.0 protocol.
 
 The data structures for each protocol version are documented in the [Date Structures Document](data-structures-overview.md).
 
@@ -33,7 +33,7 @@ The 3.0 protocol follows the same endpoints and communication as the 2.0 protoco
 For existing providers who currently support protocol 2.0, the following bullets are the most important changes in the 3.0 datastructure:
 
 * The result now contains an array of events. Each event has a type. This is done for compatibility with vaccinations. Note that you should still only provide the most recent test result, so the array for negative tests will always just contain a single item.
-* In 2.0, the holder data only contains initials and birth month / day. In 3.0 this should be changed to include the full names and the full birth date. This is necessary for EU compatiblility.
+* In 2.0, the holder data only contains initials and birth month / day. In 3.0 this should be changed to include the full names and the full birth date. This is necessary for EU compatibility.
 * The initial normalization that was done on the initials (é -> E, 't -> T etc) is not necessary in 3.0, as CoronaCheck will take care of that based on the full names.
 * The test types have changed from plain `pcr`, `pcr-lamp`, `antigen` and `breathalizer` to an EU code system. **Please ensure that the tests you are using are available in the EU code system**. The data should now be derived from:
     *  The [EU valueset for types](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json).
