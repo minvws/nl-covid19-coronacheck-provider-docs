@@ -1,7 +1,8 @@
-# Providing Vaccination / Test / Recovery Events by Digid
+# Providing Vaccination / Test / Recovery / Assessment Events by Digid
 
-* Version 1.4
-* Authors: Nick, Ivo
+
+* Version 1.5
+* Authors: Nick, Ivo, Tomas, Mendel
 
 ## Contents
 
@@ -262,6 +263,13 @@ The response (CMS Signed) may contain multiple events. The response should be pr
             "positivetest": {
                 // Test result record
             }
+        },
+        {
+            "type": "vaccinationassessment",
+            "unique": "...",
+            "vaccinationassessment": {
+                // Vaccination assessment record
+            }
         }
     ]    
 }
@@ -432,10 +440,14 @@ print(f"PUBLIC: {public.decode()}")
 ```
 ## Changelog
 
-1.4
+1.5.0
 
 * Added 'scope' parameter to provide hint to the provider so it can return the most relevant results.
 * Added explicit 'positivetest' filter that explicitly asks for positivetests and no recovery statements.
+
+1.4.0
+
+* Added vaccinationassessment event type
 
 1.3.4
 
