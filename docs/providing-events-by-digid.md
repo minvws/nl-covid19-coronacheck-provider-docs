@@ -1,6 +1,6 @@
 # Providing Vaccination / Test / Recovery Events by Digid
 
-* Version 1.3.4
+* Version 1.4
 * Authors: Nick, Ivo
 
 ## Contents
@@ -162,12 +162,19 @@ curl
   -X POST
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
-  -d '{ "filter": "vaccination" }'
+  -d '{ "filter": "vaccination", "scope": null }'
   https://api.acme.inc/information
 ```
 
 The `filter` is currently required, but we plan to make this optional in the future so providers are encouraged to consider this optional, to save future work. (If left out, the provider would check if they have either vaccination, test or recovery events for this user). 
-Allowed values currently are: `vaccination`, `negativetest` or `positivetest,recovery`.
+Allowed values currently are: `vaccination`, `negativetest`, `positivetest` or `positivetest,recovery`.
+
+The `scope` is an optional extra parameter that provides the provider with a hint to make a subselection of the data. Currently the following scopes will be supported:
+
+Filter      | Scope      | Meaning
+------------|------------|---------
+positivetest|oldest      |Provider should return the earliest positive test result for the user. This will be used for vaccination completion.
+positivetest|mostrelevant|Provider should return the most relevant positive tests. Typically this is the most recent test. However if the most recent test is an antigen test, it would not lead to a DCC. In that case, the provider should **also** return the most recent PCR test. In that case 2 tests are returned. If the most reent test is a PCR test, that is the only test returned as it's useful for both CTB and DCC.
 
 Notes:
 
@@ -424,6 +431,12 @@ print(f"SECRET: {secret.decode()}")
 print(f"PUBLIC: {public.decode()}")
 ```
 ## Changelog
+
+1.4
+
+* Added 'scope' parameter to provide hint to the provider so it can return the most relevant results.
+* Added explicit 'positivetest' filter that explicitly asks for positivetests and no recovery statements.
+
 1.3.4
 
 * Added `roleIdentifier` details with regards to NEN logging and Digid 'Machtigen'.
