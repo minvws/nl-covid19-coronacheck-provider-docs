@@ -70,6 +70,41 @@ Authorative Data sources
 * manufacturer: [ehealth manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/vaccine-mah-manf.json)
 * country: [ehealth country list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/country-2-codes.json)
 
+### Vaccination Assessment Event
+
+A vaccination assessment is the result of a quick assessment of a foreign vaccination, intended for tourists and other visitors that enter the Netherlands and want to visit restaurants, bars or other places that require a CTB (Corona Toegangs Bewijs, or Corona Access Pass). In itself it has no value and does not lead to a CTB or DCC. In combination with a negative test, the assessment will lead to a short stay corona access pass. A short stay corona access pass has a shorter validity than a typical vaccination certificate, and a longer validity than a negative test.
+
+```javascript
+{
+    "protocolVersion": "3.0",
+    "providerIdentifier": "XXX",
+    "status": "complete", // This refers to the data-completeness, not vaccination status.
+    "holder": {
+        "firstName": "",
+        "infix": "", // optional
+        "lastName": "",
+        "birthDate": "1970-01-01" // yyyy-mm-dd (see details below)
+    },
+    "events": [
+        {
+            "type": "vaccinationassessment",
+            "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed9",
+            "isSpecimen": false, //Optional
+            "vaccinationassessment": {
+                "assessmentDate": "2021-12-12T12:42:42Z",  // Date and time the assessment took place
+                "digitallyVerified": true,
+                "country": "XX"  // Country which provided the vaccination statement
+            }
+        }
+    ]
+}
+```
+
+Field details:
+* `date`: The date the assessment took place.
+* `digitallyVerified`: If the assessment is performed using a digital verification technique, such as scanning a non-DCC QR code, this boolean can be set to true.
+* `country`: ISO 3166 2-letter country field of the country that provided the vaccination statement.
+
 
 ### Negative Test Event
 

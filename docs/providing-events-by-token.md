@@ -6,8 +6,8 @@
   >  ☢️🚧 This is the 3.0 version of the protocol.
   > 
 
-* Version 3.2
-* Authors: Ivo, Nick
+* Version 3.3
+* Authors: Ivo, Nick, Tomas, Mendel
 
 In the CoronaCheck project we have implemented a means of presenting a digital proof of a negative test result, vaccination or recovery. This document describes the steps a party needs to take to provide test results or vaccination events that the CoronaCheck app will use to provide proof of vaccination/negative test/recovery.
 
@@ -270,31 +270,17 @@ And the payload should look like this:
     },
     "events": [
         {
-            "type": "vaccination",
-            "unique": "ee5afb32-3ef5-4fdf-94e3-e61b752dbed9",
-            "vaccination": {
-                // Vaccination record
-            }
-        }, // or
-        {
             "type": "negativetest",
             "unique: "...",
             "negativetest": {
                 // Test record
             }
-        }, // or
+        },
         {
-            "type": "recovery",
+            "type": "vaccinationassessment",
             "unique": "...",
-            "recovery: {
-                // Recovery record
-            }
-        }, // or
-        { 
-            "type": "positivetest",
-            "unique": "...",
-            "positivetest": { 
-                // Positive test record 
+            "vaccinationassessment": {
+                // Vaccination assessment record
             }
         }
     ]      
@@ -682,6 +668,10 @@ Example:
 	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-07-25T14:51:26Z
 
 # Changelog
+
+3.3.0
+* Added vaccinationassessment event type
+* Removed events that are not allowed via token
 
 3.2.1
 * removed protocol-Version 2.0 in these docs
