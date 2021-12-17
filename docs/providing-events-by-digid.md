@@ -219,12 +219,14 @@ curl
   -X POST
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
-  -d '{ "filter": "vaccination" }'
+  -d '{ "filter": "vaccination", "scope": null }'
   https://api.acme.inc/events
 ```
 
 The `filter` is currently required, but we plan to make this optional in the future so providers are encouraged to consider this optional, to save future work. (If left out, the provider would check if they have either vaccination, test or recovery events for this user). 
-Allowed values are: `vaccination`, `negativetest` or `positivetest,recovery`.
+Allowed values are: `vaccination`, `negativetest`, `positivetest` or `positivetest,recovery`.
+
+For the possible values of the `scope` parameter, see the information request chapter.
 
 #### Response
 
