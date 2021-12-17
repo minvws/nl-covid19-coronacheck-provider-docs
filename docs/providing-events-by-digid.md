@@ -183,7 +183,7 @@ The `scope` parameter is an optional extra parameter that provides the provider 
 
 Filter      | Scope      | Meaning
 ------------|------------|---------
-positivetest|firstepisode|Provider should return the earliest positive test result for the user, regardless of PCR or antigen test type. This will be used for vaccination completion.
+positivetest|firstepisode|Provider should return the oldest positive test result for the user, regardless of PCR or antigen test type. This will be used for vaccination completion.
 positivetest|recovery    |Provider must return the most recent test for the user, regardless of PCR or antigen test type. In addition, if this most recent test is an antigen test, it should also return the most recent PCR test, if present. In that case 2 tests are returned. The rationale is that only the most recent PCR test yields a DCC, while the most recent antigen yields a CTB.
 
 Example usages:
