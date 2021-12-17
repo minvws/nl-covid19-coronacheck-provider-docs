@@ -167,20 +167,29 @@ curl
   https://api.acme.inc/information
 ```
 
+Notes:
+
+* The useragent will be anonimized.
+* HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
+
+**Filtering**
 The `filter` is currently required, but we plan to make this optional in the future so providers are encouraged to consider this optional, to save future work. (If left out, the provider would check if they have either vaccination, test or recovery events for this user). 
 Allowed values currently are: `vaccination`, `negativetest`, `positivetest` or `positivetest,recovery`.
 
-The `scope` is an optional extra parameter that provides the provider with a hint to make a subselection of the data. Currently the following scopes will be supported:
+**Scoping**
+The `scope` parameter is an optional extra parameter that provides the provider with a hint to make a subselection of the data. Currently the following scopes will be supported:
 
 Filter      | Scope      | Meaning
 ------------|------------|---------
 positivetest|firstepisode|Provider should return the earliest positive test result for the user, regardless of PCR or antigen test type. This will be used for vaccination completion.
 positivetest|mostrecent  |Provider must return the most recent test for the user, regardless of PCR or antigen test type. In addition, if this most recent test is an antigen test, it should also return the most recent PCR test, if present. In that case 2 tests are returned. The rationale is that only the most recent PCR test yields a DCC, while the most recent antigen yields a CTB.
 
-Notes:
+Example usages:
 
-* The useragent will be anonimized.
-* HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
+1. User tests positive on may 1st, and has a 1 of 2 vaccination shot on july 1st, then on august 1st they test positive again. To be able to get a complete vaccination based on one jab and a positive test, we need the may 1st test. The august 1st test is >= vaccination date so wouldn't be eligible. For vaccination completion we will therefor use the `firstepisode` scope, which will always return the may 1st case.
+
+2. User has a positive PCR test on may 1st and a positive Antigen test on may 4th. Without scope, the may 4th test would be returned (the most recent test), which would yield only a Dutch CTB. The user also has a right to a DCC however based on the positive PCR test. Therefor when retrieving tests to create a recovery certificate, we will use the scope `mostrecent`.
+
 
 #### Response
 
