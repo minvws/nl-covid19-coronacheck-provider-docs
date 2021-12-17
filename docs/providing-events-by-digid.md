@@ -173,10 +173,12 @@ Notes:
 * HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
 
 **Filtering**
+
 The `filter` is currently required, but we plan to make this optional in the future so providers are encouraged to consider this optional, to save future work. (If left out, the provider would check if they have either vaccination, test or recovery events for this user). 
 Allowed values currently are: `vaccination`, `negativetest`, `positivetest` or `positivetest,recovery`.
 
 **Scoping**
+
 The `scope` parameter is an optional extra parameter that provides the provider with a hint to make a subselection of the data. Currently the following scopes will be supported:
 
 Filter      | Scope      | Meaning
