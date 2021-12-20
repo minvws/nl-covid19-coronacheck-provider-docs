@@ -129,6 +129,7 @@ Field details:
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
+                "sampleMethod": null,
                 "name": "", // see table NAAT / RAT*
                 "manufacturer": "", // see table NAAT / RAT*
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
@@ -145,6 +146,7 @@ Additional field explanations:
 * `negativeResult`: The presence of a negative result of the covid test. true when a negative result is present. false in all other situations. This is data minimisation: it is not necessary for the app to know whether a person is positive, only that they have had a negative test result. A `false` in the `negativeResult` field could either indicate a positive test, or no test at all, etc.
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
 * `isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. With real data this should always be false.
+* `sampleMethod`: To accomodate supervised selftests in the future, this field was aded to be able to indicate that the swab was taken by the user under supervision of the test provider. In this case the value of the sample method is `supervised-selftest`. In al other cases this field should be null. Note: only specific test providers are allowed to perform supervised selftests.
 
 
 #### NAAT / RAT differences
