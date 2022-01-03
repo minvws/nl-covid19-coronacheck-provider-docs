@@ -6,6 +6,7 @@ For integration between CoronaCheck and other apps we use Universal Links. This 
 
 - [CoronaCheck Deeplink Integration](#coronacheck-deeplink-integration)
   * [Test Result Retrieval Code Redemption (for COVID Test Providers)](#test-result-retrieval-code-redemption--for-covid-test-providers-)
+  * [Vaccination Assessment Retrieval Code Redemption (for COVID Vaccination Assessment Providers)](#vaccination-assessment-retrieval-code-redemption--for-covid-test-providers-)
   * [Opening the CoronaCheck app to show the QR code (for ticketing apps)](#opening-the-coronacheck-app-to-show-the-qr-code--for-ticketing-apps-)
     + [Flow](#flow)
     + [Available Universal Links](#available-universal-links)
