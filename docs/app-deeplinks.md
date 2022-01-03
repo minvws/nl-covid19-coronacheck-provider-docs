@@ -5,7 +5,7 @@ For integration between CoronaCheck and other apps we use Universal Links. This 
 ## Contents
 
 - [CoronaCheck Deeplink Integration](#coronacheck-deeplink-integration)
-  * [Retrieval Code Redemption (for COVID Test Providers)](#retrieval-code-redemption--for-covid-test-providers-)
+  * [Test Result Retrieval Code Redemption (for COVID Test Providers)](#test-result-retrieval-code-redemption--for-covid-test-providers-)
   * [Opening the CoronaCheck app to show the QR code (for ticketing apps)](#opening-the-coronacheck-app-to-show-the-qr-code--for-ticketing-apps-)
     + [Flow](#flow)
     + [Available Universal Links](#available-universal-links)
@@ -17,15 +17,26 @@ For integration between CoronaCheck and other apps we use Universal Links. This 
     + [Allowlisting](#allowlisting-1)
     + [Checking if CoronaCheck Scanner is installed](#checking-if-coronacheck-scanner-is-installed)
 
-## Retrieval Code Redemption (for COVID Test Providers)
+## Test Result Retrieval Code Redemption (for COVID Test Providers)
 
-When providing the token via a portal that the user can visit using the device where CoronaCheck is installed, the token can be directly loaded into the CoronaCheck app by utilizing the app's deeplink functionality. To use the deeplink, the token should be wrapped inside the same code that the manual entry uses (XXX-YYYYYYYYYY-ZV) The deeplink should be constructed as such:
+When providing the test result token via a portal that the user can visit using the device where CoronaCheck is installed, the token can be directly loaded into the CoronaCheck app by utilizing the app's deeplink functionality. To use the deeplink, the token should be wrapped inside the same code that the manual entry uses (XXX-YYYYYYYYYY-ZV) The deeplink should be constructed as such:
 
 https://coronacheck.nl/app/redeem#XXX-YYYYYYYYYYYY-ZV
 
 If a user does not have the app installed, the URL will take the user to the CoronaCheck website, where they can find download links to download the app. If the user does have the app, this URL will automatically open the URL and fetch the test result using the token.
 
 Note the use of the # in the URL. By using an anchor the token is not leaked to the CoronaCheck website when the user does not have the app installed.
+
+## Vaccination Assessment Retrieval Code Redemption (for COVID Vaccination Assessment Providers)
+
+When providing the token for a vaccination assessment via a portal that the user can visit using the device where CoronaCheck is installed, the token can be directly loaded into the CoronaCheck app by utilizing the app's deeplink functionality. To use the deeplink, the token should be wrapped inside the same code that the manual entry uses (XXX-YYYYYYYYYY-ZV) The deeplink should be constructed as such:
+
+https://coronacheck.nl/app/redeem-assessment/#XXX-YYYYYYYYYYYY-ZV
+
+If a user does not have the app installed, the URL will take the user to the CoronaCheck website, where they can find download links to download the app. If the user does have the app, this URL will automatically open the URL and fetch the test result using the token.
+
+Note the use of the # in the URL. By using an anchor the token is not leaked to the CoronaCheck website when the user does not have the app installed.
+
 
 ## Opening the CoronaCheck app to show the QR code (for ticketing apps)
 
