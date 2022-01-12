@@ -30,7 +30,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Requesting owner verification](#requesting-owner-verification)
     + [Protocol versioning](#protocol-versioning)
     + [Returning a test, vaccination or recovery event](#returning-a-test-vaccination-or-recovery-event)
-    + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
+    + [Response payload for invalid/expired tokens](#response-payload-for-invalidexpired-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
     + [CORS headers](#cors-headers)
