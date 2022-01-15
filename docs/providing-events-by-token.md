@@ -191,7 +191,7 @@ The response body would look like this:
 ```javascript
 {
     "protocolVersion": "3.0",
-    "providerIdentifier": "XXX"
+    "providerIdentifier": "XXX",
     "status": "pending",
     "pollToken": "...", // optional
     "pollDelay": 300, // seconds, optional
