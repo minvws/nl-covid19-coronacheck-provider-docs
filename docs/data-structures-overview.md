@@ -289,7 +289,7 @@ Notes:
             "type": "medicalexemption",
             "unique": "8ea0160a-8f38-11ec-b909-0242ac120002",
             "isSpecimen": false, //Optional
-            "positivetest": {
+            "medicalexemption": {
                 "exempt": "test",
                 "determinationDate": "2022-02-16"
             }
