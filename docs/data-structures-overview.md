@@ -290,7 +290,7 @@ Notes:
             "unique": "8ea0160a-8f38-11ec-b909-0242ac120002",
             "isSpecimen": false, //Optional
             "medicalexemption": {
-                "exempt": "test",
+                "exempt": ["test", "vaccination"],
                 "determinationDate": "2022-02-16"
             }
         }
