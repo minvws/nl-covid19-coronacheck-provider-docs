@@ -291,7 +291,7 @@ Notes:
             "isSpecimen": false, //Optional
             "medicalexemption": {
                 "exempt": "test",
-                "determinationDate": "2022-02-16T13:37:42Z"
+                "assessmentDate": "2022-02-16T13:37:42Z"
             }
         }
     ]    
