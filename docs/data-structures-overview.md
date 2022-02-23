@@ -270,6 +270,34 @@ Notes:
 * We deliberately use `sampleDate` and not an expiry after x hours/minutes/seconds. This is because we anticipate that validity might depend on both epidemiological conditions as well as on where the test result is presented. E.g. a 2-day festival might require a longer validity than a short seminar; By including the sample date, verifiers can control how much data they really see.
 * Returning `false` for the `positiveResult` does not necessarily imply 'negative'. This is data minimisation: when requesting a recovery, it is not necessary for the app to know whether a person is negative, only that they have had a positive test result. A `false` in the `positiveResult` field could either indicate a negative test, or no test at all, etc.
 
+### Medical Exemption
+
+
+```javascript
+{
+    "protocolVersion": "3.0",
+    "providerIdentifier": "XXX",
+    "status": "complete", // This refers to the data-completeness, not test status.
+    "holder": {
+        "firstName": "",
+        "infix": "",
+        "lastName": "",
+        "birthDate": "1970-01-01" // yyyy-mm-dd (see details below)
+    },
+    "events": [
+        {
+            "type": "medicalexemption",
+            "unique": "8ea0160a-8f38-11ec-b909-0242ac120002",
+            "isSpecimen": false, //Optional
+            "medicalexemption": {
+                "exempt": "test",  // "vaccination"
+                "assessmentDate": "2022-02-16T13:37:42Z"
+            }
+        }
+    ]    
+}
+```
+
 Authoritative data sources for values:
 * Types: [ehealth test type list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json)
 * Manufacturers: [ehealth test manufacturer list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-manf.json)
