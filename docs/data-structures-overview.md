@@ -61,7 +61,7 @@ Notes about optional fields:
 Field details:
 * `completedByMedicalStatement`: If known at the provider, mark this vaccination as 'considered complete' (e.g. last in a batch, or *doctor*-based 'this is sufficient for this person' declaration. If unknown, leave this field out instead of using false.
 * `completedByPersonalStatement`: This is the self-declared version of the completed statement. If a user has indicated that they only need 1 shot, use this boolean instead of the medical boolean. In business rules we can then make the distinction whether or not to allow this based on policy.
-* `completionReason`: Used to indicate the reason for completion. Accepted values: `recovery` (leads to 1/1 vaccination) or `priorevent` (leads to 2/2). Will only be evaluated if one of the 'completedBy' statements is used). 
+* `completionReason`: Used to indicate the reason for completion. Accepted values: `recovery` (leads to 1/1 vaccination) or `first-vaccination-elsewhere` (leads to 2/2). Will only be evaluated if one of the 'completedBy' statements is used). 
 
 Authorative Data sources
 * hpkCode from the accepted list available on [https://hpkcode.nl/](https://hpkcode.nl/).
@@ -129,6 +129,7 @@ Field details:
                 "negativeResult": true,
                 "facility": "GGD XL Amsterdam",
                 "type": "LP6464-4",
+                "sampleMethod": null,
                 "name": "", // see table NAAT / RAT*
                 "manufacturer": "", // see table NAAT / RAT*
                 "country": "NL" // optional iso 3166 2-letter country field, will be set to NL if left out. Can be used if test was administered abroad
@@ -145,6 +146,7 @@ Additional field explanations:
 * `negativeResult`: The presence of a negative result of the covid test. true when a negative result is present. false in all other situations. This is data minimisation: it is not necessary for the app to know whether a person is positive, only that they have had a negative test result. A `false` in the `negativeResult` field could either indicate a positive test, or no test at all, etc.
 * `unique`: An opaque string that is unique for this test result for this provider. An id for a test result could be used, or something that's derived/generated randomly. The signing service will use this unique id to ensure that it will only sign each test result once. (It is added to a simple strike list)
 * `isSpecimen`: A boolean indicating if the response is a specimen (fake). This is used for software test purposes in a production environment. With real data this should always be false.
+* `sampleMethod`: To accomodate supervised selftests in the future, this field was aded to be able to indicate that the swab was taken by the user under supervision of the test provider. In this case the value of the sample method is `supervised-selftest`. In al other cases this field should be null. Note: only specific test providers are allowed to perform supervised selftests.
 
 
 #### NAAT / RAT differences
@@ -267,6 +269,34 @@ For those providers who are unable to provide a recovery event but who are able 
 Notes:
 * We deliberately use `sampleDate` and not an expiry after x hours/minutes/seconds. This is because we anticipate that validity might depend on both epidemiological conditions as well as on where the test result is presented. E.g. a 2-day festival might require a longer validity than a short seminar; By including the sample date, verifiers can control how much data they really see.
 * Returning `false` for the `positiveResult` does not necessarily imply 'negative'. This is data minimisation: when requesting a recovery, it is not necessary for the app to know whether a person is negative, only that they have had a positive test result. A `false` in the `positiveResult` field could either indicate a negative test, or no test at all, etc.
+
+### Medical Exemption
+
+
+```javascript
+{
+    "protocolVersion": "3.0",
+    "providerIdentifier": "XXX",
+    "status": "complete", // This refers to the data-completeness, not test status.
+    "holder": {
+        "firstName": "",
+        "infix": "",
+        "lastName": "",
+        "birthDate": "1970-01-01" // yyyy-mm-dd (see details below)
+    },
+    "events": [
+        {
+            "type": "medicalexemption",
+            "unique": "8ea0160a-8f38-11ec-b909-0242ac120002",
+            "isSpecimen": false, //Optional
+            "medicalexemption": {
+                "exempt": "test",  // "vaccination"
+                "assessmentDate": "2022-02-16T13:37:42Z"
+            }
+        }
+    ]    
+}
+```
 
 Authoritative data sources for values:
 * Types: [ehealth test type list](https://github.com/ehn-dcc-development/ehn-dcc-valuesets/blob/main/test-type.json)

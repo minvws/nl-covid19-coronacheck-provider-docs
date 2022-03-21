@@ -30,7 +30,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Requesting owner verification](#requesting-owner-verification)
     + [Protocol versioning](#protocol-versioning)
     + [Returning a test, vaccination or recovery event](#returning-a-test-vaccination-or-recovery-event)
-    + [Response payload for invalid/expired tokens](#response-payload-for-invalid-expired-tokens)
+    + [Response payload for invalid/expired tokens](#response-payload-for-invalidexpired-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
     + [CORS headers](#cors-headers)
@@ -98,7 +98,7 @@ XXX-YYYYYYYYYYYYY-ZV
 
 Where:
 * XXX is a 3-letter identifier that is unique to the test provider and assigned by CoronaCheck. It tells the app which endpoint to use, which keys etc.
-* YYYYYYYYYYYYY is a token of arbitrary length. The token should be sufficiently large to protect against brute-force attacks, while remaining short enough to be able to perform manual entry. (see the Security Guidelines later in this document for additional guidelines.)
+* YYYYYYYYYYYYY is a token of arbitrary length (min 10). The token should be sufficiently large to protect against brute-force attacks, while remaining short enough to be able to perform manual entry. (see the Security Guidelines later in this document for additional guidelines.)
 * Z is a checksum to help avoid typing mistakes and to put up a small barrier for the apps to only pass tokens to an endpoint if a sanity check is performed using the check digits. This helps avoid hits on your endpoint by presenting invalid tokens.
 * V is the code version that tells the app how to interpret the code. It should currently always be 2.
 
@@ -191,7 +191,7 @@ The response body would look like this:
 ```javascript
 {
     "protocolVersion": "3.0",
-    "providerIdentifier": "XXX"
+    "providerIdentifier": "XXX",
     "status": "pending",
     "pollToken": "...", // optional
     "pollDelay": 300, // seconds, optional
