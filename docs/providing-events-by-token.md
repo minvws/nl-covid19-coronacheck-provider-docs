@@ -326,7 +326,7 @@ The http response code for a blocked token should be: 401
 {
     "protocolVersion": "3.0",
     "providerIdentifier": "XXX",
-    "status": "blocked_token",
+    "status": "result_blocked",
     "blockedUntil": "2022-02-28T10:05:00Z", // optional, clients should assume 5 minutes when omited. 
 }
 
