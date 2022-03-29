@@ -6,33 +6,34 @@
 
 ## Contents
 
-- [Providing Vaccination / Test / Recovery Events by Patient ID](#providing-vaccination---test---recovery-events-by-patient-id)
+- [Providing Vaccination / Test / Recovery / Assessment Events by Patient ID](#providing-vaccination---test---recovery---assessment-events-by-patient-id)
   * [Contents](#contents)
   * [Overview](#overview)
-    + [Terminology](#terminology)
-    + [Retrieval from the CoronaCheck apps](#retrieval-from-the-coronacheck-apps)
+    + [Process diagram](#process-diagram)
+    + [Process steps](#process-steps)
   * [Requirements](#requirements)
-  * [Identity Hash](#identity-hash)
+  * [Patient ID Hash](#patient-id-hash)
   * [JWT Tokens](#jwt-tokens)
   * [Protocol versioning](#protocol-versioning)
   * [Api Endpoints](#api-endpoints)
-    + [Information Available](#information-available)
+    + [Retrieve user phone/e-mail](#retrieve-user-phone-e-mail)
       - [Request](#request)
       - [Response](#response)
-      - [JWT Token](#jwt-token)
-    + [Events Api](#events-api)
+    + [Information Available](#information-available)
       - [Request](#request-1)
       - [Response](#response-1)
+      - [JWT Token](#jwt-token)
+    + [Events Api](#events-api)
+      - [Request](#request-2)
+      - [Response](#response-2)
       - [JWT Token](#jwt-token-1)
     + [Error states](#error-states)
   * [CMS Signature algorithm](#cms-signature-algorithm)
-    + [Including the signature in the response](#including-the-signature-in-the-response)
-    + [Signature verification](#signature-verification)
-    + [Command line example](#command-line-example)
-    + [More sample code](#more-sample-code)
-  * [CORS headers](#cors-headers)
-  * [Acceptance to Production](#Acceptance-to-Production)
   * [Changelog](#changelog)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 
 ## Overview
 
@@ -138,7 +139,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 }
 ```
 
-Request specific contents of the JWT tokens are documented in the definition of each api endpoint.
+Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the patientIdHash part of the jwt is different (it replaces the idHash).
 
 When evaluating the JWT, the API endpoint should check:
 * Whether the JWT has a valid signature
