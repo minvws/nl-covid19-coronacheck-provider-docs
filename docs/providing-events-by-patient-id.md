@@ -50,7 +50,7 @@ For providers who have already implemented the DigiD based route, adding this ro
 
 The following diagram depicts the login process graphically, including the steps the data follows through the various systems:
 
-!(Patient auth diagram)[images/overview-patient-auth.png]
+![Patient auth diagram](images/overview-patient-auth.png)
 
 ### Process steps
 
