@@ -128,7 +128,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 
 ```javascript
 {
-    "iss": "jwt.test.coronacheck.nl",
+    "iss": "<authentication service supplied string>",
     "aud": "api-test.coronatester.nl",
     "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61",
     "nonce": "5dee747d0eb7bccd22a6bb81e4959906aecd80bd0ebf047d",
@@ -138,7 +138,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 }
 ```
 
-Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the userHash part of the jwt is different (it replaces the idHash).
+Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the userHash part of the jwt is different (it replaces the idHash) and the issuer is not VWS but the authentication service.
 
 When evaluating the JWT, the API endpoint should check:
 * Whether the JWT has a valid signature
