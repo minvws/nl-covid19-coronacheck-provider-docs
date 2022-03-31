@@ -129,7 +129,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 ```javascript
 {
     "iss": "<authentication service supplied string>",
-    "aud": "api-test.coronatester.nl",
+    "aud": "<audience reference indicating the provider>",
     "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61",
     "nonce": "5dee747d0eb7bccd22a6bb81e4959906aecd80bd0ebf047d",
     "iat": 1622214031,
