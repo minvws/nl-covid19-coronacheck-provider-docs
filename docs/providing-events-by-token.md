@@ -6,7 +6,7 @@
   >  ☢️🚧 This is the 3.0 version of the protocol.
   > 
 
-* Version 3.3
+* Version 3.4
 * Authors: Ivo, Nick, Tomas, Mendel
 
 In the CoronaCheck project we have implemented a means of presenting a digital proof of a negative test result, vaccination or recovery. This document describes the steps a party needs to take to provide test results or vaccination events that the CoronaCheck app will use to provide proof of vaccination/negative test/recovery.
@@ -31,6 +31,7 @@ In the CoronaCheck project we have implemented a means of presenting a digital p
     + [Protocol versioning](#protocol-versioning)
     + [Returning a test, vaccination or recovery event](#returning-a-test-vaccination-or-recovery-event)
     + [Response payload for invalid/expired tokens](#response-payload-for-invalidexpired-tokens)
+    + [Response payload for blocked tokens](#response-payload-for-blocked-tokens)
     + [Token retention](#token-retention)
     + [Error states](#error-states)
     + [CORS headers](#cors-headers)
@@ -314,6 +315,22 @@ The http response code for an invalid token should be: 401
 ```
 
 Note: both failed/expired tokens and missing `verificationCode` result in a 401 (as the request could be retried with the correct token/verificationCode). The app will distinguish between the 2 states by looking at the body.
+
+### Response payload for blocked tokens
+
+Providers may implement anti-brute force measures such as blocking access to a token if an invalid verification code is attempted multiple times within a short timeframe. In this case the endpoint may return a temporary block response. If the block length is omited, the blocked period is assumed to be 5 minutes. 
+
+The http response code for a blocked token should be: 401
+
+```javascript
+{
+    "protocolVersion": "3.0",
+    "providerIdentifier": "XXX",
+    "status": "result_blocked",
+    "blockedUntil": "2022-02-28T10:05:00Z", // optional, clients should assume 5 minutes when omited. 
+}
+
+```
 
 ### Token retention
 
@@ -668,6 +685,9 @@ Example:
 	C00001|2021-04-01T10:10:10Z|Pietje Puk|1945-05-05|1|PCR|P|P|5|5|2021-07-25T14:51:26Z
 
 # Changelog
+
+3.4
+* Added temporary block response
 
 3.3.0
 * Added vaccinationassessment event type
