@@ -41,7 +41,7 @@ One of the main routes of user authentication for the CoronaCheck apps is [login
 
 For providers who have already implemented the DigiD based route, adding this route is fairly easy, as long as the provider has the following data on hand:
 
-* The unique Patient ID for a patient at the provider
+* The unique Patient ID for a patient at the provider (in short the 'user identifier')
 * The patient's full birth date
 * A cellphone number of the patient
 * If a cellphone number is not available, the e-mail address of the patient
@@ -77,13 +77,14 @@ In order to be able to deliver vaccination, test or recovery events to CoronaChe
 * Obtain another x509 PKI-O certificate to secure the https endpoints
   * Use this certificate to secure the https end points
   * Provide the public key of the X509 certificate to the CoronaCheck system so that endpoints can be verified by TLS pinning.
+* Arrange an OIDC based authentication service that lets the user enter their data and will send out verification codes via sms/email (a simple, open source authentication service will be made available that providers can choose to host within their infrastructure).
 
 ## Patient ID Hash
 Providers who have previously implemented the DigiD route will recognize this chapter; the hashing process is the same, just the fields that are used in the hash differ).
 
 In order to reliably determine a system contains information about a certain person without revealing who that person is a `patient-id-hash` will be generated for each individual connected party and sent to the Information endpoint. 
 
-Since only the designated party may check the hmac, a secret `hash key` is added. The `hash key` will be determined by MinVWS and shared privately with the provider. 
+Since only the designated party may check the hmac, a secret `hash key` is added. The `hash key` will be determined by the authentication service and shared privately with the provider. 
 
 The hmac will be created using the following items:
 
@@ -119,11 +120,9 @@ print h.digest().hex()
 ## JWT Tokens
 In order to authenticate to the API endpoints mentioned below, each request will contain a JWT token. 
 
-All JWT tokens are signed by MinVWS using a public/private keypair in the 'RS256' format. The public key used by MVWS will provided on a public api endpoint.
+All JWT tokens are signed by the provider (or their authentication service) using a public/private keypair in the 'RS256' format. Provider and authentication service will have to exchange the used keys in a secure manner. 
 
-Key rollover(s) will be published and communicated at least 2 weeks in advance. The provider should implement a key roll-over mechanism, so that if a new key is distributed, it will temporarily accept both keys, to account for users migrating over a short period of time.
-
-The provider MUST validate the signature in the token. Only tokens signed by MinVWS should be considered by the api endpoint(s).
+The provider MUST validate the signature in the token. Only tokens signed with the established key should be considered by the api endpoint(s).
 
 Example of the generic fields of a CoronaCheck JWT token:
 
@@ -131,7 +130,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 {
     "iss": "jwt.test.coronacheck.nl",
     "aud": "api-test.coronatester.nl",
-    "patientIdHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61",
+    "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61",
     "nonce": "5dee747d0eb7bccd22a6bb81e4959906aecd80bd0ebf047d",
     "iat": 1622214031,
     "nbf": 1622214031,
@@ -139,7 +138,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 }
 ```
 
-Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the patientIdHash part of the jwt is different (it replaces the idHash).
+Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the userHash part of the jwt is different (it replaces the idHash).
 
 When evaluating the JWT, the API endpoint should check:
 * Whether the JWT has a valid signature
@@ -167,7 +166,7 @@ In `cURL` the request looks as follows:
 curl
   -X POST
   -H 'CoronaCheck-Protocol-Version: 3.0'
-  -d '{ "patientIdHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
+  -d '{ "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
   https://api.acme.inc/userinfo
 ```
 
@@ -226,7 +225,7 @@ The response has been documented in the (digid route)[providing-events-by-digid.
 This request has no additional JWT fields other than the standard set.
 
 ### Events Api
-If the Information Available api returns `true` the app will follow up with a second request in order to get the actual vaccatination events. This time the JWT token will contain two items, the identity-hash and the actual BSN. The BSN inside the JWT token is encrypted.
+If the Information Available api returns `true` the app will follow up with a second request in order to get the actual vaccatination events. This time the JWT token will contain two items, the user-hash and the actual user identifier. The user identifier inside the JWT token is encrypted.
 
 #### Request
 
@@ -247,10 +246,10 @@ The response has been documented in the (digid route)[providing-events-by-digid.
 #### JWT Token
 In addition to the standard JWT token fields documented earlier, the JWT token for the event request will contain:
 
-* `patientId`: The Patient ID in an encrypted format. 
+* `userIdentifier`: The Patient's unique identifier (for example a patient number) in an encrypted format. 
 * `roleIdentifier`: Identifies the role of the requesting entity. CoronaCheck will set this to `01` ('Subject of care'), when the requesting entity is represented by the provided bsn. 
 
-The encryption of the BSN is done using libsodium public/private sealboxes (X25519). The private key that can be used to decrypt the patient ID must remain with the provider at all times. The public key has to be provided to MinVWS.
+The encryption of the BSN is done using libsodium public/private sealboxes (X25519). The private key that can be used to decrypt the patient ID must remain with the provider at all times. The public key has to be exchanged with the authentication service.
 
 ### Error states
 
