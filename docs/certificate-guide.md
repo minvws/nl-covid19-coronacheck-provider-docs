@@ -1,7 +1,7 @@
 # CoronaCheck Event Provider Certificate Guide
 
 ## Introduction
-The CoronaCheck application and website can collect events from different providers. These providers must secure their publically available https endpoints using a TLS connection with a specific certificate X509 certificate. They must also sign all of our their data using a CMS signature, created with another X509 certificate.
+The CoronaCheck application and website can collect events from different providers. These providers must secure their publically available https endpoints using a TLS connection with a specific certificate X509 certificate. They must also sign all of their data using a CMS signature, created with another X509 certificate.
 
 This is a short summary of the requirements. An extended guide is available [here](https://github.com/minvws/nl-covid19-coronacheck-app-coordination/blob/main/architecture/Security%20Architecture.md).
 
