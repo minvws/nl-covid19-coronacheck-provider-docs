@@ -74,9 +74,9 @@ In order to be able to deliver test results or vaccination events for CoronaChec
 * Implement a mechanism to distribute a `retrieval code` to the citizen that can be used to collect a negative result. 
 * Provide one endpoint:
     * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
-* Obtain an x509 PKI-O certificate for CMS signing responses (from a private PKI-O root).
+* Obtain a x509 certificate to CMS sign responses. Certificate must adhere to the requirements outlined in the [Certificate Guide](certificate-guide.md).
 * CMS sign responses using the x509 certificate.
-* Obtain another x509 PKI-O certificate for TLS/SSL pinning (public PKI-O root)
+* Obtain another x509 certificate for TLS/SSL pinning. Certificate must adhere to the requirements outlined in the [Certificate Guide](certificate-guide.md).
 * Provide the public key of the CMS X509 signing certificate to the CoronaCheck team so that signed results can be verified against the certificate.
 * Provide the public key of the X509 TLS/SSL certificate so the apps can perform TLS/SSL pinning against the endpoint.
 * Require an out of band ownership verification of the request if the event is handed out in an unsupervised manner (see details in next chapter).
