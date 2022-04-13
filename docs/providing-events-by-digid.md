@@ -58,12 +58,14 @@ In order to be able to deliver vaccination, test or recovery events to CoronaChe
 * Provide two endpoints:
   * An endpoint that an app can use to determine if a system contains information belonging to a person.
   * An endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
-* Obtain a x509 PKI-O certificate for CMS signing events.
+* Obtain a x509 certificate for CMS signing events.
   * Use this certificate to sign all data responses.
   * Provide the public key of the X509 certificate to the CoronaCheck system so that signed results can be verified against the certificate.
-* Obtain another x509 PKI-O certificate to secure the https endpoints
+  * Certificate must following the requirements outlined in the [Certificate Guide](certificate-guide.md)
+* Obtain another x509 certificate to secure the https endpoints
   * Use this certificate to secure the https end points
   * Provide the public key of the X509 certificate to the CoronaCheck system so that endpoints can be verified by TLS pinning.
+  * Certificate must following the requirements outlined in the [Certificate Guide](certificate-guide.md)
 
 ## Identity Hash
 In order to reliably determine a system contains information about a certain person without revealing who that person is an `identity-hash` will be generated for each individual connected party and sent to the Information endpoint. 
