@@ -31,7 +31,7 @@ If you're a provider of vaccinations, the following documents are relevant to yo
 
 1. [Data Structures Overview](docs/data-structures-overview.md) - The JSON responses that you should generate
 2. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve vaccination records via DigiD
-3. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign recovery statements.
+3. [Certificate Information](docs/certificate-guide.md) - Documentation on which certificates you need to sign recovery statements.
 
 ### Recovery Providers
 
@@ -40,7 +40,7 @@ If you're a provider of recovery statements (based on positive test results), th
 1. [Data Structures Overview](docs/data-structures-overview.md) - The JSON responses that you should generate
 2. [Providing Events by Token](docs/providing-events-by-token.md) - The endpoints you need to implement to allow users to retrieve recovery statements via a token.
 2. [Providing Events by DigiD](docs/providing-events-by-digid.md) - The endpoints you need to implement to allow users to retrieve recovery statements via DigiD
-3. [Certificate Information](docs/x509-pinning-test-providers-1.08.pdf) - Documentation on which certificates you need to sign recovery statements.
+3. [Certificate Information](docs/certificate-guide.md) - Documentation on which certificates you need to sign recovery statements.
 
 ### Ticket app providers
 
