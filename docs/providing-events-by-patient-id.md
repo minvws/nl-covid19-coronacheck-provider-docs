@@ -132,7 +132,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 {
     "iss": "<authentication service supplied string>",
     "aud": "<audience reference indicating the provider>",
-    "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61",
+    "userhash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61",
     "nonce": "5dee747d0eb7bccd22a6bb81e4959906aecd80bd0ebf047d",
     "iat": 1622214031,
     "nbf": 1622214031,
@@ -140,7 +140,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 }
 ```
 
-Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the userHash part of the jwt is different (it replaces the idHash) and the issuer is not VWS but the authentication service.
+Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the userhash part of the jwt is different (it replaces the idHash) and the issuer is not VWS but the authentication service.
 
 When evaluating the JWT, the API endpoint should check:
 * Whether the JWT has a valid signature
@@ -168,7 +168,7 @@ In `cURL` the request looks as follows:
 curl
   -X POST
   -H 'CoronaCheck-Protocol-Version: 3.0'
-  -d '{ "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
+  -d '{ "userhash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
   https://api.acme.inc/userinfo
 ```
 
