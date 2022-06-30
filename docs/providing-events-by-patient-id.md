@@ -191,9 +191,6 @@ The response (CMS Signed) should be provided as follows:
 
 Notes: 
 * One of the two fields `phoneNumber` and `email` should always be filled. 
-* Providers should only populate one of the two fields, with phoneNumber having the preference. 
-* If still both are filled, the authentication service will ignore the email and only use the phone number. 
-
 
 ### Information Available 
 
