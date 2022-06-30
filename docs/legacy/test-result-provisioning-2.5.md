@@ -75,8 +75,8 @@ In order to be able to deliver test results for CoronaCheck, a test provider MUS
 
 * Implement a mechanism to distribute a `token` in the form of a QR or `code` to the citizen that can be used to collect a negative result. 
 * Provide two endpoints:
-    * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
-    * An endpoint that offers the retrieval of test results to print terminals, e.g. https://api.acme.inc/resultretrieval/print. 
+    * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.example.com/resultretrieval, according to the specs laid out in this document.
+    * An endpoint that offers the retrieval of test results to print terminals, e.g. https://api.example.com/resultretrieval/print.
 * Obtain an x509 PKI-O certificate for CMS signing test results.
 * CMS sign its test results and other responses using the x509 certificate.
 * Add all intermediate certificates to the CMS signature (in order to establish a trust chain).
@@ -189,7 +189,7 @@ curl
   -H "Authorization: Bearer YYYYYYYYYYYYY"
   -H "CoronaCheck-Protocol-Version: 2.0"
   -d { "verificationCode": "12345"}
-  https://test-provider-endpoint-base-url
+  https://api.example.com
 ```
 
 The call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised scanning of a QR and doesn't require ownership verification, the app will omit this body. 
@@ -202,7 +202,7 @@ curl
   -H "Authorization: Bearer YYYYYYYYYYYYY"
   -H "CoronaCheck-Protocol-Version: 2.0"
   -d { "birthMonth": "12", "birthDay": "24" }
-  https://test-provider-endpoint-base-url-print
+  https://api.example.com
 ```
 
 Notes:
@@ -555,11 +555,11 @@ The directory 'shellscript' of https://github.com/minvws/nl-covid19-coronacheck-
 
 Its typical use is
 
-      curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh        
+      curl --silent 'https://api.example.com/something/config' | sh verify.sh
 
 when used against a PKI-Overheid.nl certificate; or 
 
-      curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh self-signed.pem
+      curl --silent 'https://api.example.com/something/config' | sh verify.sh self-signed.pem
 
 when used against a self-signed test certificate.
 
