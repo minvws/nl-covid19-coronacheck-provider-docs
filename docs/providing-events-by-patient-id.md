@@ -69,7 +69,7 @@ In order to be able to deliver vaccination, test or recovery events to CoronaChe
 
 * Provide three endpoints:
   * A public endpoint that an app can use to determine if a system contains information belonging to a person.
-  * A public endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
+  * A public endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.example.com/resultretrieval, according to the specs laid out in this document.
   * A private (server to server) endpoint to retrieve a patient's cellphone number / email address
 * Obtain a x509 certificate for CMS signing events.
   * Use this certificate to sign all data responses.
@@ -174,7 +174,7 @@ curl
 
 Notes:
 
-* The authentication service and this provider endpoint should authenticate each other via mutual TLS autnentication.
+* The authentication service and this provider endpoint should be reachable over a secure transport channel such as mTLS or VPN and use token authentication.
 * HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
 * The `userhash` property is all lower case.
 
@@ -186,15 +186,12 @@ The response (CMS Signed) should be provided as follows:
     "protocolVersion": "3.0",
     "providerIdentifier": "XXX",
     "phoneNumber": "06-123456789", // Formatting of the phone number is arbitrary, all common formats are supported by the auth service.
-    "email": "me@acme.inc"
+    "email": "me@example.com"
 }
 ```
 
 Notes: 
 * One of the two fields `phoneNumber` and `email` should always be filled. 
-* Providers should only populate one of the two fields, with phoneNumber having the preference. 
-* If still both are filled, the authentication service will ignore the email and only use the phone number. 
-
 
 ### Information Available 
 
@@ -209,7 +206,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/information
+  https://api.example.com/information
 ```
 
 Notes:
@@ -239,7 +236,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/events
+  https://api.example.com/events
 ```
 
 #### Response
