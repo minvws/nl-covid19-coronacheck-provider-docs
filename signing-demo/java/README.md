@@ -27,7 +27,7 @@ To test it, you can run the following from the shellscript directory (please see
 ```
 or if you have an external source with trusted certificate chain : 
 ```
-curl --silent "https://your.trusted.website" | java -jar ../java/target/signaturedemo-1.0-SNAPSHOT.jar verify
+curl --silent "https://trusted.example.com" | java -jar ../java/target/signaturedemo-1.0-SNAPSHOT.jar verify
 ```
 
 ### Notes

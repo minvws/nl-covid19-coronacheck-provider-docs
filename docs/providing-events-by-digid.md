@@ -57,7 +57,7 @@ In order to be able to deliver vaccination, test or recovery events to CoronaChe
 
 * Provide two endpoints:
   * An endpoint that an app can use to determine if a system contains information belonging to a person.
-  * An endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
+  * An endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.example.com/resultretrieval, according to the specs laid out in this document.
 * Obtain a x509 certificate for CMS signing events.
   * Use this certificate to sign all data responses.
   * Provide the public key of the X509 certificate to the CoronaCheck system so that signed results can be verified against the certificate.
@@ -166,7 +166,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/information
+  https://api.example.com/information
 ```
 
 Notes:
@@ -222,7 +222,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/events
+  https://api.example.com/events
 ```
 
 The `filter` is currently required, but we plan to make this optional in the future so providers are encouraged to consider this optional, to save future work. (If left out, the provider would check if they have either vaccination, test or recovery events for this user). 

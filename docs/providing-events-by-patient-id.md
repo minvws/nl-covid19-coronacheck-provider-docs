@@ -69,7 +69,7 @@ In order to be able to deliver vaccination, test or recovery events to CoronaChe
 
 * Provide three endpoints:
   * A public endpoint that an app can use to determine if a system contains information belonging to a person.
-  * A public endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
+  * A public endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.example.com/resultretrieval, according to the specs laid out in this document.
   * A private (server to server) endpoint to retrieve a patient's cellphone number / email address
 * Obtain a x509 certificate for CMS signing events.
   * Use this certificate to sign all data responses.
@@ -169,7 +169,7 @@ curl
   -X POST
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
-  https://api.acme.inc/userinfo
+  https://api.example.com/userinfo
 ```
 
 Notes:
@@ -185,7 +185,7 @@ The response (CMS Signed) should be provided as follows:
     "protocolVersion": "3.0",
     "providerIdentifier": "XXX",
     "phoneNumber": "06-123456789", // Formatting of the phone number is arbitrary, all common formats are supported by the auth service.
-    "email": "me@acme.inc"
+    "email": "me@example.com"
 }
 ```
 
@@ -205,7 +205,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/information
+  https://api.example.com/information
 ```
 
 Notes:
@@ -235,7 +235,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/events
+  https://api.example.com/events
 ```
 
 #### Response

@@ -34,7 +34,7 @@ To see what is in it
 ## Verification against a real server
 
 
-         curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh        
+         curl --silent 'https://api.example.com/something/config' | sh verify.sh
 
 Gives the output:
 
