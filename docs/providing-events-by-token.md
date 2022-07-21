@@ -73,7 +73,7 @@ In order to be able to deliver test results or vaccination events for CoronaChec
 
 * Implement a mechanism to distribute a `retrieval code` to the citizen that can be used to collect a negative result. 
 * Provide one endpoint:
-    * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
+    * An endpoint that an app can use to retrieve a test result on behalf of the citizen, e.g. https://api.example.com/resultretrieval, according to the specs laid out in this document.
 * Obtain a x509 certificate to CMS sign responses. Certificate must adhere to the requirements outlined in the [Certificate Guide](certificate-guide.md).
 * CMS sign responses using the x509 certificate.
 * Obtain another x509 certificate for TLS/SSL pinning. Certificate must adhere to the requirements outlined in the [Certificate Guide](certificate-guide.md).
@@ -171,7 +171,7 @@ curl
   -H "Authorization: Bearer YYYYYYYYYYYYY"
   -H "CoronaCheck-Protocol-Version: 3.0"
   -d { "verificationCode": "12345"}
-  https://provider-endpoint-base-url
+  https://api.example.com
 ```
 
 The initial request will not contain a request body. If the user enters a verification code, the call will contain a body with a `verificationCode` obtained from the ownership verification process (see further down on verification details). If your facility employs supervised entry of a token and doesn't require ownership verification, the app will omit this body. 
@@ -549,11 +549,11 @@ The directory 'shellscript' of https://github.com/minvws/nl-covid19-coronacheck-
 
 Its typical use is
 
-      curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh        
+      curl --silent 'https://api.example.com/something/config' | sh verify.sh
 
 when used against a PKI-Overheid.nl certificate; or 
 
-      curl --silent 'https://api.FQDN.nl/something/config' | sh verify.sh self-signed.pem
+      curl --silent 'https://api.example.com/something/config' | sh verify.sh self-signed.pem
 
 when used against a self-signed test certificate.
 

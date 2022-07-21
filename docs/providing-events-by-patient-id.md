@@ -69,7 +69,7 @@ In order to be able to deliver vaccination, test or recovery events to CoronaChe
 
 * Provide three endpoints:
   * A public endpoint that an app can use to determine if a system contains information belonging to a person.
-  * A public endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.acme.inc/resultretrieval, according to the specs laid out in this document.
+  * A public endpoint that an app can use to retrieve events on behalf of the citizen, e.g. https://api.example.com/resultretrieval, according to the specs laid out in this document.
   * A private (server to server) endpoint to retrieve a patient's cellphone number / email address
 * Obtain a x509 certificate for CMS signing events.
   * Use this certificate to sign all data responses.
@@ -140,7 +140,7 @@ Example of the generic fields of a CoronaCheck JWT token:
 }
 ```
 
-Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the userHash part of the jwt is different (it replaces the idHash) and the issuer is not VWS but the authentication service.
+Request specific contents of the JWT tokens are documented in the definition of each api endpoint. For providers who have already implemented the digid route: only the `userHash` part of the jwt is different (it replaces the `idHash`) and the issuer is not VWS but the authentication service.
 
 When evaluating the JWT, the API endpoint should check:
 * Whether the JWT has a valid signature
@@ -151,7 +151,7 @@ When evaluating the JWT, the API endpoint should check:
 
 The request to all endpoints contains a `CoronaCheck-Protocol-Version`. This should be considered a content negotiation. The app will always pass the highest version it supports. Providers should however return the JSON responses in the highest version they support.
 
-For example, the app gets an upgrade and supports a new version, `CoronaCheck-Protocol-Version: 5.0`. Providers who haven't upgraded to this new version, can continue to return 3.0 responses (`"protocolVersion": "3.0"`)until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
+For example, the app gets an upgrade and supports a new version, `CoronaCheck-Protocol-Version: 5.0`. Providers who haven't upgraded to this new version, can continue to return 3.0 responses (`"protocolVersion": "3.0"`) until they implement version 5 themselves. This way, the app and provider endpoints can be upgraded independently, with the app always having a headstart. The app will continue to support older versions until they are phased out. Information about protocol versions in use can be found in the [migration guide](migration-guide.md).
 
 ## Api Endpoints
 
@@ -168,7 +168,7 @@ In `cURL` the request looks as follows:
 curl
   -X POST
   -H 'CoronaCheck-Protocol-Version: 3.0'
-  -d '{ "userHash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
+  -d '{ "userhash": "cc0187181eedbfd169fb5e2ce60392da6916282fc60d01b403a1649525054d61" }'
   https://api.acme.inc/userinfo
 ```
 
@@ -176,6 +176,7 @@ Notes:
 
 * The authentication service and this provider endpoint should be reachable over a secure transport channel such as mTLS or VPN and use token authentication.
 * HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
+* The `userhash` property is all lower case.
 
 #### Response
 
@@ -185,7 +186,7 @@ The response (CMS Signed) should be provided as follows:
     "protocolVersion": "3.0",
     "providerIdentifier": "XXX",
     "phoneNumber": "06-123456789", // Formatting of the phone number is arbitrary, all common formats are supported by the auth service.
-    "email": "me@acme.inc"
+    "email": "me@example.com"
 }
 ```
 
@@ -205,7 +206,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/information
+  https://api.example.com/information
 ```
 
 Notes:
@@ -235,7 +236,7 @@ curl
   -H 'Authorization: Bearer <JWT TOKEN>'
   -H 'CoronaCheck-Protocol-Version: 3.0'
   -d '{ "filter": "vaccination", "scope": null }'
-  https://api.acme.inc/events
+  https://api.example.com/events
 ```
 
 #### Response
