@@ -174,7 +174,7 @@ curl
 
 Notes:
 
-* The authentication service and this provider endpoint should authenticate each other via mutual TLS autnentication.
+* The authentication service and this provider endpoint should be reachable over a secure transport channel such as mTLS or VPN and use token authentication.
 * HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
 
 #### Response
@@ -191,9 +191,6 @@ The response (CMS Signed) should be provided as follows:
 
 Notes: 
 * One of the two fields `phoneNumber` and `email` should always be filled. 
-* Providers should only populate one of the two fields, with phoneNumber having the preference. 
-* If still both are filled, the authentication service will ignore the email and only use the phone number. 
-
 
 ### Information Available 
 
