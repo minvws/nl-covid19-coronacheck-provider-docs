@@ -174,7 +174,7 @@ curl
 
 Notes:
 
-* The authentication service and this provider endpoint should authenticate each other via mutual TLS autnentication.
+* The authentication service and this provider endpoint should be reachable over a secure transport channel such as mTLS or VPN and use token authentication.
 * HTTP POST is used instead of a GET to aid in preventing logging/caching of the token or code.
 
 #### Response
